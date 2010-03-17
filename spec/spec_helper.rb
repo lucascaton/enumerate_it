@@ -4,6 +4,6 @@ require 'renun'
 require 'spec'
 require 'spec/autorun'
 
-Spec::Runner.configure do |config|
-  
-end
+require 'rubygems'
+require 'active_record'
+
