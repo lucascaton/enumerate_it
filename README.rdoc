@@ -10,13 +10,13 @@ filled with those small, unchangeable tables used to create foreign key constrai
 
 === For example:
 
-			 Table "public.relationshipstatus"
-		Column     |     Type      | Modifiers 
+	 Table "public.relationshipstatus"
+	Column     |     Type      | Modifiers 
 	-------------+---------------+-----------
 	 code        | character(1)  | not null
 	 description | character(11) | 
 	Indexes:
-			"relationshipstatus_pkey" PRIMARY KEY, btree (code)
+		"relationshipstatus_pkey" PRIMARY KEY, btree (code)
 
 	select * from relationshipstatus;
 	code   |  description  
