@@ -4,11 +4,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "renun"
+    gem.name = "renum"
     gem.summary = %Q{Hava a legacy database and need some enumerations in your models to match those stupid '4 rows/2 columns' tables with foreign keys and stop doing joins just to fetch a simple description? Or maybe use some integers instead of strings as the code for each value of your enumerations? Here's Renum.}
     gem.description = %Q{TODO: longer description of your gem}
     gem.email = "cassiommc@gmail.com"
-    gem.homepage = "http://github.com/cassiomarques/renun"
+    gem.homepage = "http://github.com/cassiomarques/renum"
     gem.authors = ["Cássio Marques"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
@@ -39,7 +39,7 @@ Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "renun #{version}"
+  rdoc.title = "renum #{version}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
