@@ -89,6 +89,18 @@
 # p = Person.new
 # p.relationship_status = RelationshipStatus::DIVORCED
 # p.relationsip_status_humanize # => 'Divorced'
+#
+# - If you pass the :create_helpers option as 'true', it will create a helper method for each enumeration
+#  option (this option defaults to false):
+#
+#  class Person < ActiveRecord::Base
+#    has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => true
+#  end
+#
+#  p = Person.new
+#  p.relationship_status = RelationshipStatus::MARRIED
+#  p.married? #=> true
+#  p.divorced? #=> false
 # 
 # - If your class can manage validations and responds to :validates_inclusion_of, it will create this
 # validation:
@@ -164,6 +176,9 @@ module EnumerateIt
         validates_inclusion_of attribute, :in => options[:with].list, :allow_blank => true
       end
       create_enumeration_humanize_method options[:with], attribute
+      if options[:create_helpers]
+        create_helper_methods options[:with], attribute
+      end
     end
 
     private
@@ -175,6 +190,16 @@ module EnumerateIt
         end
       end
     end    
+
+    def create_helper_methods(klass, attribute_name)
+      class_eval do
+        klass.enumeration.keys.each do |option|
+          define_method "#{option}?" do
+            self.send(attribute_name) == klass.enumeration[option].first
+          end
+        end
+      end
+    end
   end
 
   def self.included(receiver)

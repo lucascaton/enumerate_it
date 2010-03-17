@@ -33,6 +33,24 @@ describe EnumerateIt do
       @target.foobar = nil
       @target.foobar_humanize.should be_nil
     end
+
+    it "defaults to not creating helper methods" do
+      @target.should_not respond_to(:value_1)
+    end
+  end
+
+  context "using the option :create_helpers option" do
+    before :each do
+      class TestClass
+        has_enumeration_for :foobar, :with => TestEnumeration, :create_helpers => true
+      end
+    end
+
+    it "creates helpers methods with question marks for each enumeration option" do
+      target = TestClass.new(TestEnumeration::VALUE_2)
+      target.should be_value_2
+      target.should_not be_value_1
+    end
   end
 
   describe EnumerateIt::Base do
