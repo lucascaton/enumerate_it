@@ -86,9 +86,9 @@ This will create:
 
 * A humanized description for the values of the enumerated attribute:
 
-  p = Person.new
-  p.relationship_status = RelationshipStatus::DIVORCED
-  p.relationsip_status_humanize # => 'Divorced'
+		p = Person.new
+		p.relationship_status = RelationshipStatus::DIVORCED
+		p.relationsip_status_humanize # => 'Divorced'
 
 * If your class can manage validations and responds to :validates_inclusion_of, it will create this
 validation:
@@ -122,7 +122,7 @@ There are other similar solutions to the problem out there, but I could not find
 worked both with strings and integers as the enumerations' codes. I had both situations in 
 my legacy database. 
 
-== Why defining enumerations outside the class that used it?
+== Why defining enumerations outside the class that use it?
 
 * I think it's cleaner.
 * You can add behaviour to the enumeration class.
