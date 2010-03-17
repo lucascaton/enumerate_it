@@ -1,13 +1,13 @@
 # encoding: utf-8
 
-# Renum - Ruby Enumerations
+# EnumerateIt - Ruby Enumerations
 #
 # Author: Cássio Marques - cassiommc at gmail
 #
 # = Description
 #
 # Ok, I know there are a lot of different solutions to this problem. But none of them solved my problem,
-# so here's Renum. I needed to build a Rails application around a legacy database and this database was
+# so here's EnumerateIt. I needed to build a Rails application around a legacy database and this database was
 # filled with those small, unchangeable tables used to create foreign key constraints everywhere. 
 #
 # == For example:
@@ -35,14 +35,14 @@
 # my tests was very hard. More than this, referencing them in my code using magic numbers was terrible
 # and meaningless: What's does it mean when we say that someone or something is '2'?
 #
-# Enter Renum.
+# Enter EnumerateIt.
 #
 # = Creating enumerations
 #
 # Enumerations are created as models, but you can put then anywhere in your application. In Rails 
 # applications, I put them inside models/. 
 #
-# class RelationshipStatus < Renum::Base
+# class RelationshipStatus < EnumerateIt::Base
 #   associate_values(
 #     :single   => [1, 'Single'],
 #     :married  => [2, 'Married'],
@@ -76,7 +76,7 @@
 # or not.
 #
 # class Person
-#   include Renum
+#   include EnumerateIt
 #   attr_accessor :relationship_status
 #
 #   has_enumeration_for :relationship_status, :with => RelationshipStatus
@@ -108,9 +108,9 @@
 # 
 # * Create an initializer with the following code:
 # 
-# ActiveRecord::Base.send :include, Renum
+# ActiveRecord::Base.send :include, EnumerateIt
 # 
-# * Add the 'renum' gem as a dependency in your environment.rb (Rails 2.3.x) or Gemfile (if you're using Bundler)
+# * Add the 'enumerate_it' gem as a dependency in your environment.rb (Rails 2.3.x) or Gemfile (if you're using Bundler)
 #
 # = Why did you reinvent the wheel?
 #
@@ -124,7 +124,7 @@
 # - You can add behaviour to the enumeration class.
 # - You can reuse the enumeration inside other classes.
 # 
-module Renum
+module EnumerateIt
   class Base
     @@registered_enumerations = {}
 
