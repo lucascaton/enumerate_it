@@ -35,7 +35,7 @@ describe EnumerateIt do
     end
 
     it "defaults to not creating helper methods" do
-      @target.should_not respond_to(:value_1)
+      @target.should_not respond_to(:value_1?)
     end
   end
 
