@@ -31,8 +31,9 @@ And then I had things like a people table with a 'relationship_status' column wi
 pointing to the relationshipstatus table.
 
 While this is a good thing from the database normalization perspective, managing this values in
-my tests was very hard. More than this, referencing them in my code using magic numbers was terrible
-and meaningless: What's does it mean when we say that someone or something is '2'?
+my tests was very hard. Doing database joins just to get the description of some value was absurd. 
+And, more than this, referencing them in my code using magic numbers was terrible and meaningless: 
+What's does it mean when we say that someone or something is '2'?
 
 Enter Renun.
 
@@ -102,6 +103,10 @@ validation:
 
 Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from 
 ActiveRecord::Base.
+
+== Installation
+
+	gem install renum
 
 == Using with Rails
 
