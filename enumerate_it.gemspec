@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{enumerate_it}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["C\303\241ssio Marques"]
@@ -23,9 +23,9 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
+     "enumerate_it.gemspec",
      "lib/enumerate_it.rb",
      "spec/enumerate_it_spec.rb",
-     "spec/renun_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
   ]
@@ -36,7 +36,6 @@ Gem::Specification.new do |s|
   s.summary = %q{Ruby Enumerations}
   s.test_files = [
     "spec/enumerate_it_spec.rb",
-     "spec/renun_spec.rb",
      "spec/spec_helper.rb"
   ]
 
