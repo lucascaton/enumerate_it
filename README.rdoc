@@ -92,7 +92,7 @@ This will create:
 
 * If you don't supply a humanized string to represent an option, EnumerateIt will use a 'humanized' version of the hash's key to humanize the attribute's value:
 
-   class relationshipstatus < EnumerateIt::Base
+   class RelationshipStatus < EnumerateIt::Base
      associate_values(
        :married => 1,
        :single => 2
