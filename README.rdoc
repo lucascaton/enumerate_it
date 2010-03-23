@@ -116,13 +116,13 @@ This will create:
 
 * If your class can manage validations and responds to :validates_inclusion_of, it will create this validation:
 
-	class Person < ActiveRecord::Base
-		has_enumeration_for :relationship_status, :with => RelationshipStatus
-	end
+   class Person < ActiveRecord::Base
+     has_enumeration_for :relationship_status, :with => RelationshipStatus
+   end
 
-	p = Person.new :relationship_status => 6 # => there is no '6' value in the enumeration
-	p.valid? # => false
-	p.errors[:relationship_status] # => "is not included in the list"
+   p = Person.new :relationship_status => 6 # => there is no '6' value in the enumeration
+   p.valid? # => false
+   p.errors[:relationship_status] # => "is not included in the list"
 
 Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from 
 ActiveRecord::Base.
