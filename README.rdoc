@@ -105,14 +105,14 @@ This will create:
 
 * If you pass the :create_helpers option as 'true', it will create a helper method for each enumeration option (this option defaults to false):
 
-	class Person < ActiveRecord::Base
-		has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => true
-	end
+   class Person < ActiveRecord::Base
+     has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => true
+   end
 
-	p = Person.new
-	p.relationship_status = RelationshipStatus::MARRIED
-	p.married? #=> true
-	p.divorced? #=> false
+   p = Person.new
+   p.relationship_status = RelationshipStatus::MARRIED
+   p.married? #=> true
+   p.divorced? #=> false
 
 * If your class can manage validations and responds to :validates_inclusion_of, it will create this validation:
 
