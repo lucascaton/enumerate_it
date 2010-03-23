@@ -42,53 +42,53 @@ Enter EnumerateIt.
 Enumerations are created as models, but you can put then anywhere in your application. In Rails 
 applications, I put them inside models/. 
 
-  class RelationshipStatus < EnumerateIt::Base
-    associate_values(
-      :single   => [1, 'Single'],
-      :married  => [2, 'Married'],
-      :widow    => [3, 'Widow'],
-      :divorced => [4, 'Divorced'],
-    )
-  end
+   class RelationshipStatus < EnumerateIt::Base
+     associate_values(
+       :single   => [1, 'Single'],
+       :married  => [2, 'Married'],
+       :widow    => [3, 'Widow'],
+       :divorced => [4, 'Divorced'],
+     )
+   end
 
 This will create some nice stuff:
 
 * Each enumeration's value will turn into a constant:
 
-		RelationshipsStatus::SINGLE # returns 1
-		RelationshipStatus::MARRIED # returns 2 and so on...
+   RelationshipsStatus::SINGLE # returns 1
+   RelationshipStatus::MARRIED # returns 2 and so on...
 
 * You can retrieve a list with all the enumeration codes:
 
-		RelationshipStatus.list # [1,2,3,4]
+   RelationshipStatus.list # [1,2,3,4]
 
 * You can get an array of options, ready to use with the 'select', 'select_tag', etc family of Rails helpers.
 
-		RelationshipStatus.to_a # [["Divorced", 4],["Married", 2],["Single", 1],["Widow", 3]]
+   RelationshipStatus.to_a # [["Divorced", 4],["Married", 2],["Single", 1],["Widow", 3]]
 
 * You can manipulate the hash used to create the enumeration:
 
-		RelationshipStatus.enumeration # returns the exact hash used to define the enumeration
+   RelationshipStatus.enumeration # returns the exact hash used to define the enumeration
 
 == Using enumerations
 
 The cool part is that you can use these enumerations with any class, be it an ActiveRecord instance
 or not.
 
-  class Person
-    include EnumerateIt
-    attr_accessor :relationship_status
+   class Person
+     include EnumerateIt
+     attr_accessor :relationship_status
 
-    has_enumeration_for :relationship_status, :with => RelationshipStatus
-  end
+     has_enumeration_for :relationship_status, :with => RelationshipStatus
+   end
 
 This will create: 
 
 * A humanized description for the values of the enumerated attribute:
 
-	p = Person.new
-	p.relationship_status = RelationshipStatus::DIVORCED
-	p.relationsip_status_humanize # => 'Divorced'
+   p = Person.new
+   p.relationship_status = RelationshipStatus::DIVORCED
+   p.relationsip_status_humanize # => 'Divorced'
 
 * If you don't supply a humanized string to represent an option, EnumerateIt will use a 'humanized' version of the hash's key to humanize the attribute's value:
 
