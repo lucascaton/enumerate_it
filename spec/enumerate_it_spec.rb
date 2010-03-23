@@ -9,6 +9,13 @@ class TestEnumeration < EnumerateIt::Base
   )
 end
 
+class TestEnumerationWithoutArray < EnumerateIt::Base
+  associate_values(
+    :value_one => '1',
+    :value_two => '2'
+  )
+end
+
 describe EnumerateIt do
   before :each do
     class TestClass
@@ -16,9 +23,7 @@ describe EnumerateIt do
       attr_accessor :foobar
       has_enumeration_for :foobar, :with => TestEnumeration
 
-      def initialize(foobar)
-        @foobar = foobar
-      end
+      def initialize(foobar); @foobar = foobar; end
     end
     
     @target = TestClass.new(TestEnumeration::VALUE_2)
@@ -36,6 +41,24 @@ describe EnumerateIt do
 
     it "defaults to not creating helper methods" do
       @target.should_not respond_to(:value_1?)
+    end
+
+    context "passing the value of each option without the human string (just the value, without an array)" do
+      before :each do
+        class TestClassForEnumerationWithoutArray
+          include EnumerateIt
+          attr_accessor :foobar
+          has_enumeration_for :foobar, :with => TestEnumerationWithoutArray
+
+          def initialize(foobar); @foobar = foobar; end          
+        end
+
+        @target = TestClassForEnumerationWithoutArray.new(TestEnumerationWithoutArray::VALUE_TWO)
+      end
+
+      it "humanizes the respective hash key" do
+        @target.foobar_humanize.should == 'Value Two'
+      end
     end
   end
 

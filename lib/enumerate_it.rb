@@ -88,7 +88,21 @@
 #
 # p = Person.new
 # p.relationship_status = RelationshipStatus::DIVORCED
-# p.relationsip_status_humanize # => 'Divorced'
+# p.relationship_status_humanize # => 'Divorced'
+#
+# - If you don't supply a humanized string to represent an option, EnumerateIt will use a 'humanized' 
+# version of the hash's key to humanize the attribute's value
+#
+#  class RelationshipStatus < EnumerateIt::Base
+#    associate_values(
+#      :married => 1,
+#      :single => 2
+#    ) 
+#  end
+#
+#  p = Person.new
+#  p.relationship_status = RelationshipStatus::MARRIED
+#  p.relationship_status_humanize # => 'Married'
 #
 # - If you pass the :create_helpers option as 'true', it will create a helper method for each enumeration
 #  option (this option defaults to false):
@@ -101,7 +115,7 @@
 #  p.relationship_status = RelationshipStatus::MARRIED
 #  p.married? #=> true
 #  p.divorced? #=> false
-# 
+#
 # - If your class can manage validations and responds to :validates_inclusion_of, it will create this
 # validation:
 #
@@ -141,12 +155,21 @@ module EnumerateIt
     @@registered_enumerations = {}
 
     def self.associate_values(values_hash)
-      register_enumeration values_hash
+      register_enumeration normalize_enumeration(values_hash)
       values_hash.each_pair { |value_name, attributes| define_enumeration_constant value_name, attributes[0] }
       define_enumeration_list values_hash
     end 
 
     private
+    def self.normalize_enumeration(values_hash)
+      values_hash.each_pair do |key, value| 
+        unless value.is_a? Array
+          values_hash[key] = [value, key.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')] 
+        end
+      end
+      values_hash
+    end
+
     def self.register_enumeration(values_hash)
       @@registered_enumerations[self] = values_hash
     end

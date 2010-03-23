@@ -86,9 +86,23 @@ This will create:
 
 * A humanized description for the values of the enumerated attribute:
 
-		p = Person.new
-		p.relationship_status = RelationshipStatus::DIVORCED
-		p.relationsip_status_humanize # => 'Divorced'
+	p = Person.new
+	p.relationship_status = RelationshipStatus::DIVORCED
+	p.relationsip_status_humanize # => 'Divorced'
+
+* If you don't supply a humanized string to represent an option, EnumerateIt will use a 'humanized' 
+version of the hash's key to humanize the attribute's value:
+
+	class relationshipstatus < enumerateit::base
+	associate_values(
+	  :married => 1,
+	  :single => 2
+	) 
+	end
+
+	p = person.new
+	p.relationship_status = relationshipstatus::MARRIED
+	p.relationship_status_humanize # => 'Married'
 
 * If you pass the :create_helpers option as 'true', it will create a helper method for each enumeration option (this option defaults to false):
 
