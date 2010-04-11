@@ -82,6 +82,8 @@ or not.
      has_enumeration_for :relationship_status, :with => RelationshipStatus
    end
 
+The :with option is not required. If you ommit it, EnumerateIt will try to load an enumeration class based on the camelized attribute name. 
+
 This will create: 
 
 * A humanized description for the values of the enumerated attribute:

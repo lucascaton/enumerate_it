@@ -82,6 +82,9 @@
 #   has_enumeration_for :relationship_status, :with => RelationshipStatus
 # end
 #
+# The :with option is not required. If you ommit it, EnumerateIt will try to load an
+# enumeration class based on the camelized attribute name. 
+#
 # This will create: 
 #
 # - A humanized description for the values of the enumerated attribute:
@@ -194,7 +197,8 @@ module EnumerateIt
   end
 
   module ClassMethods
-    def has_enumeration_for(attribute, options)
+    def has_enumeration_for(attribute, options = {})
+      define_enumeration_class attribute, options
       if self.respond_to? :validates_inclusion_of
         validates_inclusion_of attribute, :in => options[:with].list, :allow_blank => true
       end
@@ -221,6 +225,12 @@ module EnumerateIt
             self.send(attribute_name) == klass.enumeration[option].first
           end
         end
+      end
+    end
+
+    def define_enumeration_class(attribute, options)
+      if options[:with].blank?
+        options[:with] = attribute.to_s.camelize.constantize
       end
     end
   end

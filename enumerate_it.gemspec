@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{enumerate_it}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["C\303\241ssio Marques"]
-  s.date = %q{2010-03-16}
+  s.date = %q{2010-04-10}
   s.description = %q{Have a legacy database and need some enumerations in your models to match those stupid '4 rows/2 columns' tables with foreign keys and stop doing joins just to fetch a simple description? Or maybe use some integers instead of strings as the code for each value of your enumerations? Here's EnumerateIt.}
   s.email = %q{cassiommc@gmail.com}
   s.extra_rdoc_files = [

@@ -60,6 +60,24 @@ describe EnumerateIt do
         @target.foobar_humanize.should == 'Value Two'
       end
     end
+
+    context "without passing the enumeration class" do
+      before :each do
+        class FooBar
+          include EnumerateIt
+          attr_accessor :test_enumeration
+          has_enumeration_for :test_enumeration
+          def initialize(test_enumeration_value)
+            @test_enumeration = test_enumeration_value
+          end
+        end
+      end
+
+      it "should find out which enumeration class to use" do
+        target = FooBar.new(TestEnumeration::VALUE_1)
+        target.test_enumeration_humanize.should == 'Hey, I am 1!'
+      end
+    end
   end
 
   context "using the option :create_helpers option" do
