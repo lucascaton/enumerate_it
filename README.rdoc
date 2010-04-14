@@ -134,7 +134,6 @@ ActiveRecord::Base.
 I18n lookup is provided on both '_humanized' and 'Enumeration#to_a' methods, given the hash key is a Symbol. The I18n strings are
 located on enumerations.'enumeration_name'.'key' :
 
-  # Symbol-based enumeration
   class RelationshipStatus < EnumerateIt::Base
    associate_values(
      :married => 1,
@@ -157,7 +156,7 @@ located on enumerations.'enumeration_name'.'key' :
   p.relationship_status_humanize # => 'Single' => nonexistent key 
   
   p.relationship_status = RelationshipStatus::DIVORCED
-  p.relationship_status_humanize # => 'He's divorced' => Uses the provided string 
+  p.relationship_status_humanize # => 'He's divorced' => uses the provided string 
 
 == Installation
 
