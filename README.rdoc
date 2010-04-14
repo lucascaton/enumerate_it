@@ -47,7 +47,7 @@ applications, I put them inside models/.
        :single   => [1, 'Single'],
        :married  => [2, 'Married'],
        :widow    => [3, 'Widow'],
-       :divorced => [4, 'Divorced'],
+       :divorced => [4, 'Divorced']
      )
    end
 
@@ -128,6 +128,36 @@ This will create:
 
 Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from 
 ActiveRecord::Base.
+
+== I18n
+
+I18n lookup is provided on both '_humanized' and 'Enumeration#to_a' methods, given the hash key is a Symbol. The I18n strings are
+located on enumerations.'enumeration_name'.'key' :
+
+  # Symbol-based enumeration
+  class RelationshipStatus < EnumerateIt::Base
+   associate_values(
+     :married => 1,
+     :single => 2,
+     :divorced => [3, 'He's divorced']
+   )
+  end
+
+  # your locale file
+  pt:
+    enumerations:
+      relationship_status:
+        single: Casado
+  
+  p = Person.new
+  p.relationship_status = RelationshipStatus::MARRIED
+  p.relationship_status_humanize # => 'Casado' 
+  
+  p.relationship_status = RelationshipStatus::SINGLE
+  p.relationship_status_humanize # => 'Single' => nonexistent key 
+  
+  p.relationship_status = RelationshipStatus::DIVORCED
+  p.relationship_status_humanize # => 'He's divorced' => Uses the provided string 
 
 == Installation
 
