@@ -1,0 +1,4 @@
+en:
+  enumerations:
+    test_enumeration_without_array:
+      value_one: First Value

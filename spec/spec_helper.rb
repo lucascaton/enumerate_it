@@ -7,3 +7,4 @@ require 'spec/autorun'
 require 'rubygems'
 require 'active_record'
 
+I18n.load_path = Dir['spec/i18n/*.yml']

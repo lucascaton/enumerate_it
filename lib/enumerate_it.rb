@@ -167,7 +167,7 @@ module EnumerateIt
     def self.normalize_enumeration(values_hash)
       values_hash.each_pair do |key, value| 
         unless value.is_a? Array
-          values_hash[key] = [value, key.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')] 
+          values_hash[key] = [value, key]
         end
       end
       values_hash
@@ -183,15 +183,22 @@ module EnumerateIt
 
     def self.define_enumeration_list(values_hash)
       def self.list 
-        @@registered_enumerations[self].values.map { |value| value[0] }.sort
+        @@registered_enumerations[self].values.map { |value| translate(value[0]) }.sort
       end
 
       def self.enumeration
         @@registered_enumerations[self]
       end
-
+      
       def self.to_a
-        @@registered_enumerations[self].values.map {|value| value.reverse }.sort_by { |value| value[0] }
+        @@registered_enumerations[self].values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
+      end
+      
+      def self.translate(value)
+        return value unless value.is_a? Symbol
+      
+        default = value.to_s.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
+        I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", :default => default)
       end
     end
   end
@@ -213,7 +220,8 @@ module EnumerateIt
       class_eval do
         define_method "#{attribute_name}_humanize" do
           values = klass.enumeration.values.detect { |v| v[0] == self.send(attribute_name) }
-          values ? values[1] : nil
+          
+          values ? klass.translate(values[1]) : nil
         end
       end
     end    
