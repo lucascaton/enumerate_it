@@ -24,6 +24,7 @@ describe EnumerateIt do
       has_enumeration_for :foobar, :with => TestEnumeration
 
       def initialize(foobar); @foobar = foobar; end
+      I18n.locale = :en
     end
     
     @target = TestClass.new(TestEnumeration::VALUE_2)
@@ -55,10 +56,19 @@ describe EnumerateIt do
 
         @target = TestClassForEnumerationWithoutArray.new(TestEnumerationWithoutArray::VALUE_TWO)
       end
-
+      
       it "humanizes the respective hash key" do
         @target.foobar_humanize.should == 'Value Two'
       end
+      
+      it "translates the respective hash key when a translation is found" do
+        @target.foobar = TestEnumerationWithoutArray::VALUE_ONE
+        @target.foobar_humanize.should == 'First Value'
+        I18n.locale = :pt
+        
+        @target.foobar_humanize.should == 'Primeiro Valor'
+      end
+      
     end
 
     context "without passing the enumeration class" do
@@ -116,6 +126,12 @@ describe EnumerateIt do
     describe ".to_a" do
       it "returns an array with the values and human representations" do
         TestEnumeration.to_a.should == [['Hey, I am 1!', '1'], ['Hey, I am 2!', '2'], ['Hey, I am 3!', '3']]
+      end
+      
+      it "translates the available values" do
+        TestEnumerationWithoutArray.to_a.should == [['First Value', '1'], ['Value Two', '2']]
+        I18n.locale = :pt
+        TestEnumerationWithoutArray.to_a.should == [['Primeiro Valor', '1'], ['Value Two', '2']]
       end
     end
 
