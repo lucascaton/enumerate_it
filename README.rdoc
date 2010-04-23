@@ -55,7 +55,7 @@ This will create some nice stuff:
 
 * Each enumeration's value will turn into a constant:
 
-   RelationshipsStatus::SINGLE # returns 1
+   RelationshipStatus::SINGLE # returns 1
    RelationshipStatus::MARRIED # returns 2 and so on...
 
 * You can retrieve a list with all the enumeration codes:
