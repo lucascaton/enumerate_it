@@ -90,7 +90,7 @@ describe EnumerateIt do
     end
   end
 
-  context "using the option :create_helpers option" do
+  context "using the :create_helpers option" do
     before :each do
       class TestClass
         has_enumeration_for :foobar, :with => TestEnumeration, :create_helpers => true
@@ -137,8 +137,15 @@ describe EnumerateIt do
 
     context "when included in ActiveRecord::Base" do
       before :each do
-        class ActiveRecordStub; attr_accessor :bla; end
-        ActiveRecordStub.stub!(:respond_to?).with(:validates_inclusion_of).and_return(true)
+        class ActiveRecordStub
+          attr_accessor :bla
+
+          class << self
+            def validates_inclusion_of(options); true; end
+            def validates_presence_of; true; end
+          end
+        end
+        
         ActiveRecordStub.stub!(:validates_inclusion_of).and_return(true)
         ActiveRecordStub.send :include, EnumerateIt
       end
@@ -147,6 +154,26 @@ describe EnumerateIt do
         ActiveRecordStub.should_receive(:validates_inclusion_of).with(:bla, :in => TestEnumeration.list, :allow_blank => true)
         class ActiveRecordStub
           has_enumeration_for :bla, :with => TestEnumeration
+        end
+      end
+
+      context "using the :required option" do
+        before :each do
+          ActiveRecordStub.stub!(:validates_presence_of).and_return(true)
+        end
+
+        it "creates a validation for presence" do
+          ActiveRecordStub.should_receive(:validates_presence_of)
+          class ActiveRecordStub
+            has_enumeration_for :bla, :with => TestEnumeration, :required => true
+          end
+        end
+
+        it "do not require the attribute by default" do
+          ActiveRecordStub.should_not_receive(:validates_presence_of)
+          class ActiveRecordStub
+            has_enumeration_for :bla, :with => TestEnumeration
+          end
         end
       end
     end
