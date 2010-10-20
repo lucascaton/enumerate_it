@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{enumerate_it}
-  s.version = "0.4.0"
+  s.version = "0.6.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["C\303\241ssio Marques"]
-  s.date = %q{2010-04-10}
+  s.date = %q{2010-10-20}
   s.description = %q{Have a legacy database and need some enumerations in your models to match those stupid '4 rows/2 columns' tables with foreign keys and stop doing joins just to fetch a simple description? Or maybe use some integers instead of strings as the code for each value of your enumerations? Here's EnumerateIt.}
   s.email = %q{cassiommc@gmail.com}
   s.extra_rdoc_files = [
@@ -26,13 +26,15 @@ Gem::Specification.new do |s|
      "enumerate_it.gemspec",
      "lib/enumerate_it.rb",
      "spec/enumerate_it_spec.rb",
+     "spec/i18n/en.yml",
+     "spec/i18n/pt.yml",
      "spec/spec.opts",
      "spec/spec_helper.rb"
   ]
   s.homepage = %q{http://github.com/cassiomarques/enumerate_it}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{Ruby Enumerations}
   s.test_files = [
     "spec/enumerate_it_spec.rb",
@@ -43,7 +45,7 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
     else
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
