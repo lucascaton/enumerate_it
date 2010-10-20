@@ -130,6 +130,13 @@
 # p.valid? # => false
 # p.errors[:relationship_status] # => "is not included in the list"
 #
+# - Also, if your class responds to :validates_presence_of, you can pass an :required option and this validation
+# will be added to your attribute:
+#
+# class Person < ActiveRecord::Base
+#   has_enumeration_for :relationship_status, :required => true # => defaults to false
+# end
+#
 # Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from 
 # ActiveRecord::Base.
 #
@@ -206,9 +213,7 @@ module EnumerateIt
   module ClassMethods
     def has_enumeration_for(attribute, options = {})
       define_enumeration_class attribute, options
-      if self.respond_to? :validates_inclusion_of
-        validates_inclusion_of attribute, :in => options[:with].list, :allow_blank => true
-      end
+      set_validations attribute, options
       create_enumeration_humanize_method options[:with], attribute
       if options[:create_helpers]
         create_helper_methods options[:with], attribute
@@ -240,6 +245,11 @@ module EnumerateIt
       if options[:with].blank?
         options[:with] = attribute.to_s.camelize.constantize
       end
+    end
+
+    def set_validations(attribute, options)
+      validates_inclusion_of(attribute, :in => options[:with].list, :allow_blank => true) if self.respond_to?(:validates_inclusion_of)
+      validates_presence_of(attribute) if options[:required] and self.respond_to?(:validates_presence_of)
     end
   end
 
