@@ -66,6 +66,10 @@ This will create some nice stuff:
 
    RelationshipStatus.to_a # [["Divorced", 4],["Married", 2],["Single", 1],["Widow", 3]]
 
+* You can retrive a list with values for a group of enumeration constants. 
+
+   RelationshipStatus.valus_for %w(MARRIED SINGLE) # [2, 1]
+
 * You can manipulate the hash used to create the enumeration:
 
    RelationshipStatus.enumeration # returns the exact hash used to define the enumeration

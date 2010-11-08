@@ -135,6 +135,12 @@ describe EnumerateIt do
       end
     end
 
+    describe ".values_for" do
+      it "returns an array with the corresponding values for a string array representing some of the enumeration's values" do
+        TestEnumeration.values_for(%w(VALUE_1 VALUE_2)).should == [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2]
+      end
+    end
+
     context "when included in ActiveRecord::Base" do
       before :each do
         class ActiveRecordStub
