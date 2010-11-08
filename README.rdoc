@@ -66,7 +66,7 @@ This will create some nice stuff:
 
    RelationshipStatus.to_a # [["Divorced", 4],["Married", 2],["Single", 1],["Widow", 3]]
 
-* You can retrive a list with values for a group of enumeration constants. 
+* You can retrieve a list with values for a group of enumeration constants. 
 
    RelationshipStatus.valus_for %w(MARRIED SINGLE) # [2, 1]
 
