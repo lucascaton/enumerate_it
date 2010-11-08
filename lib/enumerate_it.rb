@@ -66,6 +66,10 @@
 #
 # RelationshipStatus.to_a # [["Divorced", 4],["Married", 2],["Single", 1],["Widow", 3]]
 #
+# You can retrive a list with values for a group of enumeration constants
+#
+# RelationshipStatus.valus_for %w(MARRIED SINGLE) # [2, 1]
+#
 # - You can manipulate the has used to create the enumeration:
 #
 # RelationshipStatus.enumeration # returns the exact hash used to define the enumeration
@@ -199,6 +203,10 @@ module EnumerateIt
       
       def self.to_a
         @@registered_enumerations[self].values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
+      end
+
+      def self.values_for(values)
+        values.map { |v| self.const_get(v.to_sym) }
       end
       
       def self.translate(value)
