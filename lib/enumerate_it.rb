@@ -224,7 +224,8 @@ module EnumerateIt
       set_validations attribute, options
       create_enumeration_humanize_method options[:with], attribute
       if options[:create_helpers]
-        create_helper_methods options[:with], attribute
+        create_helper_methods(options[:with], attribute) 
+        create_mutator_methods(options[:with], attribute)
       end
     end
 
@@ -244,6 +245,16 @@ module EnumerateIt
         klass.enumeration.keys.each do |option|
           define_method "#{option}?" do
             self.send(attribute_name) == klass.enumeration[option].first
+          end
+        end
+      end
+    end
+
+    def create_mutator_methods(klass, attribute_name)
+      class_eval do
+        klass.enumeration.each_pair do |key, values|
+          define_method "#{key}!" do
+            self.send "#{attribute_name}=", values.first
           end
         end
       end

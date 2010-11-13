@@ -102,6 +102,18 @@ describe EnumerateIt do
       target.should be_value_2
       target.should_not be_value_1
     end
+
+    it "creates a mutator method for each enumeration value" do
+      [:value_1, :value_2, :value_3].each do |value|
+        TestClass.new(TestEnumeration::VALUE_1).should respond_to(:"#{value}!")
+      end 
+    end
+
+    it "changes the attribute's value through mutator methods" do
+      target = TestClass.new(TestEnumeration::VALUE_2)
+      target.value_3!
+      target.foobar.should == TestEnumeration::VALUE_3
+    end
   end
 
   describe EnumerateIt::Base do
