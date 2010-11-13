@@ -161,7 +161,7 @@ located on enumerations.'enumeration_name'.'key' :
   pt:
     enumerations:
       relationship_status:
-        single: Casado
+        married: Casado
   
   p = Person.new
   p.relationship_status = RelationshipStatus::MARRIED
