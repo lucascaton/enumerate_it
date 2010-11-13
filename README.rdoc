@@ -55,7 +55,7 @@ This will create some nice stuff:
 
 * Each enumeration's value will turn into a constant:
 
-   RelationshipsStatus::SINGLE # returns 1
+   RelationshipStatus::SINGLE # returns 1
    RelationshipStatus::MARRIED # returns 2 and so on...
 
 * You can retrieve a list with all the enumeration codes:
@@ -161,7 +161,7 @@ located on enumerations.'enumeration_name'.'key' :
   pt:
     enumerations:
       relationship_status:
-        single: Casado
+        married: Casado
   
   p = Person.new
   p.relationship_status = RelationshipStatus::MARRIED
@@ -195,7 +195,7 @@ An interesting approach to use it in Rails apps is to create an app/models/enume
 
 == Ruby 1.9
 
-EnumerateIt is fully compatible with Ruby 1.9.1 (all tests pass)
+EnumerateIt is fully compatible with Ruby 1.9.1 and 1.9.2 (all tests pass)
 
 == Why did you reinvent the wheel?
 
