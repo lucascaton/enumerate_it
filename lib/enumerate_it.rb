@@ -165,115 +165,71 @@
 # - You can reuse the enumeration inside other classes.
 # 
 module EnumerateIt
-  class Base
-    @@registered_enumerations = {}
-
-    def self.associate_values(values_hash)
-      register_enumeration normalize_enumeration(values_hash)
-      values_hash.each_pair { |value_name, attributes| define_enumeration_constant value_name, attributes[0] }
-      define_enumeration_list values_hash
-    end 
-
-    private
-    def self.normalize_enumeration(values_hash)
-      values_hash.each_pair do |key, value| 
-        unless value.is_a? Array
-          values_hash[key] = [value, key]
+  module Singular
+    module ClassMethods
+      def has_enumeration_for(attribute, options = {})
+        define_enumeration_class attribute, options
+        set_validations attribute, options
+        create_enumeration_humanize_method options[:with], attribute
+        if options[:create_helpers]
+          create_helper_methods(options[:with], attribute) 
+          create_mutator_methods(options[:with], attribute)
         end
       end
-      values_hash
-    end
 
-    def self.register_enumeration(values_hash)
-      @@registered_enumerations[self] = values_hash
-    end
+      private
+      def create_enumeration_humanize_method(klass, attribute_name)
+        class_eval do
+          define_method "#{attribute_name}_humanize" do
+            values = klass.enumeration.values.detect { |v| v[0] == self.send(attribute_name) }
+            
+            values ? klass.translate(values[1]) : nil
+          end
+        end
+      end    
 
-    def self.define_enumeration_constant(name, value)
-      const_set name.to_s.upcase, value
-    end
-
-    def self.define_enumeration_list(values_hash)
-      def self.list 
-        @@registered_enumerations[self].values.map { |value| translate(value[0]) }.sort
+      def create_helper_methods(klass, attribute_name)
+        class_eval do
+          klass.enumeration.keys.each do |option|
+            define_method "#{option}?" do
+              self.send(attribute_name) == klass.enumeration[option].first
+            end
+          end
+        end
       end
 
-      def self.enumeration
-        @@registered_enumerations[self]
-      end
-      
-      def self.to_a
-        @@registered_enumerations[self].values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
+      def create_mutator_methods(klass, attribute_name)
+        class_eval do
+          klass.enumeration.each_pair do |key, values|
+            define_method "#{key}!" do
+              self.send "#{attribute_name}=", values.first
+            end
+          end
+        end
       end
 
-      def self.values_for(values)
-        values.map { |v| self.const_get(v.to_sym) }
+      def define_enumeration_class(attribute, options)
+        if options[:with].blank?
+          options[:with] = attribute.to_s.camelize.constantize
+        end
       end
-      
-      def self.translate(value)
-        return value unless value.is_a? Symbol
-      
-        default = value.to_s.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
-        I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", :default => default)
+
+      def set_validations(attribute, options)
+        validates_inclusion_of(attribute, :in => options[:with].list, :allow_blank => true) if self.respond_to?(:validates_inclusion_of)
+        validates_presence_of(attribute) if options[:required] and self.respond_to?(:validates_presence_of)
       end
     end
   end
 
-  module ClassMethods
-    def has_enumeration_for(attribute, options = {})
-      define_enumeration_class attribute, options
-      set_validations attribute, options
-      create_enumeration_humanize_method options[:with], attribute
-      if options[:create_helpers]
-        create_helper_methods(options[:with], attribute) 
-        create_mutator_methods(options[:with], attribute)
-      end
-    end
+  module Multiple
+    module ClassMethods
 
-    private
-    def create_enumeration_humanize_method(klass, attribute_name)
-      class_eval do
-        define_method "#{attribute_name}_humanize" do
-          values = klass.enumeration.values.detect { |v| v[0] == self.send(attribute_name) }
-          
-          values ? klass.translate(values[1]) : nil
-        end
-      end
-    end    
-
-    def create_helper_methods(klass, attribute_name)
-      class_eval do
-        klass.enumeration.keys.each do |option|
-          define_method "#{option}?" do
-            self.send(attribute_name) == klass.enumeration[option].first
-          end
-        end
-      end
-    end
-
-    def create_mutator_methods(klass, attribute_name)
-      class_eval do
-        klass.enumeration.each_pair do |key, values|
-          define_method "#{key}!" do
-            self.send "#{attribute_name}=", values.first
-          end
-        end
-      end
-    end
-
-    def define_enumeration_class(attribute, options)
-      if options[:with].blank?
-        options[:with] = attribute.to_s.camelize.constantize
-      end
-    end
-
-    def set_validations(attribute, options)
-      validates_inclusion_of(attribute, :in => options[:with].list, :allow_blank => true) if self.respond_to?(:validates_inclusion_of)
-      validates_presence_of(attribute) if options[:required] and self.respond_to?(:validates_presence_of)
     end
   end
 
   def self.included(receiver)
-    receiver.extend ClassMethods
+    receiver.extend Singular::ClassMethods
+    receiver.extend Multiple::ClassMethods
   end
 end
 
