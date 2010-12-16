@@ -147,6 +147,12 @@ describe EnumerateIt do
       end
     end
 
+    describe "#to_range" do
+      it "returns a Range object containing the enumeration's value interval" do
+        TestEnumeration.to_range.should == ("1".."3")
+      end
+    end
+
     describe ".values_for" do
       it "returns an array with the corresponding values for a string array representing some of the enumeration's values" do
         TestEnumeration.values_for(%w(VALUE_1 VALUE_2)).should == [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2]

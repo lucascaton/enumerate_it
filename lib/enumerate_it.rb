@@ -205,6 +205,10 @@ module EnumerateIt
         @@registered_enumerations[self].values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
       end
 
+      def self.to_range
+        (list.min..list.max)
+      end
+
       def self.values_for(values)
         values.map { |v| self.const_get(v.to_sym) }
       end
