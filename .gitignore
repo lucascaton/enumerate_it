@@ -20,3 +20,4 @@ pkg
 
 ## PROJECT::SPECIFIC
 enumerate_it-*.gem
+enumerate_it.gemspec
