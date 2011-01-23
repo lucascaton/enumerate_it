@@ -16,6 +16,16 @@ class TestEnumerationWithoutArray < EnumerateIt::Base
   )
 end
 
+class TestEnumerationWithExtendedBehaviour < EnumerateIt::Base
+  associate_values(
+    :first => '1',
+    :second => '2'
+  )
+  def self.to_a
+    super.reverse
+  end
+end
+
 describe EnumerateIt do
   before :each do
     class TestClass
@@ -26,7 +36,7 @@ describe EnumerateIt do
       def initialize(foobar); @foobar = foobar; end
       I18n.locale = :en
     end
-    
+
     @target = TestClass.new(TestEnumeration::VALUE_2)
   end
 
@@ -51,24 +61,24 @@ describe EnumerateIt do
           attr_accessor :foobar
           has_enumeration_for :foobar, :with => TestEnumerationWithoutArray
 
-          def initialize(foobar); @foobar = foobar; end          
+          def initialize(foobar); @foobar = foobar; end
         end
 
         @target = TestClassForEnumerationWithoutArray.new(TestEnumerationWithoutArray::VALUE_TWO)
       end
-      
+
       it "humanizes the respective hash key" do
         @target.foobar_humanize.should == 'Value Two'
       end
-      
+
       it "translates the respective hash key when a translation is found" do
         @target.foobar = TestEnumerationWithoutArray::VALUE_ONE
         @target.foobar_humanize.should == 'First Value'
         I18n.locale = :pt
-        
+
         @target.foobar_humanize.should == 'Primeiro Valor'
       end
-      
+
     end
 
     context "without passing the enumeration class" do
@@ -139,11 +149,15 @@ describe EnumerateIt do
       it "returns an array with the values and human representations" do
         TestEnumeration.to_a.should == [['Hey, I am 1!', '1'], ['Hey, I am 2!', '2'], ['Hey, I am 3!', '3']]
       end
-      
+
       it "translates the available values" do
         TestEnumerationWithoutArray.to_a.should == [['First Value', '1'], ['Value Two', '2']]
         I18n.locale = :pt
         TestEnumerationWithoutArray.to_a.should == [['Primeiro Valor', '1'], ['Value Two', '2']]
+      end
+
+      it "can be extended from the enumeration class" do
+        TestEnumerationWithExtendedBehaviour.to_a.should == [['Second', '2'],['First','1']]
       end
     end
 
@@ -169,7 +183,7 @@ describe EnumerateIt do
             def validates_presence_of; true; end
           end
         end
-        
+
         ActiveRecordStub.stub!(:validates_inclusion_of).and_return(true)
         ActiveRecordStub.send :include, EnumerateIt
       end

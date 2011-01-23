@@ -8,27 +8,27 @@
 #
 # Ok, I know there are a lot of different solutions to this problem. But none of them solved my problem,
 # so here's EnumerateIt. I needed to build a Rails application around a legacy database and this database was
-# filled with those small, unchangeable tables used to create foreign key constraints everywhere. 
+# filled with those small, unchangeable tables used to create foreign key constraints everywhere.
 #
 # == For example:
 #
 #      Table "public.relationshipstatus"
-#   Column     |     Type      | Modifiers 
+#   Column     |     Type      | Modifiers
 # -------------+---------------+-----------
 #  code        | character(1)  | not null
-#  description | character(11) | 
+#  description | character(11) |
 # Indexes:
 #     "relationshipstatus_pkey" PRIMARY KEY, btree (code)
 #
 #  select * from relationshipstatus;
-#  code   |  description  
+#  code   |  description
 # --------+--------------
-#  1      | Single   
-#  2      | Married     
+#  1      | Single
+#  2      | Married
 #  3      | Widow
-#  4      | Divorced 
-#  
-# And then I had things like a people table with a 'relationship_status' column with a foreign key 
+#  4      | Divorced
+#
+# And then I had things like a people table with a 'relationship_status' column with a foreign key
 # pointing to the relationshipstatus table.
 #
 # While this is a good thing from the database normalization perspective, managing this values in
@@ -39,8 +39,8 @@
 #
 # = Creating enumerations
 #
-# Enumerations are created as models, but you can put then anywhere in your application. In Rails 
-# applications, I put them inside models/. 
+# Enumerations are created as models, but you can put then anywhere in your application. In Rails
+# applications, I put them inside models/.
 #
 # class RelationshipStatus < EnumerateIt::Base
 #   associate_values(
@@ -87,9 +87,9 @@
 # end
 #
 # The :with option is not required. If you ommit it, EnumerateIt will try to load an
-# enumeration class based on the camelized attribute name. 
+# enumeration class based on the camelized attribute name.
 #
-# This will create: 
+# This will create:
 #
 # - A humanized description for the values of the enumerated attribute:
 #
@@ -97,14 +97,14 @@
 # p.relationship_status = RelationshipStatus::DIVORCED
 # p.relationship_status_humanize # => 'Divorced'
 #
-# - If you don't supply a humanized string to represent an option, EnumerateIt will use a 'humanized' 
+# - If you don't supply a humanized string to represent an option, EnumerateIt will use a 'humanized'
 # version of the hash's key to humanize the attribute's value
 #
 #  class RelationshipStatus < EnumerateIt::Base
 #    associate_values(
 #      :married => 1,
 #      :single => 2
-#    ) 
+#    )
 #  end
 #
 #  p = Person.new
@@ -141,29 +141,29 @@
 #   has_enumeration_for :relationship_status, :required => true # => defaults to false
 # end
 #
-# Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from 
+# Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from
 # ActiveRecord::Base.
 #
 # = Using with Rails/ActiveRecord
-# 
+#
 # * Create an initializer with the following code:
-# 
+#
 # ActiveRecord::Base.send :include, EnumerateIt
-# 
+#
 # * Add the 'enumerate_it' gem as a dependency in your environment.rb (Rails 2.3.x) or Gemfile (if you're using Bundler)
 #
 # = Why did you reinvent the wheel?
 #
 # There are other similar solutions to the problem out there, but I could not find one that
-# worked both with strings and integers as the enumerations' codes. I had both situations in 
-# my legacy database. 
+# worked both with strings and integers as the enumerations' codes. I had both situations in
+# my legacy database.
 #
 # = Why defining enumerations outside the class that used it?
 #
 # - I think it's cleaner.
 # - You can add behaviour to the enumeration class.
 # - You can reuse the enumeration inside other classes.
-# 
+#
 module EnumerateIt
   class Base
     @@registered_enumerations = {}
@@ -171,12 +171,38 @@ module EnumerateIt
     def self.associate_values(values_hash)
       register_enumeration normalize_enumeration(values_hash)
       values_hash.each_pair { |value_name, attributes| define_enumeration_constant value_name, attributes[0] }
-      define_enumeration_list values_hash
-    end 
+    end
+
+    def self.list
+      enumeration.values.map { |value| value[0] }.sort
+    end
+
+    def self.enumeration
+      @@registered_enumerations[self]
+    end
+
+    def self.to_a
+      enumeration.values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
+    end
+
+    def self.values_for(values)
+      values.map { |v| self.const_get(v.to_sym) }
+    end
+
+    def self.to_range
+      (list.min..list.max)
+    end
+
+    def self.translate(value)
+      return value unless value.is_a? Symbol
+
+      default = value.to_s.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
+      I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", :default => default)
+    end
 
     private
     def self.normalize_enumeration(values_hash)
-      values_hash.each_pair do |key, value| 
+      values_hash.each_pair do |key, value|
         unless value.is_a? Array
           values_hash[key] = [value, key]
         end
@@ -190,35 +216,6 @@ module EnumerateIt
 
     def self.define_enumeration_constant(name, value)
       const_set name.to_s.upcase, value
-    end
-
-    def self.define_enumeration_list(values_hash)
-      def self.list 
-        @@registered_enumerations[self].values.map { |value| translate(value[0]) }.sort
-      end
-
-      def self.enumeration
-        @@registered_enumerations[self]
-      end
-      
-      def self.to_a
-        @@registered_enumerations[self].values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
-      end
-
-      def self.to_range
-        (list.min..list.max)
-      end
-
-      def self.values_for(values)
-        values.map { |v| self.const_get(v.to_sym) }
-      end
-      
-      def self.translate(value)
-        return value unless value.is_a? Symbol
-      
-        default = value.to_s.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
-        I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", :default => default)
-      end
     end
   end
 
@@ -238,11 +235,11 @@ module EnumerateIt
       class_eval do
         define_method "#{attribute_name}_humanize" do
           values = klass.enumeration.values.detect { |v| v[0] == self.send(attribute_name) }
-          
+
           values ? klass.translate(values[1]) : nil
         end
       end
-    end    
+    end
 
     def create_helper_methods(klass, attribute_name)
       class_eval do
