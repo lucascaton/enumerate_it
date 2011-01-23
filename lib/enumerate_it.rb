@@ -174,7 +174,7 @@ module EnumerateIt
     end
 
     def self.list
-      enumeration.values.map { |value| translate(value[0]) }.sort
+      enumeration.values.map { |value| value[0] }.sort
     end
 
     def self.enumeration
