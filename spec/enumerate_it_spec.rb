@@ -161,6 +161,13 @@ describe EnumerateIt do
       end
     end
 
+    describe ".t" do
+      it "translates a given value" do
+        I18n.locale = :pt
+        TestEnumerationWithoutArray.t('1').should == 'Primeiro Valor'
+      end
+    end
+
     describe "#to_range" do
       it "returns a Range object containing the enumeration's value interval" do
         TestEnumeration.to_range.should == ("1".."3")

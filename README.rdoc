@@ -173,6 +173,10 @@ located on enumerations.'enumeration_name'.'key' :
   p.relationship_status = RelationshipStatus::DIVORCED
   p.relationship_status_humanize # => 'He's divorced' => uses the provided string 
 
+You can also translate specific values:
+
+  RelationshipStatis.t(1) # => 'Casado'
+
 == Installation
 
   gem install enumerate_it
