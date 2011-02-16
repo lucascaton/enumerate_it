@@ -120,6 +120,17 @@ This will create:
    p.married? #=> true
    p.divorced? #=> false
 
+* The :create_helpers also creates some mutator helper methods, that can be used to change the attribute's value.
+
+   class Person < ActiveRecord::Base
+     has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => true
+   end
+
+   p = Person.new
+   p.married!
+   p.married? #=> true
+   p.divorced? #=> false
+
 * If your class can manage validations and responds to :validates_inclusion_of, it will create this validation:
 
    class Person < ActiveRecord::Base
@@ -200,6 +211,19 @@ An interesting approach to use it in Rails apps is to create an app/models/enume
 == Ruby 1.9
 
 EnumerateIt is fully compatible with Ruby 1.9.1 and 1.9.2 (all tests pass)
+
+* Note: on ruby 1.9.2, if you are using the enumerations in a separate folder like app/models/enumerations, and have to use the :with parameter, you have to clear the enum class namespace to a global scope by using ::EnumClass instead of EnumClass:
+
+   # 1.8.7
+   class Person < ActiveRecord::Base
+     has_enumeration_for :relationship_status, :with => EnumClass
+   end
+
+   # 1.9.2
+   class Person < ActiveRecord::Base
+     has_enumeration_for :relationship_status, :with => ::EnumClass
+   end
+
 
 == Why did you reinvent the wheel?
 
