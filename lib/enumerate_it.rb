@@ -111,6 +111,9 @@
 #  p.relationship_status = RelationshipStatus::MARRIED
 #  p.relationship_status_humanize # => 'Married'
 #
+# - The associated enumerations can be retrieved with the 'enumerations' class method.
+#  Person.enumerations[:relationship_status] # => RelationshipStatus
+#
 # - If you pass the :create_helpers option as 'true', it will create a helper method for each enumeration
 #  option (this option defaults to false):
 #
@@ -229,13 +232,23 @@ module EnumerateIt
       define_enumeration_class attribute, options
       set_validations attribute, options
       create_enumeration_humanize_method options[:with], attribute
+      store_enumeration options[:with], attribute
       if options[:create_helpers]
-        create_helper_methods(options[:with], attribute) 
+        create_helper_methods(options[:with], attribute)
         create_mutator_methods(options[:with], attribute)
       end
     end
 
+    def enumerations
+      @@_enumerations ||= {}
+    end
+
     private
+
+    def store_enumeration(klass, attribute)
+      enumerations[attribute] = klass
+    end
+
     def create_enumeration_humanize_method(klass, attribute_name)
       class_eval do
         define_method "#{attribute_name}_humanize" do

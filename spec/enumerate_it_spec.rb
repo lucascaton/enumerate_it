@@ -54,6 +54,10 @@ describe EnumerateIt do
       @target.should_not respond_to(:value_1?)
     end
 
+    it "stores the enumeration class in a class-level hash" do
+      TestClass.enumerations[:foobar].should == TestEnumeration
+    end
+
     context "passing the value of each option without the human string (just the value, without an array)" do
       before :each do
         class TestClassForEnumerationWithoutArray
@@ -116,7 +120,7 @@ describe EnumerateIt do
     it "creates a mutator method for each enumeration value" do
       [:value_1, :value_2, :value_3].each do |value|
         TestClass.new(TestEnumeration::VALUE_1).should respond_to(:"#{value}!")
-      end 
+      end
     end
 
     it "changes the attribute's value through mutator methods" do

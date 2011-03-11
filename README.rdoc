@@ -6,41 +6,41 @@ Author: Cássio Marques - cassiommc at gmail
 
 Ok, I know there are a lot of different solutions to this problem. But none of them solved my problem,
 so here's EnumerateIt. I needed to build a Rails application around a legacy database and this database was
-filled with those small, unchangeable tables used to create foreign key constraints everywhere. 
+filled with those small, unchangeable tables used to create foreign key constraints everywhere.
 
 === For example:
 
-	 Table "public.relationshipstatus"
-	Column     |     Type      | Modifiers 
-	-------------+---------------+-----------
-	 code        | character(1)  | not null
-	 description | character(11) | 
-	Indexes:
-		"relationshipstatus_pkey" PRIMARY KEY, btree (code)
+   Table "public.relationshipstatus"
+  Column     |     Type      | Modifiers
+  -------------+---------------+-----------
+   code        | character(1)  | not null
+   description | character(11) |
+  Indexes:
+    "relationshipstatus_pkey" PRIMARY KEY, btree (code)
 
-	select * from relationshipstatus;
-	code   |  description  
-	-------+--------------
-	1      | Single   
-	2      | Married     
-	3      | Widow
-	4      | Divorced 
+  select * from relationshipstatus;
+  code   |  description
+  -------+--------------
+  1      | Single
+  2      | Married
+  3      | Widow
+  4      | Divorced
 
 
-And then I had things like a people table with a 'relationship_status' column with a foreign key 
+And then I had things like a people table with a 'relationship_status' column with a foreign key
 pointing to the relationshipstatus table.
 
 While this is a good thing from the database normalization perspective, managing this values in
-my tests was very hard. Doing database joins just to get the description of some value was absurd. 
-And, more than this, referencing them in my code using magic numbers was terrible and meaningless: 
+my tests was very hard. Doing database joins just to get the description of some value was absurd.
+And, more than this, referencing them in my code using magic numbers was terrible and meaningless:
 What does it mean when we say that someone or something is '2'?
 
 Enter EnumerateIt.
 
 == Creating enumerations
 
-Enumerations are created as models, but you can put then anywhere in your application. In Rails 
-applications, you can put them inside models/. 
+Enumerations are created as models, but you can put then anywhere in your application. In Rails
+applications, you can put them inside models/.
 
    class RelationshipStatus < EnumerateIt::Base
      associate_values(
@@ -66,7 +66,7 @@ This will create some nice stuff:
 
    RelationshipStatus.to_a # [["Divorced", 4],["Married", 2],["Single", 1],["Widow", 3]]
 
-* You can retrieve a list with values for a group of enumeration constants. 
+* You can retrieve a list with values for a group of enumeration constants.
 
    RelationshipStatus.values_for %w(MARRIED SINGLE) # [2, 1]
 
@@ -86,9 +86,9 @@ or not.
      has_enumeration_for :relationship_status, :with => RelationshipStatus
    end
 
-The :with option is not required. If you ommit it, EnumerateIt will try to load an enumeration class based on the camelized attribute name. 
+The :with option is not required. If you ommit it, EnumerateIt will try to load an enumeration class based on the camelized attribute name.
 
-This will create: 
+This will create:
 
 * A humanized description for the values of the enumerated attribute:
 
@@ -102,12 +102,15 @@ This will create:
      associate_values(
        :married => 1,
        :single => 2
-     ) 
+     )
    end
 
    p = Person.new
    p.relationship_status = RelationshipStatus::MARRIED
    p.relationship_status_humanize # => 'Married'
+
+* The associated enumerations can be retrieved with the 'enumerations' class method.
+  Person.enumerations[:relationship_status] # => RelationshipStatus
 
 * If you pass the :create_helpers option as 'true', it will create a helper method for each enumeration option (this option defaults to false):
 
@@ -152,7 +155,7 @@ This will create:
    p.errors[:relationship_status] # => "can't be blank"
 
 
-Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from 
+Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from
 ActiveRecord::Base.
 
 == I18n
@@ -173,16 +176,16 @@ located on enumerations.'enumeration_name'.'key' :
     enumerations:
       relationship_status:
         married: Casado
-  
+
   p = Person.new
   p.relationship_status = RelationshipStatus::MARRIED
-  p.relationship_status_humanize # => 'Casado' 
-  
+  p.relationship_status_humanize # => 'Casado'
+
   p.relationship_status = RelationshipStatus::SINGLE
-  p.relationship_status_humanize # => 'Single' => nonexistent key 
-  
+  p.relationship_status_humanize # => 'Single' => nonexistent key
+
   p.relationship_status = RelationshipStatus::DIVORCED
-  p.relationship_status_humanize # => 'He's divorced' => uses the provided string 
+  p.relationship_status_humanize # => 'He's divorced' => uses the provided string
 
 You can also translate specific values:
 
@@ -196,7 +199,7 @@ You can also translate specific values:
 
 * Create an initializer with the following code:
 
-  ActiveRecord::Base.send :include, EnumerateIt 
+  ActiveRecord::Base.send :include, EnumerateIt
 
 * Add the 'enumerate_it' gem as a dependency in your environment.rb (Rails 2.3.x) or Gemfile (if you're using Bundler)
 
@@ -228,8 +231,8 @@ EnumerateIt is fully compatible with Ruby 1.9.1 and 1.9.2 (all tests pass)
 == Why did you reinvent the wheel?
 
 There are other similar solutions to the problem out there, but I could not find one that
-worked both with strings and integers as the enumerations' codes. I had both situations in 
-my legacy database. 
+worked both with strings and integers as the enumerations' codes. I had both situations in
+my legacy database.
 
 == Why defining enumerations outside the class that use it?
 
@@ -238,7 +241,7 @@ my legacy database.
 * You can reuse the enumeration inside other classes.
 
 == Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a
