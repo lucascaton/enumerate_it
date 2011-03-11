@@ -110,6 +110,7 @@ This will create:
    p.relationship_status_humanize # => 'Married'
 
 * The associated enumerations can be retrieved with the 'enumerations' class method.
+
   Person.enumerations[:relationship_status] # => RelationshipStatus
 
 * If you pass the :create_helpers option as 'true', it will create a helper method for each enumeration option (this option defaults to false):
