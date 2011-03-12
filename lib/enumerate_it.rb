@@ -280,7 +280,7 @@ module EnumerateIt
     end
 
     def define_enumeration_class(attribute, options)
-      if options[:with].blank?
+      if options[:with].nil?
         options[:with] = attribute.to_s.camelize.constantize
       end
     end
