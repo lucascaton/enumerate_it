@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     enumerate_it (0.7.4)
+      activesupport (>= 2.3.2)
 
 GEM
   remote: http://rubygems.org/
