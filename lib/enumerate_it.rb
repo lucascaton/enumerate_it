@@ -285,12 +285,8 @@ module EnumerateIt
 
     def create_scopes(klass, attribute_name)
       klass.enumeration.keys.each do |option|
-        if defined?(Rails) 
-          if Rails.version >= "3.0.0"
-            scope option, where(attribute_name => klass.enumeration[option].first)
-          else
-            raise StandardError, "EnumerateIt cannot create scopes if Rails.version < 3.0.0"
-          end
+        if respond_to? :scope
+          scope option, where(attribute_name => klass.enumeration[option].first)
         end
       end
     end
