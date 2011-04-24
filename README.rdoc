@@ -145,16 +145,6 @@ This will create:
 
 NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0. 
 
-* If you pass the :create_scopes option as 'true', it will create a scope method for each enumeration option (this option defaults to false):
-
-  class Person < ActiveRecord::Base
-    has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_scopes => true
-  end
-
-  Person.married.to_sql # => SELECT "people".* FROM "people" WHERE "people"."relationship_status" = 1
-
-NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0. 
-
 * If your class can manage validations and responds to :validates_inclusion_of, it will create this validation:
 
    class Person < ActiveRecord::Base
