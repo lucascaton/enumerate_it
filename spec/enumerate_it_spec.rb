@@ -130,6 +130,58 @@ describe EnumerateIt do
     end
   end
 
+  describe "using the :create_scopes option" do
+    def setup_enumeration
+      TestClass.send(:has_enumeration_for, :foobar, :with => TestEnumeration, :create_scopes => true)
+    end
+
+    context "when using Rails" do
+      before { module Rails; end }
+
+      context "with version >= 3.0.0" do
+        before do
+          module Rails
+            def self.version; "3.0.0"; end
+          end
+
+          class TestClass
+            def self.where(whatever); end
+            def self.scope(name, whatever); end
+          end
+
+          setup_enumeration
+        end
+
+        it "creates a scope for each enumeration value" do
+          TestEnumeration.enumeration do |symbol, pair|
+            TestClass.should respond_to(symbol)
+          end
+        end
+
+        it "when called, the scopes create the correct query" do          
+          TestEnumeration.enumeration do |symbol, pair|
+            TestClass.should_receive(:where).with(:foobar => pair.firs)
+            TestClass.send symbol
+          end
+        end
+      end
+
+      context "with version < 3.0.0" do
+        before :each do
+          module Rails
+            def self.version; "2.3.9"; end
+          end
+        end
+
+        it "raises an error telling that scopes creation are ony supported for Rails >= 3.0.0" do
+          expect { 
+            setup_enumeration
+          }.to raise_error("EnumerateIt cannot create scopes if Rails.version < 3.0.0")
+        end        
+      end
+    end
+  end
+
   describe EnumerateIt::Base do
     it "creates constants for each enumeration value" do
       [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2, TestEnumeration::VALUE_3].each_with_index do |constant, idx|

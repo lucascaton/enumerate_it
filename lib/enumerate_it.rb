@@ -234,8 +234,12 @@ module EnumerateIt
       create_enumeration_humanize_method options[:with], attribute
       store_enumeration options[:with], attribute
       if options[:create_helpers]
-        create_helper_methods(options[:with], attribute)
-        create_mutator_methods(options[:with], attribute)
+        create_helper_methods options[:with], attribute
+        create_mutator_methods options[:with], attribute
+      end
+
+      if options[:create_scopes]
+        create_scopes options[:with], attribute
       end
     end
 
@@ -264,6 +268,18 @@ module EnumerateIt
         klass.enumeration.keys.each do |option|
           define_method "#{option}?" do
             self.send(attribute_name) == klass.enumeration[option].first
+          end
+        end
+      end
+    end
+
+    def create_scopes(klass, attribute_name)
+      klass.enumeration.keys.each do |option|
+        if defined?(Rails) 
+          if Rails.version >= "3.0.0"
+            scope option, where(attribute_name => klass.enumeration[option].first)
+          else
+            raise StandardError, "EnumerateIt cannot create scopes if Rails.version < 3.0.0"
           end
         end
       end
