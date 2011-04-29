@@ -254,7 +254,7 @@ module EnumerateIt
     end
 
     def enumerations
-      @@_enumerations ||= {}
+      @_enumerations ||= {}
     end
 
     private
