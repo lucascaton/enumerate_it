@@ -26,6 +26,12 @@ class TestEnumerationWithExtendedBehaviour < EnumerateIt::Base
   end
 end
 
+class Foobar < EnumerateIt::Base
+  associate_values(
+    :bar => 'foo'
+  )
+end
+
 describe EnumerateIt do
   before :each do
     class TestClass
@@ -56,6 +62,18 @@ describe EnumerateIt do
 
     it "stores the enumeration class in a class-level hash" do
       TestClass.enumerations[:foobar].should == TestEnumeration
+    end
+    context 'declaring a simple enum' do
+      before do
+        class SomeClass
+          include EnumerateIt
+          has_enumeration_for :foobar
+        end
+        @target = SomeClass.new
+      end
+      it 'should have use the corret class' do
+        @target.class.enumerations[:foobar].should == Foobar
+      end
     end
 
     context "passing the value of each option without the human string (just the value, without an array)" do
