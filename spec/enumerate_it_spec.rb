@@ -31,7 +31,10 @@ class Foobar < EnumerateIt::Base
     :bar => 'foo'
   )
 end
-
+class BaseClass
+  include EnumerateIt
+  has_enumeration_for :foobar, :with => TestEnumeration
+end
 describe EnumerateIt do
   before :each do
     class TestClass
@@ -63,15 +66,16 @@ describe EnumerateIt do
     it "stores the enumeration class in a class-level hash" do
       TestClass.enumerations[:foobar].should == TestEnumeration
     end
-    context 'declaring a simple enum' do
+    context 'declaring a simple enum on an inherited class' do
       before do
-        class SomeClass
-          include EnumerateIt
+        class SomeClass < BaseClass
           has_enumeration_for :foobar
         end
         @target = SomeClass.new
       end
       it 'should have use the corret class' do
+        @base = BaseClass.new
+        @base.class.enumerations[:foobar].should == TestEnumeration
         @target.class.enumerations[:foobar].should == Foobar
       end
     end
