@@ -173,7 +173,7 @@ describe EnumerateIt do
         end
       end
 
-      it "when called, the scopes create the correct query" do          
+      it "when called, the scopes create the correct query" do
         TestEnumeration.enumeration do |symbol, pair|
           TestClass.should_receive(:where).with(:foobar => pair.firs)
           TestClass.send symbol
@@ -276,6 +276,13 @@ describe EnumerateIt::Base do
         ActiveRecordStub.should_receive(:validates_presence_of)
         class ActiveRecordStub
           has_enumeration_for :bla, :with => TestEnumeration, :required => true
+        end
+      end
+
+      it "passes the given options to the validation method" do
+        ActiveRecordStub.should_receive(:validates_presence_of).with(:bla, :if => :some_method)
+        class ActiveRecordStub
+          has_enumeration_for :bla, :with => TestEnumeration, :required => { :if => :some_method }
         end
       end
 
