@@ -127,14 +127,14 @@
 #  p.divorced? #=> false
 #
 # - If you pass the :create_scopes option as 'true', it will create a scope method for each enumeration option (this option defaults to false):
-# 
+#
 #   class Person < ActiveRecord::Base
 #     has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_scopes => true
 #   end
-# 
+#
 #   Person.married.to_sql # => SELECT "people".* FROM "people" WHERE "people"."relationship_status" = 1
-# 
-# NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0. 
+#
+# NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0.
 #
 # - If your class can manage validations and responds to :validates_inclusion_of, it will create this
 # validation:
@@ -309,7 +309,11 @@ module EnumerateIt
 
     def set_validations(attribute, options)
       validates_inclusion_of(attribute, :in => options[:with].list, :allow_blank => true) if self.respond_to?(:validates_inclusion_of)
-      validates_presence_of(attribute) if options[:required] and self.respond_to?(:validates_presence_of)
+
+      if options[:required] && respond_to?(:validates_presence_of)
+        opts = options[:required].is_a?(Hash) ? options[:required] : {}
+        validates_presence_of(attribute, opts)
+      end
     end
   end
 
