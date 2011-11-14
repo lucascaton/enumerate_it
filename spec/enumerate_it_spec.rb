@@ -26,6 +26,10 @@ class TestEnumerationWithExtendedBehaviour < EnumerateIt::Base
   end
 end
 
+class TestEnumerationWithList < EnumerateIt::Base
+  associate_values :first, :second
+end
+
 class Foobar < EnumerateIt::Base
   associate_values(
     :bar => 'foo'
@@ -242,6 +246,17 @@ describe EnumerateIt::Base do
   describe ".values_for" do
     it "returns an array with the corresponding values for a string array representing some of the enumeration's values" do
       TestEnumeration.values_for(%w(VALUE_1 VALUE_2)).should == [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2]
+    end
+  end
+
+  context 'associate values with a list' do
+    it "creates constants for each enumeration value" do
+      TestEnumerationWithList::FIRST.should == "first"
+      TestEnumerationWithList::SECOND.should == "second"
+    end
+
+    it "returns an array with the values and human representations" do
+      TestEnumerationWithList.to_a.should == [['First', 'first'], ['Second', 'second']]
     end
   end
 

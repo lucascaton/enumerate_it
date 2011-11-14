@@ -181,7 +181,14 @@ module EnumerateIt
   class Base
     @@registered_enumerations = {}
 
-    def self.associate_values(values_hash)
+    def self.associate_values(*args)
+      if args.first.is_a?(Hash)
+        values_hash = args.first
+      else
+        values_hash = {}
+        args.map{|v| values_hash[v] = v.to_s }
+      end
+
       register_enumeration normalize_enumeration(values_hash)
       values_hash.each_pair { |value_name, attributes| define_enumeration_constant value_name, attributes[0] }
     end
