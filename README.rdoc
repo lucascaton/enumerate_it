@@ -74,7 +74,7 @@ This will create some nice stuff:
 
    RelationshipStatus.enumeration # returns the exact hash used to define the enumeration
 
-=== You can also create enumerations in the following ways:
+You can also create enumerations in the following ways:
 
 * Passing an array of symbols, so that the respective value for each symbol will be the stringified version of the symbol itself:
 
