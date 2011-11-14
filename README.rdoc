@@ -74,6 +74,23 @@ This will create some nice stuff:
 
    RelationshipStatus.enumeration # returns the exact hash used to define the enumeration
 
+=== You can also create enumerations in the following ways:
+
+* Passing an array of symbols, so that the respective value for each symbol will be the stringified version of the symbol itself:
+
+   class RelationshipStatus < EnumerateIt::Base
+     associate_values :married, :single
+   end
+
+   RelationshipStatus::MARRIED # returns "married" and so on
+
+* Passing hashes where the value for each key/pair does not include a translation. In this case, the I18n feature will be used (more on this below):
+
+   class RelationshipStatus < EnumerateIt::Base
+     associate_values :married => 1, :single => 2
+   end
+
+
 == Using enumerations
 
 The cool part is that you can use these enumerations with any class, be it an ActiveRecord instance

@@ -70,7 +70,7 @@
 #
 # RelationshipStatus.valus_for %w(MARRIED SINGLE) # [2, 1]
 #
-# - You can manipulate the has used to create the enumeration:
+# - You can manipulate the hash used to create the enumeration:
 #
 # RelationshipStatus.enumeration # returns the exact hash used to define the enumeration
 #

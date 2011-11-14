@@ -35,10 +35,12 @@ class Foobar < EnumerateIt::Base
     :bar => 'foo'
   )
 end
+
 class BaseClass
   include EnumerateIt
   has_enumeration_for :foobar, :with => TestEnumeration
 end
+
 describe EnumerateIt do
   before :each do
     class TestClass
@@ -70,6 +72,7 @@ describe EnumerateIt do
     it "stores the enumeration class in a class-level hash" do
       TestClass.enumerations[:foobar].should == TestEnumeration
     end
+
     context 'declaring a simple enum on an inherited class' do
       before do
         class SomeClass < BaseClass
@@ -108,7 +111,6 @@ describe EnumerateIt do
 
         @target.foobar_humanize.should == 'Primeiro Valor'
       end
-
     end
 
     context "without passing the enumeration class" do
