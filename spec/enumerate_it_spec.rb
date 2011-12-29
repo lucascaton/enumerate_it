@@ -284,6 +284,15 @@ describe EnumerateIt::Base do
       end
     end
 
+    context "using the :validations option" do
+      it "creates a validation for inclusion with allow_blank option" do
+        ActiveRecordStub.should_receive(:validates_inclusion_of).with(:bla, :in => TestEnumeration.list, :allow_blank => false)
+        class ActiveRecordStub
+          has_enumeration_for :bla, :with => TestEnumeration, :validations => { :allow_blank => false }
+        end
+      end
+    end
+
     context "using the :required option" do
       before :each do
         ActiveRecordStub.stub!(:validates_presence_of).and_return(true)

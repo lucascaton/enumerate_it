@@ -182,9 +182,15 @@ NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0.
    p.valid? # => false
    p.errors[:relationship_status] # => "can't be blank"
 
-
 Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from
 ActiveRecord::Base.
+
+* You can pass a :validations options in a hash, as such:
+
+   class Person < ActiveRecord::Base
+     has_enumeration_for :relationship_status, :validations => { :allow_blank => false }
+   end
+
 
 == I18n
 

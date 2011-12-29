@@ -173,6 +173,12 @@
 # Remember that in Rails 3 you can add validations to any kind of class and not only to those derived from
 # ActiveRecord::Base.
 #
+# - You can pass a :validations options in a hash, as such:
+#
+# class Person < ActiveRecord::Base
+#   has_enumeration_for :relationship_status, :validations => { :allow_blank => false }
+# end
+#
 # = Using with Rails/ActiveRecord
 #
 # * Create an initializer with the following code:
@@ -326,7 +332,11 @@ module EnumerateIt
     end
 
     def set_validations(attribute, options)
-      validates_inclusion_of(attribute, :in => options[:with].list, :allow_blank => true) if self.respond_to?(:validates_inclusion_of)
+      validations = options[:validations] || { :allow_blank => true }
+
+      if self.respond_to? :validates_inclusion_of
+        validates_inclusion_of attribute, :in => options[:with].list, :allow_blank => validations[:allow_blank]
+      end
 
       if options[:required] && respond_to?(:validates_presence_of)
         opts = options[:required].is_a?(Hash) ? options[:required] : {}
@@ -339,5 +349,3 @@ module EnumerateIt
     receiver.extend ClassMethods
   end
 end
-
-
