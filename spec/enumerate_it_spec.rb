@@ -251,6 +251,22 @@ describe EnumerateIt::Base do
     end
   end
 
+  describe "#value_for" do
+    it "returns the enumeration's value" do
+      TestEnumeration.value_for("VALUE_1").should == TestEnumeration::VALUE_1
+    end
+  end
+
+  describe "#key_for" do
+    it "return the representing value for enumeration" do
+      TestEnumeration.key_for(TestEnumeration::VALUE_1).should == :value_1
+    end
+
+    it "should return nil without enumeration" do
+      TestEnumeration.key_for("foo").should be_nil
+    end
+  end
+
   context 'associate values with a list' do
     it "creates constants for each enumeration value" do
       TestEnumerationWithList::FIRST.should == "first"
