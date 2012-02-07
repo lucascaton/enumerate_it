@@ -258,11 +258,11 @@ describe EnumerateIt::Base do
   end
 
   describe "#key_for" do
-    it "return the representing value for enumeration" do
+    it "returns the key for the given value inside the enumeration" do
       TestEnumeration.key_for(TestEnumeration::VALUE_1).should == :value_1
     end
 
-    it "should return nil without enumeration" do
+    it "returns nil if the enumeration does not have the given value" do
       TestEnumeration.key_for("foo").should be_nil
     end
   end
