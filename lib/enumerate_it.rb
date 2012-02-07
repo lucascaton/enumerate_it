@@ -225,6 +225,14 @@ module EnumerateIt
       values.map { |v| self.const_get(v.to_sym) }
     end
 
+    def self.value_for(value)
+      self.const_get(value.to_sym)
+    end
+
+    def self.key_for(value)
+      enumeration.map {|e| e[0] if e[1][0] == value }.compact.first
+    end
+
     def self.to_range
       (list.min..list.max)
     end
@@ -243,7 +251,6 @@ module EnumerateIt
           values_hash[key] = [value, key]
         end
       end
-      values_hash
     end
 
     def self.register_enumeration(values_hash)
