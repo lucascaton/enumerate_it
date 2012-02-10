@@ -68,7 +68,15 @@
 #
 # You can retrive a list with values for a group of enumeration constants
 #
-# RelationshipStatus.valus_for %w(MARRIED SINGLE) # [2, 1]
+# RelationshipStatus.values_for %w(MARRIED SINGLE) # [2, 1]
+#
+# You can retrieve the value for a specific enumeration constant:
+#
+# RelationshipStatus.value_for("MARRIED") # 2
+#
+# You can retrieve the symbol used to declare a specific enumeration value:
+#
+# RelationshipStatus.key_for(RelationshioStatus::MARRIED) # :married
 #
 # - You can manipulate the hash used to create the enumeration:
 #
