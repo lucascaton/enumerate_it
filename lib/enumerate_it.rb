@@ -319,7 +319,7 @@ module EnumerateIt
     def create_scopes(klass, attribute_name)
       klass.enumeration.keys.each do |option|
         if respond_to? :scope
-          scope option, {where(attribute_name => klass.enumeration[option].first)}
+          scope option, where(attribute_name => klass.enumeration[option].first)
         end
       end
     end
