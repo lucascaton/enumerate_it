@@ -225,7 +225,7 @@ located on enumerations.'enumeration_name'.'key' :
 
 You can also translate specific values:
 
-  RelationshipStatis.t(1) # => 'Casado'
+  RelationshipStatus.t(1) # => 'Casado'
 
 == Installation
 
