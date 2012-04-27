@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    enumerate_it (0.7.12)
+    enumerate_it (0.7.13)
       activesupport (>= 2.3.2)
 
 GEM
@@ -21,6 +21,7 @@ GEM
     builder (2.1.2)
     diff-lcs (1.1.2)
     i18n (0.5.0)
+    rake (0.9.2.2)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)
@@ -37,4 +38,5 @@ PLATFORMS
 DEPENDENCIES
   activerecord (>= 3.0.5)
   enumerate_it!
+  rake
   rspec (>= 2.5.0)
