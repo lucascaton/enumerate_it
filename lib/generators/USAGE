@@ -1,5 +1,5 @@
 Description:
-    Creating EnumerateIt class an locale file
+    Creates an EnumerateIt class an its locale file
 
 Example:
     rails g enumerate_it CivilStatus single married divorced widower concubinage separated stable
