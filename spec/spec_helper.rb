@@ -7,5 +7,6 @@ require 'rspec/autorun'
 require 'rubygems'
 require "active_support"
 require "active_support/core_ext/string/inflections"
+require 'active_support/core_ext/object/to_json'
 
 I18n.load_path = Dir['spec/i18n/*.yml']

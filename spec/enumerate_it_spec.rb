@@ -232,6 +232,18 @@ describe EnumerateIt::Base do
     end
   end
 
+  describe ".to_json" do
+    it "gives a valid json back" do
+      I18n.locale = :inexsistent
+      TestEnumerationWithoutArray.to_json.should == '[{"value":"1","label":"Value One"},{"value":"2","label":"Value Two"}]'
+    end
+
+    it "give translated values when available" do
+      I18n.locale = :pt
+      TestEnumerationWithoutArray.to_json.should == '[{"value":"1","label":"Primeiro Valor"},{"value":"2","label":"Value Two"}]'
+    end
+  end
+
   describe ".t" do
     it "translates a given value" do
       I18n.locale = :pt

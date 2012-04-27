@@ -224,6 +224,10 @@ module EnumerateIt
       enumeration.values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
     end
 
+    def self.to_json
+      enumeration.values.collect {|value| { value: value[0], label: translate(value[1]) } }.to_json
+    end
+
     def self.t(value)
       target = to_a.detect { |item| item[1] == value }
       target ? target[0] : value
@@ -319,7 +323,7 @@ module EnumerateIt
     def create_scopes(klass, attribute_name)
       klass.enumeration.keys.each do |option|
         if respond_to? :scope
-          scope option, where(attribute_name => klass.enumeration[option].first)
+          scope option, lambda { where(attribute_name => klass.enumeration[option].first)}
         end
       end
     end
