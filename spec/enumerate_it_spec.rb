@@ -240,7 +240,7 @@ describe EnumerateIt::Base do
 
     it "give translated values when available" do
       I18n.locale = :pt
-      TestEnumerationWithoutArray.to_json.should == '[{"value":"1","label":"Primeiro Valor"},{"value":"2","label":"Value Two"}]'
+      JSON.parse(TestEnumerationWithoutArray.to_json).should == JSON.parse('[{"value":"1","label":"Primeiro Valor"},{"value":"2","label":"Value Two"}]')
     end
   end
 
