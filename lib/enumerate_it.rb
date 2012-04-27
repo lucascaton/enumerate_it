@@ -225,7 +225,7 @@ module EnumerateIt
     end
 
     def self.to_json
-      enumeration.values.collect {|value| { value: value[0], label: translate(value[1]) } }.to_json
+      enumeration.values.collect {|value| { :value => value[0], :label => translate(value[1]) } }.to_json
     end
 
     def self.t(value)
