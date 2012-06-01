@@ -73,6 +73,20 @@ describe EnumerateIt do
       TestClass.enumerations[:foobar].should == TestEnumeration
     end
 
+    context 'use the same enumeration from an inherited class' do
+      before do
+        class SomeClass < BaseClass
+        end
+        @target = SomeClass.new
+      end
+
+      it 'should have use the correct class' do
+        @base = BaseClass.new
+        @base.class.enumerations[:foobar].should == TestEnumeration
+        @target.class.enumerations[:foobar].should == TestEnumeration
+      end
+    end
+
     context 'declaring a simple enum on an inherited class' do
       before do
         class SomeClass < BaseClass
