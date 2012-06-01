@@ -201,6 +201,8 @@
 # - You can add behaviour to the enumeration class.
 # - You can reuse the enumeration inside other classes.
 #
+
+require "active_support/core_ext/class/attribute"
 module EnumerateIt
   class Base
     @@registered_enumerations = {}
