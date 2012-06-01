@@ -276,6 +276,8 @@ module EnumerateIt
 
   module ClassMethods
     def has_enumeration_for(attribute, options = {})
+      self.enumerations = self.enumerations.dup
+
       define_enumeration_class attribute, options
       set_validations attribute, options
       create_enumeration_humanize_method options[:with], attribute
@@ -288,10 +290,6 @@ module EnumerateIt
       if options[:create_scopes]
         create_scopes options[:with], attribute
       end
-    end
-
-    def enumerations
-      @_enumerations ||= {}
     end
 
     private
@@ -355,6 +353,9 @@ module EnumerateIt
   end
 
   def self.included(receiver)
+    receiver.class_attribute :enumerations, :instance_writer => false, :instance_reader => false
+    receiver.enumerations = {}
+
     receiver.extend ClassMethods
   end
 end

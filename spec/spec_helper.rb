@@ -6,6 +6,7 @@ require 'rspec/autorun'
 
 require 'rubygems'
 require "active_support"
+require "active_support/core_ext/class/attribute"
 require "active_support/core_ext/string/inflections"
 require 'active_support/core_ext/object/to_json'
 
