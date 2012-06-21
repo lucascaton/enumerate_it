@@ -30,6 +30,16 @@ class TestEnumerationWithList < EnumerateIt::Base
   associate_values :first, :second
 end
 
+
+class TestEnumerationWithConsts < EnumerateIt::Base
+  FIRST     = 0
+  SECOND    = 1
+  THIRD     = 2
+
+  associate_values_with_consts
+end
+
+
 class Foobar < EnumerateIt::Base
   associate_values(
     :bar => 'foo'
@@ -303,6 +313,20 @@ describe EnumerateIt::Base do
       TestEnumerationWithList.to_a.should == [['First', 'first'], ['Second', 'second']]
     end
   end
+
+
+  context 'associate values with predefined constants' do
+    it "creates constants for each enumeration value" do
+      TestEnumerationWithConsts::FIRST.should == 0
+      TestEnumerationWithConsts::SECOND.should == 1
+      TestEnumerationWithConsts::THIRD.should == 2
+    end
+
+    it "returns an array with the values and human representations" do
+      TestEnumerationWithConsts.to_a.should == [['First', 0], ['Second', 1], ['Third', 2]]
+    end
+  end
+
 
   context "when included in ActiveRecord::Base" do
     before :each do

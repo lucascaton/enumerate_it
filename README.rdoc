@@ -98,6 +98,14 @@ You can also create enumerations in the following ways:
      associate_values :married => 1, :single => 2
    end
 
+* Defining value constants and calling 'associate_values_with_consts' method. If you use any IDE, this way of creating enumerations is preferable, because in this case IDE can parse defined constants and show them in code autocomplete. Example below does completely the same as previous one:
+
+   class RelationshipStatus < EnumerateIt::Base
+     MARRIED = 1
+     SINGLE  = 2
+
+     associate_values_with_consts
+   end
 
 == Using enumerations
 

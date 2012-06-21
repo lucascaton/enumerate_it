@@ -214,6 +214,15 @@ module EnumerateIt
       values_hash.each_pair { |value_name, attributes| define_enumeration_constant value_name, attributes[0] }
     end
 
+
+    def self.associate_values_with_consts
+      # Build hash from predefined constants
+      values = {}
+      constants.each{|const| values[const.downcase] = const_get(const)}
+      associate_values(values)
+    end
+
+
     def self.list
       enumeration.values.map { |value| value[0] }.sort
     end
@@ -272,7 +281,8 @@ module EnumerateIt
     end
 
     def self.define_enumeration_constant(name, value)
-      const_set name.to_s.upcase, value
+      const_name = name.to_s.upcase
+      const_set(const_name, value) unless const_defined?(const_name)
     end
   end
 
