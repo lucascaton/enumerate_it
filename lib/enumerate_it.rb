@@ -272,7 +272,8 @@ module EnumerateIt
     end
 
     def self.define_enumeration_constant(name, value)
-      const_set name.to_s.upcase, value
+      const_name = name.to_s.upcase
+      const_set(const_name, value) unless const_defined?(const_name)
     end
   end
 
