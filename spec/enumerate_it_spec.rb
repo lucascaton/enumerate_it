@@ -170,6 +170,31 @@ describe EnumerateIt do
       target.value_3!
       target.foobar.should == TestEnumeration::VALUE_3
     end
+
+    context "with :prefix option" do
+      before :each do
+        class TestClass
+          has_enumeration_for :foobar, :with => TestEnumeration, :create_helpers => true, :prefix => true
+        end
+      end
+
+      it "creates helpers methods with question marks and prefixes for each enumeration option" do
+        target = TestClass.new(TestEnumeration::VALUE_2)
+        target.should be_foobar_value_2
+      end
+
+      it "creates a mutator method for each enumeration value" do
+        [:value_1, :value_2, :value_3].each do |value|
+          TestClass.new(TestEnumeration::VALUE_1).should respond_to(:"foobar_#{value}!")
+        end
+      end
+
+      it "changes the attribute's value through mutator methods" do
+        target = TestClass.new(TestEnumeration::VALUE_2)
+        target.foobar_value_3!
+        target.foobar.should == TestEnumeration::VALUE_3
+      end
+    end
   end
 
   describe "using the :create_scopes option" do
