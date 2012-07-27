@@ -285,8 +285,8 @@ module EnumerateIt
       create_enumeration_humanize_method options[:with], attribute
       store_enumeration options[:with], attribute
       if options[:create_helpers]
-        create_helper_methods options[:with], attribute, options[:prefix]
-        create_mutator_methods options[:with], attribute, options[:prefix]
+        create_helper_methods options[:with], attribute, options[:create_helpers]
+        create_mutator_methods options[:with], attribute, options[:create_helpers]
       end
 
       if options[:create_scopes]
@@ -310,8 +310,8 @@ module EnumerateIt
       end
     end
 
-    def create_helper_methods(klass, attribute_name, prefix)
-      prefix_name = "#{attribute_name}_" if prefix
+    def create_helper_methods(klass, attribute_name, helpers)
+      prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
 
       class_eval do
         klass.enumeration.keys.each do |option|
@@ -330,8 +330,8 @@ module EnumerateIt
       end
     end
 
-    def create_mutator_methods(klass, attribute_name, prefix)
-      prefix_name = "#{attribute_name}_" if prefix
+    def create_mutator_methods(klass, attribute_name, helpers)
+      prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
 
       class_eval do
         klass.enumeration.each_pair do |key, values|

@@ -174,7 +174,7 @@ describe EnumerateIt do
     context "with :prefix option" do
       before :each do
         class TestClass
-          has_enumeration_for :foobar, :with => TestEnumeration, :create_helpers => true, :prefix => true
+          has_enumeration_for :foobar, :with => TestEnumeration, :create_helpers => { :prefix => true }
         end
       end
 
