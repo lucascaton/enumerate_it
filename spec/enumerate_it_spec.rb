@@ -230,6 +230,32 @@ describe EnumerateIt::Base do
     }
   end
 
+  describe ".length" do
+    it "returns the length of the enumeration" do
+      TestEnumeration.length.should == 3
+    end
+  end
+
+  describe ".each_translation" do
+    it "yields each enumeration's value translation" do
+      translations = []
+      TestEnumeration.each_translation do |translation|
+        translations << translation
+      end
+      translations.should == ["Hey, I am 1!", "Hey, I am 2!", "Hey, I am 3!"]
+    end
+  end
+
+  describe ".each_value" do
+    it "yields each enumeration's value" do
+      values = []
+      TestEnumeration.each_value do |value|
+        values << value
+      end
+      values.should == TestEnumeration.list
+    end
+  end
+
   describe ".to_a" do
     it "returns an array with the values and human representations" do
       TestEnumeration.to_a.should == [['Hey, I am 1!', '1'], ['Hey, I am 2!', '2'], ['Hey, I am 3!', '3']]
@@ -265,7 +291,7 @@ describe EnumerateIt::Base do
     end
   end
 
-  describe "#to_range" do
+  describe ".to_range" do
     it "returns a Range object containing the enumeration's value interval" do
       TestEnumeration.to_range.should == ("1".."3")
     end
@@ -277,13 +303,13 @@ describe EnumerateIt::Base do
     end
   end
 
-  describe "#value_for" do
+  describe ".value_for" do
     it "returns the enumeration's value" do
       TestEnumeration.value_for("VALUE_1").should == TestEnumeration::VALUE_1
     end
   end
 
-  describe "#key_for" do
+  describe ".key_for" do
     it "returns the key for the given value inside the enumeration" do
       TestEnumeration.key_for(TestEnumeration::VALUE_1).should == :value_1
     end

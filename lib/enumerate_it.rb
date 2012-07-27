@@ -74,6 +74,14 @@
 #
 # RelationshipStatus.value_for("MARRIED") # 2
 #
+# You can iterate over the list of the enumeration's values:
+#
+#   RelationshipStatus.each_value { |value| # ... }
+#
+# You can iterate over the list of the enumeration's translations: 
+#
+#   RelationshipStatus.each_translation { |translation| # ... }
+#
 # You can retrieve the symbol used to declare a specific enumeration value:
 #
 # RelationshipStatus.key_for(RelationshioStatus::MARRIED) # :married
@@ -224,6 +232,18 @@ module EnumerateIt
 
     def self.to_a
       enumeration.values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
+    end
+
+    def self.length
+      list.length
+    end
+
+    def self.each_translation
+      each_value { |value| yield t(value) }
+    end
+
+    def self.each_value
+      list.each { |value| yield value }
     end
 
     def self.to_json

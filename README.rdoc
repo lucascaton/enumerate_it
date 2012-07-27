@@ -78,6 +78,18 @@ This will create some nice stuff:
 
    RelationshipStatus.key_for(RelationshioStatus::MARRIED) # :married
 
+* You can iterate over the list of the enumeration's values:
+
+   RelationshipStatus.each_value { |value| # ... }
+
+* You can iterate over the list of the enumeration's translations: 
+
+   RelationshipStatus.each_translation { |translation| # ... }
+
+* You can ask for the enumeration's length:
+
+   RelationshipStatus.length # 4
+
 * You can manipulate the hash used to create the enumeration:
 
    RelationshipStatus.enumeration # returns the exact hash used to define the enumeration
