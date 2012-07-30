@@ -1,5 +1,7 @@
 = EnumerateIt - Ruby Enumerations
 
+{<img src="https://secure.travis-ci.org/cassiomarques/enumerate_it.png?branch=master" alt="Build Status" />}[http://travis-ci.org/cassiomarques/enumerate_it]
+
 Author: Cássio Marques - cassiommc at gmail
 
 == Description
