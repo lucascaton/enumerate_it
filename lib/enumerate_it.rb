@@ -158,6 +158,18 @@
 #  p.married? #=> true
 #  p.divorced? #=> false
 #
+# - It's also possible to "namespace" the created helper methods, passing a hash to the :create_helpers option. 
+#  This can be useful when two or more of the enumerations used share the same constants.
+#
+#  class Person < ActiveRecord::Base
+#    has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :prefix => true }
+#  end
+#
+#  p = Person.new
+#  p.relationship_status = RelationshipStatus::MARRIED
+#  p.relationship_status_married? #=> true
+#  p.relationship_status_divoced? #=> false
+#
 # - If you pass the :create_scopes option as 'true', it will create a scope method for each enumeration option (this option defaults to false):
 #
 #   class Person < ActiveRecord::Base
