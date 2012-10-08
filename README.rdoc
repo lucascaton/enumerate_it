@@ -133,7 +133,7 @@ This will create:
 
    p = Person.new
    p.relationship_status = RelationshipStatus::DIVORCED
-   p.relationsip_status_humanize # => 'Divorced'
+   p.relationship_status_humanize # => 'Divorced'
 
 * If you don't supply a humanized string to represent an option, EnumerateIt will use a 'humanized' version of the hash's key to humanize the attribute's value:
 
