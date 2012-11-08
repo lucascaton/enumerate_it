@@ -1,3 +1,3 @@
 module EnumerateIt
-  VERSION = "0.7.17"
+  VERSION = "1.0.0"
 end
