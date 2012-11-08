@@ -112,7 +112,7 @@
 # or not.
 #
 # class Person
-#   include EnumerateIt
+#   extend EnumerateIt
 #   attr_accessor :relationship_status
 #
 #   has_enumeration_for :relationship_status, :with => RelationshipStatus
@@ -205,7 +205,7 @@
 #
 # * Create an initializer with the following code:
 #
-# ActiveRecord::Base.send :include, EnumerateIt
+# ActiveRecord::Base.extend EnumerateIt
 #
 # * Add the 'enumerate_it' gem as a dependency in your environment.rb (Rails 2.3.x) or Gemfile (if you're using Bundler)
 #

@@ -39,6 +39,15 @@ What does it mean when we say that someone or something is '2'?
 
 Enter EnumerateIt.
 
+== Documentation
+
+http://rubydoc.info/gems/enumerate_it/1.0.0/frames
+
+== About versions compatibility
+
+Version 1.0.0 is NOT backwards compatible with 0.x.x versions. The biggest difference is that on 1.0.0 you need to `extend` the EnumerateIt
+module inside classes that are going to have enumerated attributes, while in past versions you would use `include`.
+
 == Creating enumerations
 
 Enumerations are created as models, but you can put then anywhere in your application. In Rails
@@ -84,7 +93,7 @@ This will create some nice stuff:
 
    RelationshipStatus.each_value { |value| # ... }
 
-* You can iterate over the list of the enumeration's translations: 
+* You can iterate over the list of the enumeration's translations:
 
    RelationshipStatus.each_translation { |translation| # ... }
 
@@ -119,7 +128,7 @@ The cool part is that you can use these enumerations with any class, be it an Ac
 or not.
 
    class Person
-     include EnumerateIt
+     extend EnumerateIt
      attr_accessor :relationship_status
 
      has_enumeration_for :relationship_status, :with => RelationshipStatus
@@ -163,7 +172,7 @@ This will create:
    p.married? #=> true
    p.divorced? #=> false
 
-* It's also possible to "namespace" the created helper methods, passing a hash to the :create_helpers option. 
+* It's also possible to "namespace" the created helper methods, passing a hash to the :create_helpers option.
   This can be useful when two or more of the enumerations used share the same constants.
 
   class Person < ActiveRecord::Base
@@ -194,7 +203,7 @@ This will create:
 
    Person.married.to_sql # => SELECT "people".* FROM "people" WHERE "people"."relationship_status" = 1
 
-NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0. 
+NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0.
 
 * If your class can manage validations and responds to :validates_inclusion_of, it will create this validation:
 
@@ -261,7 +270,7 @@ You can also translate specific values:
 
 * Create an initializer with the following code:
 
-  ActiveRecord::Base.send :include, EnumerateIt
+  ActiveRecord::Base.extend EnumerateIt
 
 * Add the 'enumerate_it' gem as a dependency in your environment.rb (Rails 2.3.x) or Gemfile (if you're using Bundler)
 
@@ -273,7 +282,7 @@ An interesting approach to use it in Rails apps is to create an app/enumerations
     end
   end
 
-There is also a Rails Generator that you can use to generate enumerations and their locale files. Take a look at how to use it running 
+There is also a Rails Generator that you can use to generate enumerations and their locale files. Take a look at how to use it running
 
   rails generate enumerate_it --help
 
