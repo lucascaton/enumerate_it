@@ -78,7 +78,7 @@
 #
 #   RelationshipStatus.each_value { |value| # ... }
 #
-# You can iterate over the list of the enumeration's translations: 
+# You can iterate over the list of the enumeration's translations:
 #
 #   RelationshipStatus.each_translation { |translation| # ... }
 #
@@ -91,17 +91,17 @@
 # RelationshipStatus.enumeration # returns the exact hash used to define the enumeration
 #
 # You can also create enumerations in the following ways:
-# 
+#
 # * Passing an array of symbols, so that the respective value for each symbol will be the stringified version of the symbol itself:
-# 
+#
 #    class RelationshipStatus < EnumerateIt::Base
 #      associate_values :married, :single
 #    end
-# 
+#
 #    RelationshipStatus::MARRIED # returns "married" and so on
-# 
+#
 # * Passing hashes where the value for each key/pair does not include a translation. In this case, the I18n feature will be used (more on this below):
-# 
+#
 #    class RelationshipStatus < EnumerateIt::Base
 #      associate_values :married => 1, :single => 2
 #    end
@@ -158,7 +158,7 @@
 #  p.married? #=> true
 #  p.divorced? #=> false
 #
-# - It's also possible to "namespace" the created helper methods, passing a hash to the :create_helpers option. 
+# - It's also possible to "namespace" the created helper methods, passing a hash to the :create_helpers option.
 #  This can be useful when two or more of the enumerations used share the same constants.
 #
 #  class Person < ActiveRecord::Base
@@ -223,173 +223,11 @@
 #
 
 require "active_support/core_ext/class/attribute"
+require "enumerate_it/base"
+require "enumerate_it/class_methods"
+
 module EnumerateIt
-  class Base
-    @@registered_enumerations = {}
-
-    def self.associate_values(*args)
-      values_hash = args.first.is_a?(Hash) ? args.first : args.inject({}) { |h, v| h[v] = v.to_s; h }
-
-      register_enumeration normalize_enumeration(values_hash)
-      values_hash.each_pair { |value_name, attributes| define_enumeration_constant value_name, attributes[0] }
-    end
-
-    def self.list
-      enumeration.values.map { |value| value[0] }.sort
-    end
-
-    def self.enumeration
-      @@registered_enumerations[self]
-    end
-
-    def self.to_a
-      enumeration.values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
-    end
-
-    def self.length
-      list.length
-    end
-
-    def self.each_translation
-      each_value { |value| yield t(value) }
-    end
-
-    def self.each_value
-      list.each { |value| yield value }
-    end
-
-    def self.to_json
-      enumeration.values.collect {|value| { :value => value[0], :label => translate(value[1]) } }.to_json
-    end
-
-    def self.t(value)
-      target = to_a.detect { |item| item[1] == value }
-      target ? target[0] : value
-    end
-
-    def self.values_for(values)
-      values.map { |v| self.const_get(v.to_sym) }
-    end
-
-    def self.value_for(value)
-      self.const_get(value.to_sym)
-    end
-
-    def self.key_for(value)
-      enumeration.map {|e| e[0] if e[1][0] == value }.compact.first
-    end
-
-    def self.to_range
-      (list.min..list.max)
-    end
-
-    private
-    def self.translate(value)
-      return value unless value.is_a? Symbol
-
-      default = value.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
-      I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", :default => default)
-    end
-
-    def self.normalize_enumeration(values_hash)
-      values_hash.each_pair do |key, value|
-        unless value.is_a? Array
-          values_hash[key] = [value, key]
-        end
-      end
-    end
-
-    def self.register_enumeration(values_hash)
-      @@registered_enumerations[self] = values_hash
-    end
-
-    def self.define_enumeration_constant(name, value)
-      const_set name.to_s.upcase, value
-    end
-  end
-
-  module ClassMethods
-    def has_enumeration_for(attribute, options = {})
-      self.enumerations = self.enumerations.dup
-
-      define_enumeration_class attribute, options
-      set_validations attribute, options
-      create_enumeration_humanize_method options[:with], attribute
-      store_enumeration options[:with], attribute
-      if options[:create_helpers]
-        create_helper_methods options[:with], attribute, options[:create_helpers]
-        create_mutator_methods options[:with], attribute, options[:create_helpers]
-      end
-
-      if options[:create_scopes]
-        create_scopes options[:with], attribute
-      end
-    end
-
-    private
-    def store_enumeration(klass, attribute)
-      enumerations[attribute] = klass
-    end
-
-    def create_enumeration_humanize_method(klass, attribute_name)
-      class_eval do
-        define_method "#{attribute_name}_humanize" do
-          values = klass.enumeration.values.detect { |v| v[0] == self.send(attribute_name) }
-
-          values ? klass.translate(values[1]) : nil
-        end
-      end
-    end
-
-    def create_helper_methods(klass, attribute_name, helpers)
-      prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
-
-      class_eval do
-        klass.enumeration.keys.each do |option|
-          define_method "#{prefix_name}#{option}?" do
-            self.send(attribute_name) == klass.enumeration[option].first
-          end
-        end
-      end
-    end
-
-    def create_scopes(klass, attribute_name)
-      klass.enumeration.keys.each do |option|
-        if respond_to? :scope
-          scope option, lambda { where(attribute_name => klass.enumeration[option].first)}
-        end
-      end
-    end
-
-    def create_mutator_methods(klass, attribute_name, helpers)
-      prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
-
-      class_eval do
-        klass.enumeration.each_pair do |key, values|
-          define_method "#{prefix_name}#{key}!" do
-            self.send "#{attribute_name}=", values.first
-          end
-        end
-      end
-    end
-
-    def define_enumeration_class(attribute, options)
-      if options[:with].nil?
-        options[:with] = attribute.to_s.camelize.constantize
-      end
-    end
-
-    def set_validations(attribute, options)
-      validates_inclusion_of(attribute, :in => options[:with].list, :allow_blank => true) if self.respond_to?(:validates_inclusion_of)
-
-      if options[:required] && respond_to?(:validates_presence_of)
-        opts = options[:required].is_a?(Hash) ? options[:required] : {}
-        validates_presence_of(attribute, opts)
-      end
-    end
-  end
-
-  def self.included(receiver)
+  def self.extended(receiver)
     receiver.class_attribute :enumerations, :instance_writer => false, :instance_reader => false
     receiver.enumerations = {}
 

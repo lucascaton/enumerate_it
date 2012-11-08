@@ -37,14 +37,14 @@ class Foobar < EnumerateIt::Base
 end
 
 class BaseClass
-  include EnumerateIt
+  extend EnumerateIt
   has_enumeration_for :foobar, :with => TestEnumeration
 end
 
 describe EnumerateIt do
   before :each do
     class TestClass
-      include EnumerateIt
+      extend EnumerateIt
       attr_accessor :foobar
       has_enumeration_for :foobar, :with => TestEnumeration
 
@@ -104,7 +104,7 @@ describe EnumerateIt do
     context "passing the value of each option without the human string (just the value, without an array)" do
       before :each do
         class TestClassForEnumerationWithoutArray
-          include EnumerateIt
+          extend EnumerateIt
           attr_accessor :foobar
           has_enumeration_for :foobar, :with => TestEnumerationWithoutArray
 
@@ -130,7 +130,7 @@ describe EnumerateIt do
     context "without passing the enumeration class" do
       before :each do
         class FooBar
-          include EnumerateIt
+          extend EnumerateIt
           attr_accessor :test_enumeration
           has_enumeration_for :test_enumeration
           def initialize(test_enumeration_value)
@@ -367,7 +367,7 @@ describe EnumerateIt::Base do
       end
 
       ActiveRecordStub.stub!(:validates_inclusion_of).and_return(true)
-      ActiveRecordStub.send :include, EnumerateIt
+      ActiveRecordStub.extend EnumerateIt
     end
 
     it "creates a validation for inclusion" do
