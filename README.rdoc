@@ -39,10 +39,6 @@ What does it mean when we say that someone or something is '2'?
 
 Enter EnumerateIt.
 
-== Documentation
-
-http://rubydoc.info/gems/enumerate_it/1.0.0/frames
-
 == About versions compatibility
 
 Versions 1.x.x are NOT backwards compatible with 0.x.x versions. The biggest difference is that on 1.0.0 you need to `extend` the EnumerateIt
