@@ -264,11 +264,13 @@ You can also translate specific values:
 
 == Using with Rails
 
-* Create an initializer with the following code:
+* Add the gem to your Gemfile:
 
-  ActiveRecord::Base.extend EnumerateIt
+  gem "enumerate_it"
 
-* Add the 'enumerate_it' gem as a dependency in your environment.rb (Rails 2.3.x) or Gemfile (if you're using Bundler)
+* Run the install generator:
+
+  rails g enumerate_it:install
 
 An interesting approach to use it in Rails apps is to create an app/enumerations folder and add it to your autoload path in config/application.rb:
 

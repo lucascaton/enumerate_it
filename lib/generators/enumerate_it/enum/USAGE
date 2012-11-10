@@ -2,7 +2,7 @@ Description:
     Creates an EnumerateIt class an its locale file
 
 Example:
-    rails g enumerate_it CivilStatus single married divorced widower concubinage separated stable
+    rails g enumerate_it:enum CivilStatus single married divorced widower concubinage separated stable
 
     This will create:
         app/enumerations/civil_status.rb with `associate_values :single, :married, :divorced, :widower, :concubinage, :separated, :stable`
