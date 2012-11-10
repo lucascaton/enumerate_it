@@ -9,7 +9,7 @@ module EnumerateIt
 
       class_option :lang, :type => 'string', :desc => 'Lang to use in i18n', :default => 'en'
 
-      desc "Creates an initializer file on config/initializers that extends ActiveRecord::Base with Enumerate_it"
+      desc "Creates a locale file on config/locales"
       def create_locale
         template "locale.yml", File.join('config/locales', "#{singular_name}.yml")
       end
