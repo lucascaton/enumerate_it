@@ -1,5 +1,6 @@
 #encoding: utf-8
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'active_record'
 
 class TestEnumeration < EnumerateIt::Base
   associate_values(
@@ -199,29 +200,28 @@ describe EnumerateIt do
 
   describe "using the :create_scopes option" do
     def setup_enumeration
-      TestClass.send(:has_enumeration_for, :foobar, :with => TestEnumeration, :create_scopes => true)
+      OtherTestClass.send(:has_enumeration_for, :foobar, :with => TestEnumeration, :create_scopes => true)
     end
 
     context "if the hosting class responds to :scope" do
       before do
-        class TestClass
-          def self.where(whatever); end
-          def self.scope(name, whatever); end
+        class OtherTestClass < ActiveRecord::Base
+          extend EnumerateIt
         end
 
         setup_enumeration
       end
 
       it "creates a scope for each enumeration value" do
-        TestEnumeration.enumeration do |symbol, pair|
-          TestClass.should respond_to(symbol)
+        TestEnumeration.enumeration.keys.each do |symbol|
+          OtherTestClass.should respond_to(symbol)
         end
       end
 
       it "when called, the scopes create the correct query" do
-        TestEnumeration.enumeration do |symbol, pair|
-          TestClass.should_receive(:where).with(:foobar => pair.firs)
-          TestClass.send symbol
+        TestEnumeration.enumeration.each do |symbol, pair|
+          OtherTestClass.should_receive(:where).with(:foobar => pair.first)
+          OtherTestClass.send symbol
         end
       end
     end
