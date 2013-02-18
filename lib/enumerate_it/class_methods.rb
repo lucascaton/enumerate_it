@@ -8,6 +8,7 @@ module EnumerateIt
       set_validations attribute, options
       create_enumeration_humanize_method options[:with], attribute
       store_enumeration options[:with], attribute
+
       if options[:create_helpers]
         create_helper_methods options[:with], attribute, options[:create_helpers]
         create_mutator_methods options[:with], attribute, options[:create_helpers]

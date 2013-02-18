@@ -334,6 +334,12 @@ describe EnumerateIt::Base do
     end
   end
 
+  describe ".keys" do
+    it "returns a list with the keys used to define the enumeration" do
+      TestEnumeration.keys.should == [:value_1, :value_2, :value_3]
+    end
+  end
+
   describe ".key_for" do
     it "returns the key for the given value inside the enumeration" do
       TestEnumeration.key_for(TestEnumeration::VALUE_1).should == :value_1

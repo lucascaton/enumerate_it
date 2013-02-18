@@ -51,6 +51,10 @@ module EnumerateIt
       self.const_get(value.to_sym)
     end
 
+    def self.keys
+      enumeration.keys
+    end
+
     def self.key_for(value)
       enumeration.map {|e| e[0] if e[1][0] == value }.compact.first
     end
