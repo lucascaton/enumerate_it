@@ -133,7 +133,9 @@ describe EnumerateIt do
         class FooBar
           extend EnumerateIt
           attr_accessor :test_enumeration
+
           has_enumeration_for :test_enumeration
+
           def initialize(test_enumeration_value)
             @test_enumeration = test_enumeration_value
           end
@@ -143,6 +145,34 @@ describe EnumerateIt do
       it "should find out which enumeration class to use" do
         target = FooBar.new(TestEnumeration::VALUE_1)
         target.test_enumeration_humanize.should == 'Hey, I am 1!'
+      end
+
+      context "when using a nested class as the enumeration" do
+        before do
+          class NestedEnum < EnumerateIt::Base
+            associate_values :foo => ['1', 'Fooo'], :bar => ['2', 'Barrrr']
+          end
+
+          class ClassWithNestedEnum
+            class NestedEnum < EnumerateIt::Base
+              associate_values :foo => ['1', 'Blerrgh'], :bar => ['2' => 'Blarghhh']
+            end
+
+            extend EnumerateIt
+
+            attr_accessor :nested_enum
+
+            has_enumeration_for :nested_enum
+
+            def initialize(nested_enum_value)
+              @nested_enum = nested_enum_value
+            end
+          end
+        end
+
+        it "uses the inner class as the enumeration class" do
+          target = ClassWithNestedEnum.new('1').nested_enum_humanize.should == 'Blerrgh'
+        end
       end
     end
   end

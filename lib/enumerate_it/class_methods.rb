@@ -68,7 +68,8 @@ module EnumerateIt
 
     def define_enumeration_class(attribute, options)
       if options[:with].nil?
-        options[:with] = attribute.to_s.camelize.constantize
+        inner_enum_class_name = attribute.to_s.camelize.to_sym
+        options[:with] = self.constants.include?(inner_enum_class_name) ? self.const_get(inner_enum_class_name) : attribute.to_s.camelize.constantize
       end
     end
 
