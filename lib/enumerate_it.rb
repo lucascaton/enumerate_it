@@ -225,6 +225,7 @@
 require "active_support/core_ext/class/attribute"
 require "enumerate_it/base"
 require "enumerate_it/class_methods"
+require "matchers/include"
 
 module EnumerateIt
   def self.extended(receiver)

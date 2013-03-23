@@ -284,6 +284,27 @@ There is also a Rails Generator that you can use to generate enumerations and th
 
   rails generate enumerate_it --help
 
+== Custom Matchers
+
+  EnumerateIt matchers
+    class Job < EnumerateIt::Base
+    associate_values one: 'um'
+  end
+
+   class SomeClientEnumeration
+     extend EnumerateIt
+     has_enumeration_for :job
+     has_enumeration_for :last, with: Job
+   end
+
+   describe SomeClientEnumeration do
+     it { should has_enumeration_for :job }
+     it { should has_enumeration_for :last, Job }
+   end
+
+   should has enumerate it the job
+   should has enumerate it the last with Job
+
 == Why did you reinvent the wheel?
 
 There are other similar solutions to the problem out there, but I could not find one that
