@@ -8,7 +8,7 @@ Example:
         app/enumerations/civil_status.rb with `associate_values :single, :married, :divorced, :widower, :concubinage, :separated, :stable`
         config/locales/civil_status.yml
 
-    rails g enumerate_it CivilStatus single:1 married:2 divorced:3 widower:4
+    rails g enumerate_it:enum CivilStatus single:1 married:2 divorced:3 widower:4
 
     This will create:
         app/enumerations/civil_status.rb with `associate_values :single => 1, :married => 2, :divorced => 2, :widower => 4`

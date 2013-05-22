@@ -282,7 +282,7 @@ An interesting approach to use it in Rails apps is to create an app/enumerations
 
 There is also a Rails Generator that you can use to generate enumerations and their locale files. Take a look at how to use it running
 
-  rails generate enumerate_it --help
+  rails generate enumerate_it:enum --help
 
 == Why did you reinvent the wheel?
 
