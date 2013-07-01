@@ -19,7 +19,7 @@ module EnumerateIt
     end
 
     def self.list
-      sorted_map.map { |k, v| v[0] }
+      enumeration.values.map { |value| value[0] }.sort
     end
 
     def self.enumeration
@@ -60,7 +60,7 @@ module EnumerateIt
     end
 
     def self.keys
-      sorted_map.map { |k, v| k }
+      enumeration.keys
     end
 
     def self.key_for(value)
