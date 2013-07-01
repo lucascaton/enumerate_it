@@ -38,3 +38,15 @@ class BaseClass
   has_enumeration_for :foobar, :with => TestEnumeration
 end
 
+def create_enumeration_class_with_sort_mode(sort_mode)
+  Class.new(EnumerateIt::Base) do
+    sort_by sort_mode
+
+    associate_values(
+      :foo  => ["1", "xyz"],
+      :bar  => ["2", "fgh"],
+      :zomg => ["3", "abc"]
+    )
+  end
+end
+

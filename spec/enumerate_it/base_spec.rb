@@ -126,6 +126,28 @@ describe EnumerateIt::Base do
     end
   end
 
+  context "specifying a default sort mode" do
+    subject { create_enumeration_class_with_sort_mode(sort_mode).to_a }
+
+    context "by value" do
+      let(:sort_mode) { :value }
+
+      it { should == [["xyz", "1"], ["fgh", "2"], ["abc", "3"]] }
+    end
+
+    context "by name" do
+      let(:sort_mode) { :name }
+
+      it { should == [["fgh", "2"], ["xyz", "1"], ["abc", "3"]] }
+    end
+
+    context "by translation" do
+      let(:sort_mode) { :translation }
+
+      it { should == [["abc", "3"] ,["fgh", "2"], ["xyz", "1"]] }
+    end
+  end
+
   context "when included in ActiveRecord::Base" do
     before :each do
       class ActiveRecordStub

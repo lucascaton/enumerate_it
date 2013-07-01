@@ -3,6 +3,10 @@ module EnumerateIt
   class Base
     @@registered_enumerations = {}
 
+    class << self
+      attr_reader :sort_mode
+    end
+
     def self.associate_values(*args)
       values_hash = args.first.is_a?(Hash) ? args.first : args.inject({}) { |h, v| h[v] = v.to_s; h }
 
@@ -10,8 +14,12 @@ module EnumerateIt
       values_hash.each_pair { |value_name, attributes| define_enumeration_constant value_name, attributes[0] }
     end
 
+    def self.sort_by(sort_mode)
+      @sort_mode = sort_mode
+    end
+
     def self.list
-      enumeration.values.map { |value| value[0] }.sort
+      sorted_map.map { |k, v| v[0] }
     end
 
     def self.enumeration
@@ -19,7 +27,7 @@ module EnumerateIt
     end
 
     def self.to_a
-      enumeration.values.map {|value| [translate(value[1]), value[0]] }.sort_by { |value| value[0] }
+      sorted_map.map { |k, v| [translate(v[1]), v[0]] }
     end
 
     def self.length
@@ -35,7 +43,7 @@ module EnumerateIt
     end
 
     def self.to_json
-      enumeration.values.collect {|value| { :value => value[0], :label => translate(value[1]) } }.to_json
+      sorted_map.map { |k, v| { :value => v[0], :label => translate(v[1]) } }.to_json
     end
 
     def self.t(value)
@@ -52,7 +60,7 @@ module EnumerateIt
     end
 
     def self.keys
-      enumeration.keys
+      sorted_map.map { |k, v| k }
     end
 
     def self.key_for(value)
@@ -64,6 +72,19 @@ module EnumerateIt
     end
 
     private
+
+    def self.sorted_map
+      enumeration.sort_by { |k, v| sort_lambda.call(k, v) }
+    end
+
+    def self.sort_lambda
+      {
+        :value       => lambda { |k, v| v[0] },
+        :name        => lambda { |k, v| k },
+        :translation => lambda { |k, v| translate(v[1]) }
+      }[sort_mode || :translation]
+    end
+
     def self.translate(value)
       return value unless value.is_a? Symbol
 
