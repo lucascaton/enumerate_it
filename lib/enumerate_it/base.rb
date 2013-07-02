@@ -81,7 +81,8 @@ module EnumerateIt
       {
         :value       => lambda { |k, v| v[0] },
         :name        => lambda { |k, v| k },
-        :translation => lambda { |k, v| translate(v[1]) }
+        :translation => lambda { |k, v| translate(v[1]) },
+        :none        => lambda { |k, v| nil }
       }[sort_mode || :translation]
     end
 

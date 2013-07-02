@@ -132,19 +132,25 @@ describe EnumerateIt::Base do
     context "by value" do
       let(:sort_mode) { :value }
 
-      it { should == [["xyz", "1"], ["fgh", "2"], ["abc", "3"]] }
+      it { should == [["jkl", "0"], ["xyz", "1"], ["fgh", "2"], ["abc", "3"]] }
     end
 
     context "by name" do
       let(:sort_mode) { :name }
 
-      it { should == [["fgh", "2"], ["xyz", "1"], ["abc", "3"]] }
+      it { should == [["fgh", "2"], ["xyz", "1"], ["abc", "3"], ["jkl", "0"]] }
     end
 
     context "by translation" do
       let(:sort_mode) { :translation }
 
-      it { should == [["abc", "3"] ,["fgh", "2"], ["xyz", "1"]] }
+      it { should == [["abc", "3"] ,["fgh", "2"], ["jkl", "0"], ["xyz", "1"]] }
+    end
+
+    context "by nothing" do
+      let(:sort_mode) { :none }
+
+      it { should == [["xyz", "1"], ["fgh", "2"], ["abc", "3"], ["jkl", "0"] ] }
     end
   end
 

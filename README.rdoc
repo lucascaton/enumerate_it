@@ -133,6 +133,7 @@ The `sort_by` methods accept one of the following values:
 * `:translation`: The default behavior, will sort the returned values based on translations.
 * `:value`: Will sort the returned values based on values.
 * `:name`: Will sort the returned values based on the name of each enumeration option.
+* `:none`: Will return values in order that was passed to associate_values call.
 
 == Using enumerations
 

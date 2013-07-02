@@ -45,7 +45,8 @@ def create_enumeration_class_with_sort_mode(sort_mode)
     associate_values(
       :foo  => ["1", "xyz"],
       :bar  => ["2", "fgh"],
-      :zomg => ["3", "abc"]
+      :omg => ["3", "abc"],
+      :zomg => ["0", "jkl"]
     )
   end
 end
