@@ -83,7 +83,7 @@ This will create some nice stuff:
 
 * You can retrieve the symbol used to declare a specific enumeration value:
 
-   RelationshipStatus.key_for(RelationshioStatus::MARRIED) # :married
+   RelationshipStatus.key_for(RelationshipStatus::MARRIED) # :married
 
 * You can iterate over the list of the enumeration's values:
 
