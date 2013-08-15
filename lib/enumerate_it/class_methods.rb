@@ -68,6 +68,8 @@ module EnumerateIt
     end
 
     def create_polymorphic_methods(klass, attribute_name, helpers)
+      return unless helpers.is_a?(Hash) && helpers[:polymorphic]
+
       class_eval do
         define_method "#{attribute_name}_object" do
           value = self.public_send(attribute_name)
