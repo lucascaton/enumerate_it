@@ -33,6 +33,22 @@ class Foobar < EnumerateIt::Base
   )
 end
 
+class PolymorphicEnum < EnumerateIt::Base
+  associate_values :normal, :crazy
+
+  class Normal
+    def print(msg)
+      "I'm Normal: #{msg}"
+    end
+  end
+
+  class Crazy
+    def print(msg)
+      "Whoa!: #{msg}"
+    end
+  end
+end
+
 class BaseClass
   extend EnumerateIt
   has_enumeration_for :foobar, :with => TestEnumeration
