@@ -12,6 +12,7 @@ module EnumerateIt
       if options[:create_helpers]
         create_helper_methods options[:with], attribute, options[:create_helpers]
         create_mutator_methods options[:with], attribute, options[:create_helpers]
+        create_polymorphic_methods options[:with], attribute, options[:create_helpers]
       end
 
       if options[:create_scopes]
@@ -62,6 +63,21 @@ module EnumerateIt
           define_method "#{prefix_name}#{key}!" do
             self.send "#{attribute_name}=", values.first
           end
+        end
+      end
+    end
+
+    def create_polymorphic_methods(klass, attribute_name, helpers)
+      return unless helpers.is_a?(Hash) && helpers[:polymorphic]
+      options = helpers[:polymorphic]
+      suffix = options.is_a?(Hash) && options[:suffix]
+      suffix ||= "_object"
+
+      class_eval do
+        define_method "#{attribute_name}#{suffix}" do
+          value = self.public_send(attribute_name)
+
+          klass.const_get(klass.key_for(value).to_s.camelize).new if value
         end
       end
     end
