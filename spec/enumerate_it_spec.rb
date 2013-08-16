@@ -211,6 +211,25 @@ describe EnumerateIt do
 
         target.foo_object.should be_nil
       end
+
+      context "and :suffix" do
+        before :each do
+          class Polymorphic
+            has_enumeration_for :foo, :with => PolymorphicEnum, :create_helpers => { :polymorphic => { :suffix => "_strategy" } }
+          end
+        end
+
+        it "calls methods on the enum constants' objects" do
+          target = Polymorphic.new
+          target.foo = PolymorphicEnum::NORMAL
+
+          target.foo_strategy.print("Gol").should == "I'm Normal: Gol"
+
+          target.foo = PolymorphicEnum::CRAZY
+
+          target.foo_strategy.print("Gol").should == "Whoa!: Gol"
+        end
+      end
     end
   end
 

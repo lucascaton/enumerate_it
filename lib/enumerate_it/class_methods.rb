@@ -69,9 +69,12 @@ module EnumerateIt
 
     def create_polymorphic_methods(klass, attribute_name, helpers)
       return unless helpers.is_a?(Hash) && helpers[:polymorphic]
+      options = helpers[:polymorphic]
+      suffix = options.is_a?(Hash) && options[:suffix]
+      suffix ||= "_object"
 
       class_eval do
-        define_method "#{attribute_name}_object" do
+        define_method "#{attribute_name}#{suffix}" do
           value = self.public_send(attribute_name)
 
           klass.const_get(klass.key_for(value).to_s.camelize).new if value
