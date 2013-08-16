@@ -170,6 +170,44 @@
 #  p.relationship_status_married? #=> true
 #  p.relationship_status_divoced? #=> false
 #
+# - You can define polymorphic behavior for the enum values, so you can define a class for each of
+# them:
+#
+# class RelationshipStatus < EnumerateIt::Base
+#   associate_values :married, :single
+#
+#   class Married
+#     def saturday_night
+#       "At home with the kids"
+#     end
+#   end
+#
+#   class Single
+#     def saturday_night
+#       "Party Hard!"
+#     end
+#   end
+# end
+#
+#  class Person < ActiveRecord::Base
+#    has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => true }
+#  end
+#
+#  p = Person.new
+#  p.relationship_status = RelationshipStatus::MARRIED
+#  p.relationship_status_object.saturday_night # => "At home with the kids"
+#
+#  p.relationship_status = RelationshipStatus::SINGLE
+#  p.relationship_status_object.saturday_night # => "Party Hard!"
+#
+# You can also change the suffix '_object', using the :suffix option:
+#
+#  class Person < ActiveRecord::Base
+#    has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => { :suffix => "_mode" } }
+#  end
+#
+#  p.relationship_status_mode.saturday_night
+#
 # - If you pass the :create_scopes option as 'true', it will create a scope method for each enumeration option (this option defaults to false):
 #
 #   class Person < ActiveRecord::Base
