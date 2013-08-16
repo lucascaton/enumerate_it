@@ -206,7 +206,7 @@ describe EnumerateIt do
         target.foo_object.print("Gol").should == "Whoa!: Gol"
       end
 
-      it "returns new if foo is not set" do
+      it "returns nil if foo is not set" do
         target = Polymorphic.new
 
         target.foo_object.should be_nil
