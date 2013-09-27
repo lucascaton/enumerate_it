@@ -55,68 +55,90 @@ you would use `include`.
 Enumerations are created as models, but you can put then anywhere in your
 application. In Rails applications, you can put them inside models/.
 
-    class RelationshipStatus < EnumerateIt::Base
-      associate_values(
-        :single   => [1, 'Single'],
-        :married  => [2, 'Married'],
-        :widow    => [3, 'Widow'],
-        :divorced => [4, 'Divorced']
-      )
-    end
+``` ruby
+class RelationshipStatus < EnumerateIt::Base
+  associate_values(
+    :single   => [1, 'Single'],
+    :married  => [2, 'Married'],
+    :widow    => [3, 'Widow'],
+    :divorced => [4, 'Divorced']
+  )
+end
+```
 
 This will create some nice stuff:
 
 *   Each enumeration's value will turn into a constant:
 
-        RelationshipStatus::SINGLE
-        #=> 1
+    ``` ruby
+    RelationshipStatus::SINGLE
+    #=> 1
 
-        RelationshipStatus::MARRIED
-        #=> 2
+    RelationshipStatus::MARRIED
+    #=> 2
+    ```
 
 *   You can retrieve a list with all the enumeration codes:
 
-        RelationshipStatus.list
-        #=> [1, 2, 3, 4]
+    ``` ruby
+    RelationshipStatus.list
+    #=> [1, 2, 3, 4]
+    ```
 
 *   You can get an array of options, ready to use with the 'select',
     'select_tag', etc family of Rails helpers.
 
-        RelationshipStatus.to_a
-        #=> [["Divorced", 4], ["Married", 2], ["Single", 1], ["Widow", 3]]
+    ``` ruby
+    RelationshipStatus.to_a
+    #=> [["Divorced", 4], ["Married", 2], ["Single", 1], ["Widow", 3]]
+    ```
 
 *   You can retrieve a list with values for a group of enumeration constants.
 
-        RelationshipStatus.values_for %w(MARRIED SINGLE)
-        #=> [2, 1]
+    ``` ruby
+    RelationshipStatus.values_for %w(MARRIED SINGLE)
+    #=> [2, 1]
+    ```
 
 *   You can retrieve the value for a specific enumeration constant:
 
-        RelationshipStatus.value_for("MARRIED")
-        #=> 2
+    ``` ruby
+    RelationshipStatus.value_for("MARRIED")
+    #=> 2
+    ```
 
 *   You can retrieve the symbol used to declare a specific enumeration value:
 
-        RelationshipStatus.key_for(RelationshipStatus::MARRIED)
-        #=> :married
+    ``` ruby
+    RelationshipStatus.key_for(RelationshipStatus::MARRIED)
+    #=> :married
+    ```
 
 *   You can iterate over the list of the enumeration's values:
 
-        RelationshipStatus.each_value { |value| ... }
+    ``` ruby
+    RelationshipStatus.each_value { |value| ... }
+    ```
 
 *   You can iterate over the list of the enumeration's translations:
 
-        RelationshipStatus.each_translation { |translation| ... }
+    ``` ruby
+    RelationshipStatus.each_translation { |translation| ... }
+    ```
 
 *   You can ask for the enumeration's length:
 
-        RelationshipStatus.length
-        #=> 4
+    ``` ruby
+    RelationshipStatus.length
+    #=> 4
+    ```
 
 *   You can manipulate the hash used to create the enumeration:
 
-        RelationshipStatus.enumeration
-        #=> returns the exact hash used to define the enumeration
+    ``` ruby
+    RelationshipStatus.enumeration
+    #=> returns the exact hash used to define the enumeration
+    ```
 
 
 You can also create enumerations in the following ways:
@@ -124,20 +146,24 @@ You can also create enumerations in the following ways:
 *   Passing an array of symbols, so that the respective value for each symbol
     will be the stringified version of the symbol itself:
 
-        class RelationshipStatus < EnumerateIt::Base
-          associate_values :married, :single
-        end
+    ``` ruby
+    class RelationshipStatus < EnumerateIt::Base
+      associate_values :married, :single
+    end
 
-        RelationshipStatus::MARRIED
-        #=> "married"
+    RelationshipStatus::MARRIED
+    #=> "married"
+    ```
 
 *   Passing hashes where the value for each key/pair does not include a
     translation. In this case, the I18n feature will be used (more on this
     below):
 
-        class RelationshipStatus < EnumerateIt::Base
-          associate_values :married => 1, :single => 2
-        end
+    ``` ruby
+    class RelationshipStatus < EnumerateIt::Base
+      associate_values :married => 1, :single => 2
+    end
+    ```
 
 
 ### Defining a default sort mode
@@ -147,11 +173,13 @@ sorted using the translation for each one of the enumeration values. If you
 want to overwrite the default sort mode, you can use the `sort_mode` class
 method.
 
-    class RelationshipStatus < EnumerateIt::Base
-      associate_values :married => 1, :single => 2
+``` ruby
+class RelationshipStatus < EnumerateIt::Base
+  associate_values :married => 1, :single => 2
 
-      sort_by :value
-    end
+  sort_by :value
+end
+```
 
 The `sort_by` methods accept one of the following values:
 
@@ -169,12 +197,14 @@ The `sort_by` methods accept one of the following values:
 The cool part is that you can use these enumerations with any class, be it an
 ActiveRecord instance or not.
 
-    class Person
-      extend EnumerateIt
-      attr_accessor :relationship_status
+``` ruby
+class Person
+  extend EnumerateIt
+  attr_accessor :relationship_status
 
-      has_enumeration_for :relationship_status, :with => RelationshipStatus
-    end
+  has_enumeration_for :relationship_status, :with => RelationshipStatus
+end
+```
 
 The :with option is not required. If you ommit it, EnumerateIt will try to
 load an enumeration class based on the camelized attribute name.
@@ -183,131 +213,149 @@ This will create:
 
 *   A humanized description for the values of the enumerated attribute:
 
-        p = Person.new
-        p.relationship_status = RelationshipStatus::DIVORCED
-        p.relationship_status_humanize
-        #=> 'Divorced'
+    ``` ruby
+    p = Person.new
+    p.relationship_status = RelationshipStatus::DIVORCED
+    p.relationship_status_humanize
+    #=> 'Divorced'
+    ```
 
 *   If you don't supply a humanized string to represent an option, EnumerateIt
     will use a 'humanized' version of the hash's key to humanize the
     attribute's value:
 
-        class RelationshipStatus < EnumerateIt::Base
-          associate_values(
-            :married => 1,
-            :single => 2
-          )
-        end
+    ``` ruby
+    class RelationshipStatus < EnumerateIt::Base
+      associate_values(
+        :married => 1,
+        :single => 2
+      )
+    end
 
-        p = Person.new
-        p.relationship_status = RelationshipStatus::MARRIED
-        p.relationship_status_humanize
-        #=> 'Married'
+    p = Person.new
+    p.relationship_status = RelationshipStatus::MARRIED
+    p.relationship_status_humanize
+    #=> 'Married'
+    ```
 
 *   The associated enumerations can be retrieved with the 'enumerations' class
     method.
 
-        Person.enumerations[:relationship_status]
-        #=> RelationshipStatus
+    ``` ruby
+    Person.enumerations[:relationship_status]
+    #=> RelationshipStatus
+    ```
 
 *   If you pass the :create_helpers option as 'true', it will create a helper
     method for each enumeration option (this option defaults to false):
 
-        class Person < ActiveRecord::Base
-          has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => true
-        end
+    ``` ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => true
+    end
 
-        p = Person.new
-        p.relationship_status = RelationshipStatus::MARRIED
+    p = Person.new
+    p.relationship_status = RelationshipStatus::MARRIED
 
-        p.married?
-        #=> true
+    p.married?
+    #=> true
 
-        p.divorced?
-        #=> false
+    p.divorced?
+    #=> false
+    ```
 
 *   It's also possible to "namespace" the created helper methods, passing a
     hash to the :create_helpers option. This can be useful when two or more of
     the enumerations used share the same constants.
 
-        class Person < ActiveRecord::Base
-          has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :prefix => true }
-        end
+    ``` ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :prefix => true }
+    end
 
-        p = Person.new
-        p.relationship_status = RelationshipStatus::MARRIED
+    p = Person.new
+    p.relationship_status = RelationshipStatus::MARRIED
 
-        p.relationship_status_married?
-        #=> true
+    p.relationship_status_married?
+    #=> true
 
-        p.relationship_status_divoced?
-        #=> false
+    p.relationship_status_divoced?
+    #=> false
+    ```
 
 *   You can define polymorphic behavior for the enum values, so you can define
     a class for each of them:
 
-        class RelationshipStatus < EnumerateIt::Base
-          associate_values :married, :single
+    ``` ruby
+    class RelationshipStatus < EnumerateIt::Base
+      associate_values :married, :single
 
-          class Married
-            def saturday_night
-              "At home with the kids"
-            end
-          end
-
-          class Single
-            def saturday_night
-              "Party Hard!"
-            end
-          end
+      class Married
+        def saturday_night
+          "At home with the kids"
         end
+      end
 
-        class Person < ActiveRecord::Base
-          has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => true }
+      class Single
+        def saturday_night
+          "Party Hard!"
         end
+      end
+    end
 
-        p = Person.new
-        p.relationship_status = RelationshipStatus::MARRIED
-        p.relationship_status_object.saturday_night
-        #=> "At home with the kids"
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => true }
+    end
 
-        p.relationship_status = RelationshipStatus::SINGLE
-        p.relationship_status_object.saturday_night
-        #=> "Party Hard!"
+    p = Person.new
+    p.relationship_status = RelationshipStatus::MARRIED
+    p.relationship_status_object.saturday_night
+    #=> "At home with the kids"
 
-     You can also change the suffix '_object', using the :suffix option:
+    p.relationship_status = RelationshipStatus::SINGLE
+    p.relationship_status_object.saturday_night
+    #=> "Party Hard!"
+    ```
 
-        class Person < ActiveRecord::Base
-          has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => { :suffix => "_mode" } }
-        end
+    You can also change the suffix '_object', using the :suffix option:
 
-        p.relationship_status_mode.saturday_night
+    ``` ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => { :suffix => "_mode" } }
+    end
+
+    p.relationship_status_mode.saturday_night
+    ```
 
 *   The :create_helpers also creates some mutator helper methods, that can be
     used to change the attribute's value.
 
-        class Person < ActiveRecord::Base
-          has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => true
-        end
+    ``` ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => true
+    end
 
-        p = Person.new
-        p.married!
+    p = Person.new
+    p.married!
 
-        p.married?
-        #=> true
+    p.married?
+    #=> true
 
-        p.divorced?
-        #=> false
+    p.divorced?
+    #=> false
+    ```
 
 *   If you pass the :create_scopes option as 'true', it will create a scope
     method for each enumeration option (this option defaults to false):
 
-        class Person < ActiveRecord::Base
-          has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_scopes => true
-        end
+    ``` ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_scopes => true
+    end
 
-        Person.married.to_sql
-        #=> SELECT "people".* FROM "people" WHERE "people"."relationship_status" = 1
+    Person.married.to_sql
+    #=> SELECT "people".* FROM "people" WHERE "people"."relationship_status" = 1
+    ```
 
 
 NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0.
@@ -315,29 +363,33 @@ NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0.
 *   If your class can manage validations and responds to
     :validates_inclusion_of, it will create this validation:
 
-        class Person < ActiveRecord::Base
-          has_enumeration_for :relationship_status, :with => RelationshipStatus
-        end
+    ``` ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, :with => RelationshipStatus
+    end
 
-        p = Person.new(:relationship_status => 6) # there is no '6' value in the enumeration
-        p.valid?
-        #=> false
-        p.errors[:relationship_status]
-        #=> "is not included in the list"
+    p = Person.new(:relationship_status => 6) # there is no '6' value in the enumeration
+    p.valid?
+    #=> false
+    p.errors[:relationship_status]
+    #=> "is not included in the list"
+    ```
 
 *   If your class can manage validations and responds to
     :validates_presence_of, you can pass the :required options as true and
     this validation will be created for you (this option defaults to false):
 
-        class Person < ActiveRecord::Base
-          has_enumeration_for :relationship_status, :required => true
-        end
+    ``` ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, :required => true
+    end
 
-        p = Person.new :relationship_status => nil
-        p.valid?
-        #=> false
-        p.errors[:relationship_status]
-        #=> "can't be blank"
+    p = Person.new :relationship_status => nil
+    p.valid?
+    #=> false
+    p.errors[:relationship_status]
+    #=> "can't be blank"
+    ```
 
 
 Remember that in Rails 3 you can add validations to any kind of class and not
@@ -349,67 +401,83 @@ I18n lookup is provided on both '_humanized' and 'Enumeration#to_a' methods,
 given the hash key is a Symbol. The I18n strings are located on
 enumerations.'enumeration_name'.'key' :
 
-    class RelationshipStatus < EnumerateIt::Base
-      associate_values(
-        :married => 1,
-        :single => 2,
-        :divorced => [3, 'He's divorced']
-      )
-    end
+``` yaml
+# your locale file
+pt:
+  enumerations:
+    relationship_status:
+      married: Casado
+```
 
-    # your locale file
-    pt:
-      enumerations:
-        relationship_status:
-          married: Casado
+``` ruby
+class RelationshipStatus < EnumerateIt::Base
+  associate_values(
+    :married => 1,
+    :single => 2,
+    :divorced => [3, "He's divorced"]
+  )
+end
 
-    p = Person.new
-    p.relationship_status = RelationshipStatus::MARRIED
-    p.relationship_status_humanize
-    #=> 'Casado'
+p = Person.new
+p.relationship_status = RelationshipStatus::MARRIED
+p.relationship_status_humanize
+#=> 'Casado'
 
-    p.relationship_status = RelationshipStatus::SINGLE
-    p.relationship_status_humanize # nonexistent key
-    #=> 'Single'
+p.relationship_status = RelationshipStatus::SINGLE
+p.relationship_status_humanize # nonexistent key
+#=> 'Single'
 
-    p.relationship_status = RelationshipStatus::DIVORCED
-    p.relationship_status_humanize # uses the provided string
-    #=> 'He's divorced'
+p.relationship_status = RelationshipStatus::DIVORCED
+p.relationship_status_humanize # uses the provided string
+#=> 'He's divorced'
+```
 
 You can also translate specific values:
 
-    RelationshipStatus.t(1)
-    #=> 'Casado'
+``` ruby
+RelationshipStatus.t(1)
+#=> 'Casado'
+```
 
 ## Installation
 
-    gem install enumerate_it
+``` bash
+gem install enumerate_it
+```
 
 ## Using with Rails
 
 *   Add the gem to your Gemfile:
 
-        gem "enumerate_it"
+    ``` ruby
+    gem "enumerate_it"
+    ```
 
 *   Run the install generator:
 
-        rails g enumerate_it:install
+    ``` bash
+    rails generate enumerate_it:install
+    ```
 
 
 An interesting approach to use it in Rails apps is to create an
 app/enumerations folder and add it to your autoload path in
 config/application.rb:
 
-    module YourApp
-      class Application < Rails::Application
-        config.autoload_paths << "#{Rails.root}/app/enumerations"
-      end
-    end
+``` ruby
+module YourApp
+  class Application < Rails::Application
+    config.autoload_paths << "#{Rails.root}/app/enumerations"
+  end
+end
+```
 
 There is also a Rails Generator that you can use to generate enumerations and
 their locale files. Take a look at how to use it running
 
-    rails generate enumerate_it:enum --help
+``` bash
+rails generate enumerate_it:enum --help
+```
 
 ## Why did you reinvent the wheel?
 
