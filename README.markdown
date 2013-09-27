@@ -68,45 +68,55 @@ This will create some nice stuff:
 
 *   Each enumeration's value will turn into a constant:
 
-        RelationshipStatus::SINGLE # returns 1
-        RelationshipStatus::MARRIED # returns 2 and so on...
+        RelationshipStatus::SINGLE
+        #=> 1
+
+        RelationshipStatus::MARRIED
+        #=> 2
 
 *   You can retrieve a list with all the enumeration codes:
 
-        RelationshipStatus.list # [1,2,3,4]
+        RelationshipStatus.list
+        #=> [1, 2, 3, 4]
 
 *   You can get an array of options, ready to use with the 'select',
     'select_tag', etc family of Rails helpers.
 
-        RelationshipStatus.to_a # [["Divorced", 4],["Married", 2],["Single", 1],["Widow", 3]]
+        RelationshipStatus.to_a
+        #=> [["Divorced", 4], ["Married", 2], ["Single", 1], ["Widow", 3]]
 
 *   You can retrieve a list with values for a group of enumeration constants.
 
-        RelationshipStatus.values_for %w(MARRIED SINGLE) # [2, 1]
+        RelationshipStatus.values_for %w(MARRIED SINGLE)
+        #=> [2, 1]
 
 *   You can retrieve the value for a specific enumeration constant:
 
-        RelationshipStatus.value_for("MARRIED") # 2
+        RelationshipStatus.value_for("MARRIED")
+        #=> 2
 
 *   You can retrieve the symbol used to declare a specific enumeration value:
 
-        RelationshipStatus.key_for(RelationshipStatus::MARRIED) # :married
+        RelationshipStatus.key_for(RelationshipStatus::MARRIED)
+        #=> :married
 
 *   You can iterate over the list of the enumeration's values:
 
-        RelationshipStatus.each_value { |value| # ... }
+        RelationshipStatus.each_value { |value| ... }
 
 *   You can iterate over the list of the enumeration's translations:
 
-        RelationshipStatus.each_translation { |translation| # ... }
+        RelationshipStatus.each_translation { |translation| ... }
 
 *   You can ask for the enumeration's length:
 
-        RelationshipStatus.length # 4
+        RelationshipStatus.length
+        #=> 4
 
 *   You can manipulate the hash used to create the enumeration:
 
-        RelationshipStatus.enumeration # returns the exact hash used to define the enumeration
+        RelationshipStatus.enumeration
+        #=> returns the exact hash used to define the enumeration
 
 
 You can also create enumerations in the following ways:
@@ -118,7 +128,8 @@ You can also create enumerations in the following ways:
           associate_values :married, :single
         end
 
-        RelationshipStatus::MARRIED # returns "married" and so on
+        RelationshipStatus::MARRIED
+        #=> "married"
 
 *   Passing hashes where the value for each key/pair does not include a
     translation. In this case, the I18n feature will be used (more on this
@@ -174,7 +185,8 @@ This will create:
 
         p = Person.new
         p.relationship_status = RelationshipStatus::DIVORCED
-        p.relationship_status_humanize # => 'Divorced'
+        p.relationship_status_humanize
+        #=> 'Divorced'
 
 *   If you don't supply a humanized string to represent an option, EnumerateIt
     will use a 'humanized' version of the hash's key to humanize the
@@ -189,12 +201,14 @@ This will create:
 
         p = Person.new
         p.relationship_status = RelationshipStatus::MARRIED
-        p.relationship_status_humanize # => 'Married'
+        p.relationship_status_humanize
+        #=> 'Married'
 
 *   The associated enumerations can be retrieved with the 'enumerations' class
     method.
 
-        Person.enumerations[:relationship_status] # => RelationshipStatus
+        Person.enumerations[:relationship_status]
+        #=> RelationshipStatus
 
 *   If you pass the :create_helpers option as 'true', it will create a helper
     method for each enumeration option (this option defaults to false):
@@ -205,8 +219,12 @@ This will create:
 
         p = Person.new
         p.relationship_status = RelationshipStatus::MARRIED
-        p.married? #=> true
-        p.divorced? #=> false
+
+        p.married?
+        #=> true
+
+        p.divorced?
+        #=> false
 
 *   It's also possible to "namespace" the created helper methods, passing a
     hash to the :create_helpers option. This can be useful when two or more of
@@ -216,9 +234,14 @@ This will create:
           has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :prefix => true }
         end
 
-        p = Person.new p.relationship_status = RelationshipStatus::MARRIED
-        p.relationship_status_married? #=> true
-        p.relationship_status_divoced? #=> false
+        p = Person.new
+        p.relationship_status = RelationshipStatus::MARRIED
+
+        p.relationship_status_married?
+        #=> true
+
+        p.relationship_status_divoced?
+        #=> false
 
 *   You can define polymorphic behavior for the enum values, so you can define
     a class for each of them:
@@ -245,10 +268,12 @@ This will create:
 
         p = Person.new
         p.relationship_status = RelationshipStatus::MARRIED
-        p.relationship_status_object.saturday_night # => "At home with the kids"
+        p.relationship_status_object.saturday_night
+        #=> "At home with the kids"
 
         p.relationship_status = RelationshipStatus::SINGLE
-        p.relationship_status_object.saturday_night # => "Party Hard!"
+        p.relationship_status_object.saturday_night
+        #=> "Party Hard!"
 
      You can also change the suffix '_object', using the :suffix option:
 
@@ -267,8 +292,12 @@ This will create:
 
         p = Person.new
         p.married!
-        p.married? #=> true
-        p.divorced? #=> false
+
+        p.married?
+        #=> true
+
+        p.divorced?
+        #=> false
 
 *   If you pass the :create_scopes option as 'true', it will create a scope
     method for each enumeration option (this option defaults to false):
@@ -277,7 +306,8 @@ This will create:
           has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_scopes => true
         end
 
-        Person.married.to_sql # => SELECT "people".* FROM "people" WHERE "people"."relationship_status" = 1
+        Person.married.to_sql
+        #=> SELECT "people".* FROM "people" WHERE "people"."relationship_status" = 1
 
 
 NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0.
@@ -289,9 +319,11 @@ NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0.
           has_enumeration_for :relationship_status, :with => RelationshipStatus
         end
 
-        p = Person.new :relationship_status => 6 # => there is no '6' value in the enumeration
-        p.valid? # => false
-        p.errors[:relationship_status] # => "is not included in the list"
+        p = Person.new(:relationship_status => 6) # there is no '6' value in the enumeration
+        p.valid?
+        #=> false
+        p.errors[:relationship_status]
+        #=> "is not included in the list"
 
 *   If your class can manage validations and responds to
     :validates_presence_of, you can pass the :required options as true and
@@ -302,8 +334,10 @@ NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0.
         end
 
         p = Person.new :relationship_status => nil
-        p.valid? # => false
-        p.errors[:relationship_status] # => "can't be blank"
+        p.valid?
+        #=> false
+        p.errors[:relationship_status]
+        #=> "can't be blank"
 
 
 Remember that in Rails 3 you can add validations to any kind of class and not
@@ -331,17 +365,21 @@ enumerations.'enumeration_name'.'key' :
 
     p = Person.new
     p.relationship_status = RelationshipStatus::MARRIED
-    p.relationship_status_humanize # => 'Casado'
+    p.relationship_status_humanize
+    #=> 'Casado'
 
     p.relationship_status = RelationshipStatus::SINGLE
-    p.relationship_status_humanize # => 'Single' => nonexistent key
+    p.relationship_status_humanize # nonexistent key
+    #=> 'Single'
 
     p.relationship_status = RelationshipStatus::DIVORCED
-    p.relationship_status_humanize # => 'He's divorced' => uses the provided string
+    p.relationship_status_humanize # uses the provided string
+    #=> 'He's divorced'
 
 You can also translate specific values:
 
-    RelationshipStatus.t(1) # => 'Casado'
+    RelationshipStatus.t(1)
+    #=> 'Casado'
 
 ## Installation
 
@@ -351,11 +389,11 @@ You can also translate specific values:
 
 *   Add the gem to your Gemfile:
 
-    gem "enumerate_it"
+        gem "enumerate_it"
 
 *   Run the install generator:
 
-    rails g enumerate_it:install
+        rails g enumerate_it:install
 
 
 An interesting approach to use it in Rails apps is to create an
