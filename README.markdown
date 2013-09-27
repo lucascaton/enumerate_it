@@ -212,53 +212,51 @@ This will create:
     hash to the :create_helpers option. This can be useful when two or more of
     the enumerations used share the same constants.
 
-    class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :prefix => true }
-    end
+        class Person < ActiveRecord::Base
+          has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :prefix => true }
+        end
 
-    p = Person.new p.relationship_status = RelationshipStatus::MARRIED
-    p.relationship_status_married? #=> true p.relationship_status_divoced? #=>
-    false
+        p = Person.new p.relationship_status = RelationshipStatus::MARRIED
+        p.relationship_status_married? #=> true
+        p.relationship_status_divoced? #=> false
 
 *   You can define polymorphic behavior for the enum values, so you can define
-    a class for each of
+    a class for each of them:
 
-    them:
+        class RelationshipStatus < EnumerateIt::Base
+          associate_values :married, :single
 
-     class RelationshipStatus < EnumerateIt::Base
-       associate_values :married, :single
+          class Married
+            def saturday_night
+              "At home with the kids"
+            end
+          end
 
-       class Married
-         def saturday_night
-           "At home with the kids"
-         end
-       end
+          class Single
+            def saturday_night
+              "Party Hard!"
+            end
+          end
+        end
 
-       class Single
-         def saturday_night
-           "Party Hard!"
-         end
-       end
-     end
+        class Person < ActiveRecord::Base
+          has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => true }
+        end
 
-     class Person < ActiveRecord::Base
-       has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => true }
-     end
+        p = Person.new
+        p.relationship_status = RelationshipStatus::MARRIED
+        p.relationship_status_object.saturday_night # => "At home with the kids"
 
-     p = Person.new
-     p.relationship_status = RelationshipStatus::MARRIED
-     p.relationship_status_object.saturday_night # => "At home with the kids"
-
-     p.relationship_status = RelationshipStatus::SINGLE
-     p.relationship_status_object.saturday_night # => "Party Hard!"
+        p.relationship_status = RelationshipStatus::SINGLE
+        p.relationship_status_object.saturday_night # => "Party Hard!"
 
      You can also change the suffix '_object', using the :suffix option:
 
-     class Person < ActiveRecord::Base
-       has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => { :suffix => "_mode" } }
-     end
+        class Person < ActiveRecord::Base
+          has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_helpers => { :polymorphic => { :suffix => "_mode" } }
+        end
 
-     p.relationship_status_mode.saturday_night
+        p.relationship_status_mode.saturday_night
 
 *   The :create_helpers also creates some mutator helper methods, that can be
     used to change the attribute's value.
@@ -318,11 +316,11 @@ given the hash key is a Symbol. The I18n strings are located on
 enumerations.'enumeration_name'.'key' :
 
     class RelationshipStatus < EnumerateIt::Base
-     associate_values(
-       :married => 1,
-       :single => 2,
-       :divorced => [3, 'He's divorced']
-     )
+      associate_values(
+        :married => 1,
+        :single => 2,
+        :divorced => [3, 'He's divorced']
+      )
     end
 
     # your locale file
