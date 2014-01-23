@@ -1,6 +1,7 @@
 # EnumerateIt - Ruby Enumerations
 
 [![Build Status](https://travis-ci.org/cassiomarques/enumerate_it.png?branch=master)](https://travis-ci.org/cassiomarques/enumerate_it)
+[![Gem Version](https://badge.fury.io/rb/enumerate_it.png)](http://badge.fury.io/rb/enumerate_it)
 
 Author: Cássio Marques - cassiommc at gmail
 
