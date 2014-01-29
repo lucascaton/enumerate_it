@@ -171,7 +171,7 @@ You can also create enumerations in the following ways:
 
 When calling methods like `to_a` and `to_json`, the returned values will be
 sorted using the translation for each one of the enumeration values. If you
-want to overwrite the default sort mode, you can use the `sort_mode` class
+want to overwrite the default sort mode, you can use the `sort_by` class
 method.
 
 ``` ruby
