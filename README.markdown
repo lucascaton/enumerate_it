@@ -398,7 +398,7 @@ only to those derived from ActiveRecord::Base.
 
 ## I18n
 
-I18n lookup is provided on both '_humanized' and 'Enumeration#to_a' methods,
+I18n lookup is provided on both `_humanized` and `Enumeration#to_a` methods,
 given the hash key is a Symbol. The I18n strings are located on
 enumerations.'enumeration_name'.'key' :
 
