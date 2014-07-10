@@ -36,6 +36,12 @@ describe EnumerateIt::Base do
     end
   end
 
+  describe ".translations" do
+    it "returns all translations" do
+      TestEnumeration.translations.should == ["Hey, I am 1!", "Hey, I am 2!", "Hey, I am 3!"]
+    end
+  end
+
   describe ".each_value" do
     it "yields each enumeration's value" do
       values = []
