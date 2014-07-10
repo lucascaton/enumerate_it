@@ -127,6 +127,12 @@ This will create some nice stuff:
     RelationshipStatus.each_translation { |translation| ... }
     ```
 
+*   You can also retrieve all the translations of the enumeration:
+
+    ``` ruby
+    RelationshipStatus.translations
+    ```
+
 *   You can ask for the enumeration's length:
 
     ``` ruby
