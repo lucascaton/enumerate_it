@@ -38,6 +38,10 @@ module EnumerateIt
       each_value { |value| yield t(value) }
     end
 
+    def self.translations
+      list.map { |value| t(value) }
+    end
+
     def self.each_value
       list.each { |value| yield value }
     end
