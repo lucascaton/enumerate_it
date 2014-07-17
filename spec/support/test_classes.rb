@@ -27,6 +27,10 @@ class TestEnumerationWithList < EnumerateIt::Base
   associate_values :first, :second
 end
 
+class TestEnumerationWithReservedWords < EnumerateIt::Base
+  associate_values :new => 1, :no_schedule => 2, :with_schedule => 3, :suspended => 4
+end
+
 class Foobar < EnumerateIt::Base
   associate_values(
     :bar => 'foo'

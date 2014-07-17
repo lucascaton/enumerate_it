@@ -16,7 +16,7 @@ module EnumerateIt
       end
 
       if options[:create_scopes]
-        create_scopes options[:with], attribute
+        create_scopes options[:with], attribute, options[:create_helpers]
       end
     end
 
@@ -47,10 +47,12 @@ module EnumerateIt
       end
     end
 
-    def create_scopes(klass, attribute_name)
-      klass.enumeration.keys.each do |option|
+    def create_scopes(klass, attribute_name, helpers)
+      prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
+
+      klass.enumeration.keys.each do |key|
         if respond_to? :scope
-          scope option, lambda { where(attribute_name => klass.enumeration[option].first)}
+          scope "#{prefix_name}#{key}", lambda { where(attribute_name => klass.enumeration[key].first)}
         end
       end
     end

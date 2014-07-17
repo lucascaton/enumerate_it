@@ -268,6 +268,21 @@ describe EnumerateIt do
         }.to_not raise_error
       end
     end
+
+    context "with :prefix option" do
+      before do
+        class OtherTestClass < ActiveRecord::Base
+          extend EnumerateIt
+          has_enumeration_for :foobar, :with => TestEnumerationWithReservedWords, :create_scopes => true, :create_helpers => { :prefix => true }
+        end
+      end
+
+      it "creates a scope with prefix for each enumeration value" do
+        TestEnumerationWithReservedWords.enumeration.keys.each do |symbol|
+          OtherTestClass.should respond_to(:"foobar_#{symbol}")
+        end
+      end
+    end
   end
 end
 
