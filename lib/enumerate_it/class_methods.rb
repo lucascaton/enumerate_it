@@ -16,7 +16,7 @@ module EnumerateIt
       end
 
       if options[:create_scopes]
-        create_scopes options[:with], attribute, options[:create_helpers]
+        create_scopes options[:with], attribute, options[:create_scopes]
       end
     end
 

@@ -271,9 +271,9 @@ describe EnumerateIt do
 
     context "with :prefix option" do
       before do
-        class OtherTestClass < ActiveRecord::Base
+        class OtherTestClass
           extend EnumerateIt
-          has_enumeration_for :foobar, :with => TestEnumerationWithReservedWords, :create_scopes => true, :create_helpers => { :prefix => true }
+          has_enumeration_for :foobar, :with => TestEnumerationWithReservedWords, :create_scopes => { :prefix => true }
         end
       end
 
