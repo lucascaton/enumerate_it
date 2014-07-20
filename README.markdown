@@ -364,6 +364,15 @@ This will create:
     #=> SELECT "people".* FROM "people" WHERE "people"."relationship_status" = 1
     ```
 
+    The :create_scopes also accept :prefix option.
+
+    ``` ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, :with => RelationshipStatus, :create_scopes => { :prefix => true }
+    end
+
+    Person.relationship_status_married.to_sql
+    ```
 
 NOTE: The :create_scopes option can only be used for Rails.version >= 3.0.0.
 
