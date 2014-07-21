@@ -364,7 +364,7 @@ This will create:
     #=> SELECT "people".* FROM "people" WHERE "people"."relationship_status" = 1
     ```
 
-    The :create_scopes also accept :prefix option.
+    The :create_scopes also accepts :prefix option.
 
     ``` ruby
     class Person < ActiveRecord::Base
