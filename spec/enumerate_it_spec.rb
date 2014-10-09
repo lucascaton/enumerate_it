@@ -262,9 +262,15 @@ describe EnumerateIt do
     end
 
     context "when the hosting class do not respond to :scope" do
+      before do
+        class GenericClass
+          extend EnumerateIt
+        end
+      end
+
       it "raises no errors" do
         expect {
-          setup_enumeration
+          GenericClass.send(:has_enumeration_for, :foobar, :with => TestEnumeration, :create_scopes => true)
         }.to_not raise_error
       end
     end
