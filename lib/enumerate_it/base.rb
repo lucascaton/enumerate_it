@@ -56,11 +56,13 @@ module EnumerateIt
     end
 
     def self.values_for(values)
-      values.map { |v| self.const_get(v.to_sym) }
+      values.map { |v| self.value_for v.to_sym }
     end
 
     def self.value_for(value)
       self.const_get(value.to_sym)
+    rescue NameError
+      nil
     end
 
     def self.keys

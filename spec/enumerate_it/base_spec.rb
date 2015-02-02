@@ -97,11 +97,21 @@ describe EnumerateIt::Base do
     it "returns an array with the corresponding values for a string array representing some of the enumeration's values" do
       TestEnumeration.values_for(%w(VALUE_1 VALUE_2)).should == [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2]
     end
+
+    it "returns a nil value if the a constant named after one of the given strings cannot be found" do
+      TestEnumeration.values_for(%w(VALUE_1 THIS_IS_WRONG)).should == [TestEnumeration::VALUE_1, nil]
+    end
   end
 
   describe ".value_for" do
     it "returns the enumeration's value" do
       TestEnumeration.value_for("VALUE_1").should == TestEnumeration::VALUE_1
+    end
+
+    context "when a constant named after the received value cannot be found" do
+      it "returns nil" do
+        TestEnumeration.value_for("THIS_IS_WRONG").should be_nil
+      end
     end
   end
 
