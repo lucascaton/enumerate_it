@@ -115,6 +115,20 @@ describe EnumerateIt::Base do
     end
   end
 
+  describe ".value_from_key" do
+    it "returns the correct value when the key is a string" do
+      TestEnumeration.value_from_key("value_1").should == TestEnumeration::VALUE_1
+    end
+
+    it "returns the correct value when the key is a symbol" do
+      TestEnumeration.value_from_key(:value_1).should == TestEnumeration::VALUE_1
+    end
+
+    it "returns nil when the key does not exist in the enumeration" do
+      TestEnumeration.value_from_key("wrong").should be_nil
+    end
+  end
+
   describe ".keys" do
     it "returns a list with the keys used to define the enumeration" do
       TestEnumeration.keys.should == [:value_1, :value_2, :value_3]

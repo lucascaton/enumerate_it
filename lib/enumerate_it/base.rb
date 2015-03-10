@@ -65,6 +65,10 @@ module EnumerateIt
       nil
     end
 
+    def self.value_from_key(key)
+      (enumeration[key.to_sym] || []).first
+    end
+
     def self.keys
       enumeration.keys
     end
