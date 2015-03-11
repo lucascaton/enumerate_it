@@ -127,6 +127,10 @@ describe EnumerateIt::Base do
     it "returns nil when the key does not exist in the enumeration" do
       TestEnumeration.value_from_key("wrong").should be_nil
     end
+
+    it "returns nil when the given value is nil" do
+      TestEnumeration.value_from_key(nil).should be_nil
+    end
   end
 
   describe ".keys" do

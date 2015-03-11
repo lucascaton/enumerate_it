@@ -66,6 +66,7 @@ module EnumerateIt
     end
 
     def self.value_from_key(key)
+      return if key.nil?
       (enumeration[key.to_sym] || []).first
     end
 
