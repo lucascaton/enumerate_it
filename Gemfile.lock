@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    enumerate_it (1.2.6)
+    enumerate_it (1.2.7)
       activesupport (>= 3.0.0)
 
 GEM
