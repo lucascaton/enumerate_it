@@ -8,6 +8,10 @@ describe EnumerateIt::Base do
     end
   end
 
+  it "creates constants replacing its dashes with underscores" do
+    TestEnumerationWithDash::PT_BR.should == 'pt-BR'
+  end
+
   it "creates a method that returns the allowed values in the enumeration's class" do
     TestEnumeration.list.should == ['1', '2', '3']
   end

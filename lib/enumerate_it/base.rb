@@ -117,7 +117,7 @@ module EnumerateIt
     end
 
     def self.define_enumeration_constant(name, value)
-      const_set name.to_s.upcase, value
+      const_set name.to_s.underscore.upcase, value
     end
   end
 end
