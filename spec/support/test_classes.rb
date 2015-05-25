@@ -37,6 +37,12 @@ class TestEnumerationWithDash < EnumerateIt::Base
   )
 end
 
+class TestEnumerationWithCamelCase < EnumerateIt::Base
+  associate_values(
+    'iPhone'
+  )
+end
+
 class Foobar < EnumerateIt::Base
   associate_values(
     :bar => 'foo'

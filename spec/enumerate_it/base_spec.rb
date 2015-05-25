@@ -8,6 +8,10 @@ describe EnumerateIt::Base do
     end
   end
 
+  it "creates constants for camel case values" do
+    TestEnumerationWithCamelCase::IPHONE.should == 'iPhone'
+  end
+
   it "creates constants replacing its dashes with underscores" do
     TestEnumerationWithDash::PT_BR.should == 'pt-BR'
   end
