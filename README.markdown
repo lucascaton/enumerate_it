@@ -277,7 +277,8 @@ This will create:
 
     ```ruby
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, create_helpers: { prefix: true }
+      has_enumeration_for :relationship_status, with: RelationshipStatus, 
+                                                create_helpers: { prefix: true }
     end
 
     p = Person.new
@@ -311,7 +312,8 @@ This will create:
     end
 
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, create_helpers: { polymorphic: true }
+      has_enumeration_for :relationship_status, with: RelationshipStatus,
+                                                create_helpers: { polymorphic: true }
     end
 
     p = Person.new
@@ -324,11 +326,12 @@ This will create:
     #=> "Party Hard!"
     ```
 
-    You can also change the suffix '_object', using the :suffix option:
+    You can also change the suffix '_object', using the `:suffix` option:
 
     ```ruby
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, create_helpers: { polymorphic: { suffix: '_mode' } }
+      has_enumeration_for :relationship_status, with: RelationshipStatus, 
+                                                create_helpers: { polymorphic: { suffix: '_mode' } }
     end
 
     p.relationship_status_mode.saturday_night
@@ -368,7 +371,8 @@ This will create:
 
     ```ruby
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, create_scopes: { prefix: true }
+      has_enumeration_for :relationship_status, with: RelationshipStatus, 
+                                                create_scopes: { prefix: true }
     end
 
     Person.relationship_status_married.to_sql
