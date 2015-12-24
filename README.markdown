@@ -479,19 +479,6 @@ gem install enumerate_it
     rails generate enumerate_it:install
     ```
 
-
-An interesting approach to use it in Rails apps is to create an
-app/enumerations folder and add it to your autoload path in
-config/application.rb:
-
-```ruby
-module YourApp
-  class Application < Rails::Application
-    config.autoload_paths << "#{Rails.root}/app/enumerations"
-  end
-end
-```
-
 There is also a Rails Generator that you can use to generate enumerations and
 their locale files. Take a look at how to use it running
 
