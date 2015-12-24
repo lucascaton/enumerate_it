@@ -277,7 +277,7 @@ This will create:
 
     ```ruby
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, 
+      has_enumeration_for :relationship_status, with: RelationshipStatus,
                                                 create_helpers: { prefix: true }
     end
 
@@ -330,7 +330,7 @@ This will create:
 
     ```ruby
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, 
+      has_enumeration_for :relationship_status, with: RelationshipStatus,
                                                 create_helpers: { polymorphic: { suffix: '_mode' } }
     end
 
@@ -371,7 +371,7 @@ This will create:
 
     ```ruby
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, 
+      has_enumeration_for :relationship_status, with: RelationshipStatus,
                                                 create_scopes: { prefix: true }
     end
 
@@ -478,6 +478,9 @@ gem install enumerate_it
     ```bash
     rails generate enumerate_it:install
     ```
+
+An interesting approach to use it in Rails apps is to create an
+`app/enumerations` folder.
 
 There is also a Rails Generator that you can use to generate enumerations and
 their locale files. Take a look at how to use it running
