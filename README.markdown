@@ -1,7 +1,7 @@
 # EnumerateIt - Ruby Enumerations
 
-[![Build Status](https://travis-ci.org/cassiomarques/enumerate_it.png?branch=master)](https://travis-ci.org/cassiomarques/enumerate_it)
-[![Gem Version](https://badge.fury.io/rb/enumerate_it.png)](http://badge.fury.io/rb/enumerate_it)
+[![Build Status](https://travis-ci.org/cassiomarques/enumerate_it.svg?branch=master)](https://travis-ci.org/cassiomarques/enumerate_it)
+[![Gem Version](https://badge.fury.io/rb/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
 
 Author: Cássio Marques - cassiommc at gmail
 
@@ -277,7 +277,7 @@ This will create:
 
     ```ruby
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, 
+      has_enumeration_for :relationship_status, with: RelationshipStatus,
                                                 create_helpers: { prefix: true }
     end
 
@@ -330,7 +330,7 @@ This will create:
 
     ```ruby
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, 
+      has_enumeration_for :relationship_status, with: RelationshipStatus,
                                                 create_helpers: { polymorphic: { suffix: '_mode' } }
     end
 
@@ -371,7 +371,7 @@ This will create:
 
     ```ruby
     class Person < ActiveRecord::Base
-      has_enumeration_for :relationship_status, with: RelationshipStatus, 
+      has_enumeration_for :relationship_status, with: RelationshipStatus,
                                                 create_scopes: { prefix: true }
     end
 
