@@ -1,10 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
 require "enumerate_it"
-require "rspec"
-require "rspec/autorun"
 
-require "rubygems"
 require "active_support"
 require "active_record"
 require "active_support/core_ext/string/inflections"

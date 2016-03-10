@@ -237,7 +237,7 @@ describe EnumerateIt::Base do
         end
       end
 
-      ActiveRecordStub.stub!(:validates_inclusion_of).and_return(true)
+      ActiveRecordStub.stub(:validates_inclusion_of).and_return(true)
       ActiveRecordStub.extend EnumerateIt
     end
 
@@ -250,7 +250,7 @@ describe EnumerateIt::Base do
 
     context "using the :required option" do
       before :each do
-        ActiveRecordStub.stub!(:validates_presence_of).and_return(true)
+        ActiveRecordStub.stub(:validates_presence_of).and_return(true)
       end
 
       it "creates a validation for presence" do
