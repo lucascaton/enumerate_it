@@ -16,8 +16,38 @@ describe EnumerateIt::Base do
     TestEnumerationWithDash::PT_BR.should == 'pt-BR'
   end
 
-  it "creates a method that returns the allowed values in the enumeration's class" do
-    TestEnumeration.list.should == ['1', '2', '3']
+  describe ".list" do
+    it "creates a method that returns the allowed values in the enumeration's class" do
+      TestEnumeration.list.should == ['1', '2', '3']
+    end
+
+    context "specifying a default sort mode" do
+      subject { create_enumeration_class_with_sort_mode(sort_mode).list }
+
+      context "by value" do
+        let(:sort_mode) { :value }
+
+        it { should == %w(0 1 2 3) }
+      end
+
+      context "by name" do
+        let(:sort_mode) { :name }
+
+        it { should == %w(2 1 3 0) }
+      end
+
+      context "by translation" do
+        let(:sort_mode) { :translation }
+
+        it { should == %w(3 2 0 1) }
+      end
+
+      context "by nothing" do
+        let(:sort_mode) { :none }
+
+        it { should == %w(1 2 3 0) }
+      end
+    end
   end
 
   it "creates a method that returns the enumeration specification" do
