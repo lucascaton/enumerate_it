@@ -20,5 +20,4 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec", ">= 2.5.0"
   gem.add_development_dependency "activerecord", ">= 3.0.5"
   gem.add_development_dependency "pry"
-  gem.add_development_dependency "pry-nav"
 end
