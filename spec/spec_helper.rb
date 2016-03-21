@@ -1,15 +1,15 @@
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
-require "enumerate_it"
-require "rspec"
-require "rspec/autorun"
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 
-require "rubygems"
-require "active_support"
-require "active_record"
-require "active_support/core_ext/string/inflections"
-require "active_support/core_ext/object/to_json"
+require 'enumerate_it'
+require 'rspec'
 
-Dir["./spec/support/**/*.rb"].each { |f| require f }
+require 'rubygems'
+require 'active_support'
+require 'active_record'
+require 'active_support/core_ext/string/inflections'
+require 'active_support/core_ext/object/to_json'
 
-I18n.load_path = Dir["spec/i18n/*.yml"]
+Dir['./spec/support/**/*.rb'].each { |f| require f }
+
+I18n.config.enforce_available_locales = false
+I18n.load_path = Dir['spec/i18n/*.yml']
