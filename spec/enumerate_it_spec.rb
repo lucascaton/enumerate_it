@@ -17,33 +17,33 @@ describe EnumerateIt do
 
   context "associating an enumeration with a class attribute" do
     it "creates an humanized description for the attribute's value" do
-      @target.foobar_humanize.should == 'Hey, I am 2!'
+      expect(@target.foobar_humanize).to eq('Hey, I am 2!')
     end
 
     it "if the attribute is blank, the humanize description is nil" do
       @target.foobar = nil
-      @target.foobar_humanize.should be_nil
+      expect(@target.foobar_humanize).to be_nil
     end
 
     it "defaults to not creating helper methods" do
-      @target.should_not respond_to(:value_1?)
+      expect(@target).not_to respond_to(:value_1?)
     end
 
     it "stores the enumeration class in a class-level hash" do
-      TestClass.enumerations[:foobar].should == TestEnumeration
+      expect(TestClass.enumerations[:foobar]).to eq(TestEnumeration)
     end
 
     context 'use the same enumeration from an inherited class' do
       before do
-        class SomeClass < BaseClass
+        class SomeClassWithoutEnum < BaseClass
         end
-        @target = SomeClass.new
+        @target = SomeClassWithoutEnum.new
       end
 
       it 'should have use the correct class' do
         @base = BaseClass.new
-        @base.class.enumerations[:foobar].should == TestEnumeration
-        @target.class.enumerations[:foobar].should == TestEnumeration
+        expect(@base.class.enumerations[:foobar]).to eq(TestEnumeration)
+        expect(@target.class.enumerations[:foobar]).to eq(TestEnumeration)
       end
     end
 
@@ -56,8 +56,8 @@ describe EnumerateIt do
       end
       it 'should have use the corret class' do
         @base = BaseClass.new
-        @base.class.enumerations[:foobar].should == TestEnumeration
-        @target.class.enumerations[:foobar].should == Foobar
+        expect(@base.class.enumerations[:foobar]).to eq(TestEnumeration)
+        expect(@target.class.enumerations[:foobar]).to eq(Foobar)
       end
     end
 
@@ -75,15 +75,15 @@ describe EnumerateIt do
       end
 
       it "humanizes the respective hash key" do
-        @target.foobar_humanize.should == 'Value Two'
+        expect(@target.foobar_humanize).to eq('Value Two')
       end
 
       it "translates the respective hash key when a translation is found" do
         @target.foobar = TestEnumerationWithoutArray::VALUE_ONE
-        @target.foobar_humanize.should == 'First Value'
+        expect(@target.foobar_humanize).to eq('First Value')
         I18n.locale = :pt
 
-        @target.foobar_humanize.should == 'Primeiro Valor'
+        expect(@target.foobar_humanize).to eq('Primeiro Valor')
       end
     end
 
@@ -103,7 +103,7 @@ describe EnumerateIt do
 
       it "should find out which enumeration class to use" do
         target = FooBar.new(TestEnumeration::VALUE_1)
-        target.test_enumeration_humanize.should == 'Hey, I am 1!'
+        expect(target.test_enumeration_humanize).to eq('Hey, I am 1!')
       end
 
       context "when using a nested class as the enumeration" do
@@ -130,7 +130,7 @@ describe EnumerateIt do
         end
 
         it "uses the inner class as the enumeration class" do
-          target = ClassWithNestedEnum.new('1').nested_enum_humanize.should == 'Blerrgh'
+          target = expect(ClassWithNestedEnum.new('1').nested_enum_humanize).to eq('Blerrgh')
         end
       end
     end
@@ -138,51 +138,56 @@ describe EnumerateIt do
 
   context "using the :create_helpers option" do
     before :each do
-      class TestClass
+      class TestClassWithHelper
+        extend EnumerateIt
+        attr_accessor :foobar
         has_enumeration_for :foobar, :with => TestEnumeration, :create_helpers => true
+
+        def initialize(foobar); @foobar = foobar; end
+        I18n.locale = :en
       end
     end
 
     it "creates helpers methods with question marks for each enumeration option" do
-      target = TestClass.new(TestEnumeration::VALUE_2)
-      target.should be_value_2
-      target.should_not be_value_1
+      target = TestClassWithHelper.new(TestEnumeration::VALUE_2)
+      expect(target).to be_value_2
+      expect(target).not_to be_value_1
     end
 
     it "creates a mutator method for each enumeration value" do
       [:value_1, :value_2, :value_3].each do |value|
-        TestClass.new(TestEnumeration::VALUE_1).should respond_to(:"#{value}!")
+        expect(TestClassWithHelper.new(TestEnumeration::VALUE_1)).to respond_to(:"#{value}!")
       end
     end
 
     it "changes the attribute's value through mutator methods" do
-      target = TestClass.new(TestEnumeration::VALUE_2)
+      target = TestClassWithHelper.new(TestEnumeration::VALUE_2)
       target.value_3!
-      target.foobar.should == TestEnumeration::VALUE_3
+      expect(target.foobar).to eq(TestEnumeration::VALUE_3)
     end
 
     context "with :prefix option" do
       before :each do
-        class TestClass
+        class TestClassWithHelper
           has_enumeration_for :foobar, :with => TestEnumeration, :create_helpers => { :prefix => true }
         end
       end
 
       it "creates helpers methods with question marks and prefixes for each enumeration option" do
-        target = TestClass.new(TestEnumeration::VALUE_2)
-        target.should be_foobar_value_2
+        target = TestClassWithHelper.new(TestEnumeration::VALUE_2)
+        expect(target).to be_foobar_value_2
       end
 
       it "creates a mutator method for each enumeration value" do
         [:value_1, :value_2, :value_3].each do |value|
-          TestClass.new(TestEnumeration::VALUE_1).should respond_to(:"foobar_#{value}!")
+          expect(TestClassWithHelper.new(TestEnumeration::VALUE_1)).to respond_to(:"foobar_#{value}!")
         end
       end
 
       it "changes the attribute's value through mutator methods" do
-        target = TestClass.new(TestEnumeration::VALUE_2)
+        target = TestClassWithHelper.new(TestEnumeration::VALUE_2)
         target.foobar_value_3!
-        target.foobar.should == TestEnumeration::VALUE_3
+        expect(target.foobar).to eq(TestEnumeration::VALUE_3)
       end
     end
 
@@ -199,17 +204,17 @@ describe EnumerateIt do
         target = Polymorphic.new
         target.foo = PolymorphicEnum::NORMAL
 
-        target.foo_object.print("Gol").should == "I'm Normal: Gol"
+        expect(target.foo_object.print("Gol")).to eq("I'm Normal: Gol")
 
         target.foo = PolymorphicEnum::CRAZY
 
-        target.foo_object.print("Gol").should == "Whoa!: Gol"
+        expect(target.foo_object.print("Gol")).to eq("Whoa!: Gol")
       end
 
       it "returns nil if foo is not set" do
         target = Polymorphic.new
 
-        target.foo_object.should be_nil
+        expect(target.foo_object).to be_nil
       end
 
       context "and :suffix" do
@@ -223,44 +228,39 @@ describe EnumerateIt do
           target = Polymorphic.new
           target.foo = PolymorphicEnum::NORMAL
 
-          target.foo_strategy.print("Gol").should == "I'm Normal: Gol"
+          expect(target.foo_strategy.print("Gol")).to eq("I'm Normal: Gol")
 
           target.foo = PolymorphicEnum::CRAZY
 
-          target.foo_strategy.print("Gol").should == "Whoa!: Gol"
+          expect(target.foo_strategy.print("Gol")).to eq("Whoa!: Gol")
         end
       end
     end
   end
 
   describe "using the :create_scopes option" do
-    def setup_enumeration
-      OtherTestClass.send(:has_enumeration_for, :foobar, :with => TestEnumeration, :create_scopes => true)
-    end
-
     context "if the hosting class responds to :scope" do
       before do
         if ActiveSupport::VERSION::STRING =~ /3\.1/
-          Object.send :remove_const, 'OtherTestClass' if defined?(OtherTestClass)
+          Object.send :remove_const, 'TestClassWithScope' if defined?(TestClassWithScope)
         end
 
-        class OtherTestClass < ActiveRecord::Base
+        class TestClassWithScope < ActiveRecord::Base
           extend EnumerateIt
+          has_enumeration_for :foobar, :with => TestEnumeration, :create_scopes => true
         end
-
-        setup_enumeration
       end
 
       it "creates a scope for each enumeration value" do
         TestEnumeration.enumeration.keys.each do |symbol|
-          OtherTestClass.should respond_to(symbol)
+          expect(TestClassWithScope).to respond_to(symbol)
         end
       end
 
       it "when called, the scopes create the correct query" do
         TestEnumeration.enumeration.each do |symbol, pair|
-          OtherTestClass.should_receive(:where).with(:foobar => pair.first)
-          OtherTestClass.send symbol
+          expect(TestClassWithScope).to receive(:where).with(:foobar => pair.first)
+          TestClassWithScope.send symbol
         end
       end
     end
@@ -281,7 +281,7 @@ describe EnumerateIt do
 
     context "with :prefix option" do
       before do
-        class OtherTestClass
+        class OtherTestClass < ActiveRecord::Base
           extend EnumerateIt
           has_enumeration_for :foobar, :with => TestEnumerationWithReservedWords, :create_scopes => { :prefix => true }
         end
@@ -289,7 +289,7 @@ describe EnumerateIt do
 
       it "creates a scope with prefix for each enumeration value" do
         TestEnumerationWithReservedWords.enumeration.keys.each do |symbol|
-          OtherTestClass.should respond_to(:"foobar_#{symbol}")
+          expect(OtherTestClass).to respond_to(:"foobar_#{symbol}")
         end
       end
     end
