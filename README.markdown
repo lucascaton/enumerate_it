@@ -3,7 +3,8 @@
 [![Build Status](https://travis-ci.org/lucascaton/enumerate_it.svg?branch=master)](https://travis-ci.org/lucascaton/enumerate_it)
 [![Gem Version](https://badge.fury.io/rb/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
 
-Author: Cássio Marques - cassiommc at gmail
+* **Author:** Cássio Marques
+* **Maintainer:** Lucas Caton
 
 ## Description
 
@@ -147,7 +148,6 @@ This will create some nice stuff:
     #=> returns the exact hash used to define the enumeration
     ```
 
-
 You can also create enumerations in the following ways:
 
 *   Passing an array of symbols, so that the respective value for each symbol
@@ -171,7 +171,6 @@ You can also create enumerations in the following ways:
       associate_values married: 1, single: 2
     end
     ```
-
 
 ### Defining a default sort mode
 
@@ -197,7 +196,6 @@ The `sort_by` methods accept one of the following values:
     enumeration option.
 *   `:none`: Will return values in order that was passed to associate_values
     call.
-
 
 ## Using enumerations
 
@@ -411,7 +409,6 @@ NOTE: The `:create_scopes` option can only be used for Rails.version >= 3.0.0.
     #=> "can't be blank"
     ```
 
-
 Remember that in Rails 3 you can add validations to any kind of class and not
 only to those derived from ActiveRecord::Base.
 
@@ -478,7 +475,6 @@ gem install enumerate_it
     ```bash
     rails generate enumerate_it:install
     ```
-
 
 An interesting approach to use it in Rails apps is to create an
 app/enumerations folder and add it to your autoload path in
