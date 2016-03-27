@@ -54,8 +54,9 @@ you would use `include`.
 
 ## Creating enumerations
 
-Enumerations are created as models, but you can put then anywhere in your
-application. In Rails applications, you can put them inside models/.
+Enumerations are created as models, but you can put them anywhere in your
+application. In Rails applications, you should put them inside
+`app/enumerations` folder.
 
 ```ruby
 class RelationshipStatus < EnumerateIt::Base
@@ -376,8 +377,6 @@ This will create:
     Person.relationship_status_married.to_sql
     ```
 
-NOTE: The `:create_scopes` option can only be used for Rails.version >= 3.0.0.
-
 *   If your class can manage validations and responds to
     :validates_inclusion_of, it will create this validation:
 
@@ -409,17 +408,17 @@ NOTE: The `:create_scopes` option can only be used for Rails.version >= 3.0.0.
     #=> "can't be blank"
     ```
 
-Remember that in Rails 3 you can add validations to any kind of class and not
-only to those derived from ActiveRecord::Base.
+Remember that you can add validations to any kind of class and not only to
+those derived from ActiveRecord::Base.
 
 ## I18n
 
 I18n lookup is provided on both `_humanized` and `Enumeration#to_a` methods,
 given the hash key is a Symbol. The I18n strings are located on
-enumerations.'enumeration_name'.'key' :
+`enumerations.<enumeration_name>.<key>`:
 
 ```yaml
-# your locale file
+# Your locale file
 pt:
   enumerations:
     relationship_status:
@@ -467,7 +466,7 @@ gem install enumerate_it
 *   Add the gem to your Gemfile:
 
     ```ruby
-    gem "enumerate_it"
+    gem 'enumerate_it'
     ```
 
 *   Run the install generator:
@@ -480,7 +479,7 @@ An interesting approach to use it in Rails apps is to create an
 `app/enumerations` folder.
 
 There is also a Rails Generator that you can use to generate enumerations and
-their locale files. Take a look at how to use it running
+their locale files. Take a look at how to use it running:
 
 ```bash
 rails generate enumerate_it:enum --help
@@ -494,9 +493,9 @@ codes. I had both situations in my legacy database.
 
 ## Why defining enumerations outside the class that use it?
 
-*   I think it's cleaner.
-*   You can add behaviour to the enumeration class.
-*   You can reuse the enumeration inside other classes.
+* I think it's cleaner.
+* You can add behaviour to the enumeration class.
+* You can reuse the enumeration inside other classes.
 
 ## Note on Patches/Pull Requests
 
@@ -504,11 +503,12 @@ codes. I had both situations in my legacy database.
 *   Make your feature addition or bug fix.
 *   Add tests for it. This is important so I don't break it in a future
     version unintentionally.
-*   Commit, do not mess with rakefile, version, or history. (if you want to
+*   Run the tests agaist all supported versions: `$ appraisal rake`.
+*   Commit, do not mess with Rakefile, version, or history. (if you want to
     have your own version, that is fine but bump version in a commit by itself
     I can ignore when I pull)
 *   Send me a pull request. Bonus points for topic branches.
 
 ## Copyright
 
-Copyright (c) 2010 Cássio Marques. See LICENSE for details.
+Copyright (c) 2010-2016 Cássio Marques and Lucas Caton. See LICENSE for details.
