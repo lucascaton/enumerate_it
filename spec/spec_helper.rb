@@ -4,10 +4,8 @@ require 'enumerate_it'
 require 'rspec'
 
 require 'rubygems'
-require 'active_support'
+require 'active_support/all'
 require 'active_record'
-require 'active_support/core_ext/string/inflections'
-require 'active_support/core_ext/object/to_json'
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 
