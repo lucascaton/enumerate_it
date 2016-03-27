@@ -47,8 +47,8 @@ Enter EnumerateIt.
 
 ## About versions compatibility
 
-Versions 1.x.x are NOT backwards compatible with 0.x.x versions. The biggest
-difference is that on 1.0.0 you need to `extend` the EnumerateIt module inside
+Versions `1.x.x  are NOT backwards compatible with `0.x.x` versions. The biggest
+difference is that on `1.0.0` you need to `extend` the EnumerateIt module inside
 classes that are going to have enumerated attributes, while in past versions
 you would use `include`.
 
@@ -484,6 +484,10 @@ their locale files. Take a look at how to use it running:
 ```bash
 rails generate enumerate_it:enum --help
 ```
+
+## Supported versions
+
+Check [travis config file](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
 
 ## Why did you reinvent the wheel?
 
