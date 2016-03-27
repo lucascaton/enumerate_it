@@ -19,7 +19,7 @@ module EnumerateIt
     end
 
     def self.list
-      sorted_map.to_h.values.map(&:first)
+      sorted_map.map { |_k, v| v.first }
     end
 
     def self.enumeration
