@@ -47,7 +47,7 @@ Enter EnumerateIt.
 
 ## About versions compatibility
 
-Versions `1.x.x  are NOT backwards compatible with `0.x.x` versions. The biggest
+Versions `1.x.x` are NOT backwards compatible with `0.x.x` versions. The biggest
 difference is that on `1.0.0` you need to `extend` the EnumerateIt module inside
 classes that are going to have enumerated attributes, while in past versions
 you would use `include`.
