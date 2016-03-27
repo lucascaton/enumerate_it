@@ -2,6 +2,6 @@
 
 source "http://rubygems.org"
 
-gem "activesupport", "~> 4.2"
+gem "activesupport", "~> 4.2.0"
 
 gemspec :path => "../"
