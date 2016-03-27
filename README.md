@@ -482,7 +482,7 @@ their locale files. Take a look at how to use it running:
 rails generate enumerate_it:enum --help
 ```
 
-## Supported versions
+## Supported Ruby and Rails (ActiveSupport) versions
 
 Check [travis config file](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
 
