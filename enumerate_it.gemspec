@@ -15,7 +15,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'activesupport', '>= 3.0.0'
 
-  gem.add_development_dependency 'activerecord', '>= 3.0.5'
   gem.add_development_dependency 'appraisal'
   gem.add_development_dependency 'pry'
   gem.add_development_dependency 'rake'

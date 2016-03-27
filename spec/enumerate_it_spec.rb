@@ -240,6 +240,10 @@ describe EnumerateIt do
 
     context "if the hosting class responds to :scope" do
       before do
+        if ActiveSupport::VERSION::STRING =~ /3\.1/
+          Object.send :remove_const, 'OtherTestClass' if defined?(OtherTestClass)
+        end
+
         class OtherTestClass < ActiveRecord::Base
           extend EnumerateIt
         end
@@ -291,4 +295,3 @@ describe EnumerateIt do
     end
   end
 end
-
