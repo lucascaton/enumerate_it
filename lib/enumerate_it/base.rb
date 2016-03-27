@@ -19,7 +19,7 @@ module EnumerateIt
     end
 
     def self.list
-      enumeration.values.map { |value| value[0] }.sort
+      sorted_map.to_h.values.map(&:first)
     end
 
     def self.enumeration
@@ -85,6 +85,8 @@ module EnumerateIt
     private
 
     def self.sorted_map
+      return enumeration if sort_mode == :none
+
       enumeration.sort_by { |k, v| sort_lambda.call(k, v) }
     end
 
@@ -93,7 +95,6 @@ module EnumerateIt
         :value       => lambda { |k, v| v[0] },
         :name        => lambda { |k, v| k },
         :translation => lambda { |k, v| translate(v[1]) },
-        :none        => lambda { |k, v| nil }
       }[sort_mode || :translation]
     end
 
