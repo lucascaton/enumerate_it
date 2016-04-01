@@ -27,7 +27,7 @@ module EnumerateIt
     end
 
     def self.to_a
-      sorted_map.map { |k, v| [translate(v[1]), v[0]] }
+      sorted_map.map { |_k, v| [translate(v[1]), v[0]] }
     end
 
     def self.length
@@ -47,7 +47,7 @@ module EnumerateIt
     end
 
     def self.to_json
-      sorted_map.map { |k, v| { :value => v[0], :label => translate(v[1]) } }.to_json
+      sorted_map.map { |_k, v| { value: v[0], label: translate(v[1]) } }.to_json
     end
 
     def self.t(value)
@@ -75,7 +75,7 @@ module EnumerateIt
     end
 
     def self.key_for(value)
-      enumeration.map {|e| e[0] if e[1][0] == value }.compact.first
+      enumeration.map { |e| e[0] if e[1][0] == value }.compact.first
     end
 
     def self.to_range
@@ -92,9 +92,9 @@ module EnumerateIt
 
     def self.sort_lambda
       {
-        :value       => lambda { |k, v| v[0] },
-        :name        => lambda { |k, v| k },
-        :translation => lambda { |k, v| translate(v[1]) },
+        value:       lambda { |_k, v| v[0] },
+        name:        lambda { |k, _v| k },
+        translation: lambda { |_k, v| translate(v[1]) }
       }[sort_mode || :translation]
     end
 
@@ -102,14 +102,12 @@ module EnumerateIt
       return value unless value.is_a? Symbol
 
       default = value.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
-      I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", :default => default)
+      I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", default: default)
     end
 
     def self.normalize_enumeration(values_hash)
       values_hash.each_pair do |key, value|
-        unless value.is_a? Array
-          values_hash[key] = [value, key]
-        end
+        values_hash[key] = [value, key] unless value.is_a? Array
       end
     end
 

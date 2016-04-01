@@ -52,7 +52,7 @@ module EnumerateIt
 
       klass.enumeration.keys.each do |key|
         if respond_to? :scope
-          scope "#{prefix_name}#{key}", lambda { where(attribute_name => klass.enumeration[key].first)}
+          scope "#{prefix_name}#{key}", lambda { where(attribute_name => klass.enumeration[key].first) }
         end
       end
     end
@@ -92,7 +92,7 @@ module EnumerateIt
     end
 
     def set_validations(attribute, options)
-      validates_inclusion_of(attribute, :in => options[:with].list, :allow_blank => true) if self.respond_to?(:validates_inclusion_of)
+      validates_inclusion_of(attribute, in: options[:with].list, allow_blank: true) if self.respond_to?(:validates_inclusion_of)
 
       if options[:required] && respond_to?(:validates_presence_of)
         opts = options[:required].is_a?(Hash) ? options[:required] : {}

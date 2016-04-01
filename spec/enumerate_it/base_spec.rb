@@ -52,11 +52,11 @@ describe EnumerateIt::Base do
  end
 
   it "creates a method that returns the enumeration specification" do
-    expect(TestEnumeration.enumeration).to eq({
-      :value_1 => ['1', 'Hey, I am 1!'],
-      :value_2 => ['2', 'Hey, I am 2!'],
-      :value_3 => ['3', 'Hey, I am 3!']
-    })
+    expect(TestEnumeration.enumeration).to eq(
+      value_1: ['1', 'Hey, I am 1!'],
+      value_2: ['2', 'Hey, I am 2!'],
+      value_3: ['3', 'Hey, I am 3!']
+    )
   end
 
   describe ".length" do
@@ -244,9 +244,9 @@ describe EnumerateIt::Base do
     end
 
     it "creates a validation for inclusion" do
-      expect(ActiveRecordStub).to receive(:validates_inclusion_of).with(:bla, :in => TestEnumeration.list, :allow_blank => true)
+      expect(ActiveRecordStub).to receive(:validates_inclusion_of).with(:bla, in: TestEnumeration.list, allow_blank: true)
       class ActiveRecordStub
-        has_enumeration_for :bla, :with => TestEnumeration
+        has_enumeration_for :bla, with: TestEnumeration
       end
     end
 
@@ -258,21 +258,21 @@ describe EnumerateIt::Base do
       it "creates a validation for presence" do
         expect(ActiveRecordStub).to receive(:validates_presence_of)
         class ActiveRecordStub
-          has_enumeration_for :bla, :with => TestEnumeration, :required => true
+          has_enumeration_for :bla, with: TestEnumeration, required: true
         end
       end
 
       it "passes the given options to the validation method" do
-        expect(ActiveRecordStub).to receive(:validates_presence_of).with(:bla, :if => :some_method)
+        expect(ActiveRecordStub).to receive(:validates_presence_of).with(:bla, if: :some_method)
         class ActiveRecordStub
-          has_enumeration_for :bla, :with => TestEnumeration, :required => { :if => :some_method }
+          has_enumeration_for :bla, with: TestEnumeration, required: { if: :some_method }
         end
       end
 
       it "do not require the attribute by default" do
         expect(ActiveRecordStub).to_not receive(:validates_presence_of)
         class ActiveRecordStub
-          has_enumeration_for :bla, :with => TestEnumeration
+          has_enumeration_for :bla, with: TestEnumeration
         end
       end
     end
