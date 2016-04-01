@@ -1,14 +1,18 @@
-#encoding: utf-8
+# encoding: utf-8
+
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe EnumerateIt do
-  before :each do
+  before do
     class TestClass
       extend EnumerateIt
       attr_accessor :foobar
-      has_enumeration_for :foobar, :with => TestEnumeration
+      has_enumeration_for :foobar, with: TestEnumeration
 
-      def initialize(foobar); @foobar = foobar; end
+      def initialize(foobar)
+        @foobar = foobar
+      end
+
       I18n.locale = :en
     end
 
@@ -62,13 +66,15 @@ describe EnumerateIt do
     end
 
     context "passing the value of each option without the human string (just the value, without an array)" do
-      before :each do
+      before do
         class TestClassForEnumerationWithoutArray
           extend EnumerateIt
           attr_accessor :foobar
-          has_enumeration_for :foobar, :with => TestEnumerationWithoutArray
+          has_enumeration_for :foobar, with: TestEnumerationWithoutArray
 
-          def initialize(foobar); @foobar = foobar; end
+          def initialize(foobar)
+            @foobar = foobar
+          end
         end
 
         @target = TestClassForEnumerationWithoutArray.new(TestEnumerationWithoutArray::VALUE_TWO)
@@ -88,7 +94,7 @@ describe EnumerateIt do
     end
 
     context "without passing the enumeration class" do
-      before :each do
+      before do
         class FooBar
           extend EnumerateIt
           attr_accessor :test_enumeration
@@ -109,12 +115,12 @@ describe EnumerateIt do
       context "when using a nested class as the enumeration" do
         before do
           class NestedEnum < EnumerateIt::Base
-            associate_values :foo => ['1', 'Fooo'], :bar => ['2', 'Barrrr']
+            associate_values foo: ['1', 'Fooo'], bar: ['2', 'Barrrr']
           end
 
           class ClassWithNestedEnum
             class NestedEnum < EnumerateIt::Base
-              associate_values :foo => ['1', 'Blerrgh'], :bar => ['2' => 'Blarghhh']
+              associate_values foo: ['1', 'Blerrgh'], bar: ['2' => 'Blarghhh']
             end
 
             extend EnumerateIt
@@ -130,21 +136,22 @@ describe EnumerateIt do
         end
 
         it "uses the inner class as the enumeration class" do
-          target = expect(ClassWithNestedEnum.new('1').nested_enum_humanize).to eq('Blerrgh')
+          expect(ClassWithNestedEnum.new('1').nested_enum_humanize).to eq('Blerrgh')
         end
       end
     end
   end
 
   context "using the :create_helpers option" do
-    before :each do
+    before do
       class TestClassWithHelper
         extend EnumerateIt
         attr_accessor :foobar
-        has_enumeration_for :foobar, :with => TestEnumeration, :create_helpers => true
+        has_enumeration_for :foobar, with: TestEnumeration, create_helpers: true
 
-        def initialize(foobar); @foobar = foobar; end
-        I18n.locale = :en
+        def initialize(foobar)
+          @foobar = foobar
+        end
       end
     end
 
@@ -167,9 +174,9 @@ describe EnumerateIt do
     end
 
     context "with :prefix option" do
-      before :each do
+      before do
         class TestClassWithHelper
-          has_enumeration_for :foobar, :with => TestEnumeration, :create_helpers => { :prefix => true }
+          has_enumeration_for :foobar, with: TestEnumeration, create_helpers: { prefix: true }
         end
       end
 
@@ -192,11 +199,11 @@ describe EnumerateIt do
     end
 
     context "with :polymorphic option" do
-      before :each do
+      before do
         class Polymorphic
           extend EnumerateIt
           attr_accessor :foo
-          has_enumeration_for :foo, :with => PolymorphicEnum, :create_helpers => { :polymorphic => true }
+          has_enumeration_for :foo, with: PolymorphicEnum, create_helpers: { polymorphic: true }
         end
       end
 
@@ -218,9 +225,9 @@ describe EnumerateIt do
       end
 
       context "and :suffix" do
-        before :each do
+        before do
           class Polymorphic
-            has_enumeration_for :foo, :with => PolymorphicEnum, :create_helpers => { :polymorphic => { :suffix => "_strategy" } }
+            has_enumeration_for :foo, with: PolymorphicEnum, create_helpers: { polymorphic: { suffix: "_strategy" } }
           end
         end
 
@@ -247,7 +254,7 @@ describe EnumerateIt do
 
         class TestClassWithScope < ActiveRecord::Base
           extend EnumerateIt
-          has_enumeration_for :foobar, :with => TestEnumeration, :create_scopes => true
+          has_enumeration_for :foobar, with: TestEnumeration, create_scopes: true
         end
       end
 
@@ -259,7 +266,7 @@ describe EnumerateIt do
 
       it "when called, the scopes create the correct query" do
         TestEnumeration.enumeration.each do |symbol, pair|
-          expect(TestClassWithScope).to receive(:where).with(:foobar => pair.first)
+          expect(TestClassWithScope).to receive(:where).with(foobar: pair.first)
           TestClassWithScope.send symbol
         end
       end
@@ -274,7 +281,7 @@ describe EnumerateIt do
 
       it "raises no errors" do
         expect {
-          GenericClass.send(:has_enumeration_for, :foobar, :with => TestEnumeration, :create_scopes => true)
+          GenericClass.send(:has_enumeration_for, :foobar, with: TestEnumeration, create_scopes: true)
         }.to_not raise_error
       end
     end
@@ -283,7 +290,7 @@ describe EnumerateIt do
       before do
         class OtherTestClass < ActiveRecord::Base
           extend EnumerateIt
-          has_enumeration_for :foobar, :with => TestEnumerationWithReservedWords, :create_scopes => { :prefix => true }
+          has_enumeration_for :foobar, with: TestEnumerationWithReservedWords, create_scopes: { prefix: true }
         end
       end
 

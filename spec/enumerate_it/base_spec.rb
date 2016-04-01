@@ -1,4 +1,5 @@
 # encoding: utf-8
+
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe EnumerateIt::Base do
@@ -228,7 +229,7 @@ describe EnumerateIt::Base do
   end
 
   context "when included in ActiveRecord::Base" do
-    before :each do
+    before do
       class ActiveRecordStub
         attr_accessor :bla
 
@@ -250,7 +251,7 @@ describe EnumerateIt::Base do
     end
 
     context "using the :required option" do
-      before :each do
+      before do
         allow(ActiveRecordStub).to receive(:validates_presence_of).and_return(true)
       end
 
