@@ -4,21 +4,21 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe EnumerateIt::Base do
   it "creates constants for each enumeration value" do
     [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2, TestEnumeration::VALUE_3].each_with_index do |constant, idx|
-      constant.should == (idx + 1).to_s
+      expect(constant).to eq((idx + 1).to_s)
     end
   end
 
   it "creates constants for camel case values" do
-    TestEnumerationWithCamelCase::IPHONE.should == 'iPhone'
+    expect(TestEnumerationWithCamelCase::IPHONE).to eq('iPhone')
   end
 
   it "creates constants replacing its dashes with underscores" do
-    TestEnumerationWithDash::PT_BR.should == 'pt-BR'
+    expect(TestEnumerationWithDash::PT_BR).to eq('pt-BR')
   end
 
   describe ".list" do
     it "creates a method that returns the allowed values in the enumeration's class" do
-      TestEnumeration.list.should == ['1', '2', '3']
+      expect(TestEnumeration.list).to eq(['1', '2', '3'])
     end
 
     context "specifying a default sort mode" do
@@ -27,40 +27,40 @@ describe EnumerateIt::Base do
       context "by value" do
         let(:sort_mode) { :value }
 
-        it { should == %w(0 1 2 3) }
+        it { should eq(%w(0 1 2 3)) }
       end
 
       context "by name" do
         let(:sort_mode) { :name }
 
-        it { should == %w(2 1 3 0) }
+        it { should eq(%w(2 1 3 0)) }
       end
 
       context "by translation" do
         let(:sort_mode) { :translation }
 
-        it { should == %w(3 2 0 1) }
+        it { should eq(%w(3 2 0 1)) }
       end
 
       context "by nothing" do
         let(:sort_mode) { :none }
 
-        it { should == %w(1 2 3 0) }
+        it { should eq(%w(1 2 3 0)) }
       end
     end
  end
 
   it "creates a method that returns the enumeration specification" do
-    TestEnumeration.enumeration.should == {
+    expect(TestEnumeration.enumeration).to eq({
       :value_1 => ['1', 'Hey, I am 1!'],
       :value_2 => ['2', 'Hey, I am 2!'],
       :value_3 => ['3', 'Hey, I am 3!']
-    }
+    })
   end
 
   describe ".length" do
     it "returns the length of the enumeration" do
-      TestEnumeration.length.should == 3
+      expect(TestEnumeration.length).to eq(3)
     end
   end
 
@@ -70,13 +70,13 @@ describe EnumerateIt::Base do
       TestEnumeration.each_translation do |translation|
         translations << translation
       end
-      translations.should == ["Hey, I am 1!", "Hey, I am 2!", "Hey, I am 3!"]
+      expect(translations).to eq(["Hey, I am 1!", "Hey, I am 2!", "Hey, I am 3!"])
     end
   end
 
   describe ".translations" do
     it "returns all translations" do
-      TestEnumeration.translations.should == ["Hey, I am 1!", "Hey, I am 2!", "Hey, I am 3!"]
+      expect(TestEnumeration.translations).to eq(["Hey, I am 1!", "Hey, I am 2!", "Hey, I am 3!"])
     end
   end
 
@@ -86,115 +86,116 @@ describe EnumerateIt::Base do
       TestEnumeration.each_value do |value|
         values << value
       end
-      values.should == TestEnumeration.list
+      expect(values).to eq(TestEnumeration.list)
     end
   end
 
   describe ".to_a" do
     it "returns an array with the values and human representations" do
-      TestEnumeration.to_a.should == [['Hey, I am 1!', '1'], ['Hey, I am 2!', '2'], ['Hey, I am 3!', '3']]
+      expect(TestEnumeration.to_a).to eq([['Hey, I am 1!', '1'], ['Hey, I am 2!', '2'], ['Hey, I am 3!', '3']])
     end
 
     it "translates the available values" do
-      TestEnumerationWithoutArray.to_a.should == [['First Value', '1'], ['Value Two', '2']]
+      I18n.locale = :en
+      expect(TestEnumerationWithoutArray.to_a).to eq([['First Value', '1'], ['Value Two', '2']])
       I18n.locale = :pt
-      TestEnumerationWithoutArray.to_a.should == [['Primeiro Valor', '1'], ['Value Two', '2']]
+      expect(TestEnumerationWithoutArray.to_a).to eq([['Primeiro Valor', '1'], ['Value Two', '2']])
     end
 
     it "can be extended from the enumeration class" do
-      TestEnumerationWithExtendedBehaviour.to_a.should == [['Second', '2'],['First','1']]
+      expect(TestEnumerationWithExtendedBehaviour.to_a).to eq([['Second', '2'],['First','1']])
     end
   end
 
   describe ".to_json" do
     it "gives a valid json back" do
       I18n.locale = :inexsistent
-      TestEnumerationWithoutArray.to_json.should == '[{"value":"1","label":"Value One"},{"value":"2","label":"Value Two"}]'
+      expect(TestEnumerationWithoutArray.to_json).to eq('[{"value":"1","label":"Value One"},{"value":"2","label":"Value Two"}]')
     end
 
     it "give translated values when available" do
       I18n.locale = :pt
-      TestEnumerationWithoutArray.to_json.should == '[{"value":"1","label":"Primeiro Valor"},{"value":"2","label":"Value Two"}]'
+      expect(TestEnumerationWithoutArray.to_json).to eq('[{"value":"1","label":"Primeiro Valor"},{"value":"2","label":"Value Two"}]')
     end
   end
 
   describe ".t" do
     it "translates a given value" do
       I18n.locale = :pt
-      TestEnumerationWithoutArray.t('1').should == 'Primeiro Valor'
+      expect(TestEnumerationWithoutArray.t('1')).to eq('Primeiro Valor')
     end
   end
 
   describe ".to_range" do
     it "returns a Range object containing the enumeration's value interval" do
-      TestEnumeration.to_range.should == ("1".."3")
+      expect(TestEnumeration.to_range).to eq("1".."3")
     end
   end
 
   describe ".values_for" do
     it "returns an array with the corresponding values for a string array representing some of the enumeration's values" do
-      TestEnumeration.values_for(%w(VALUE_1 VALUE_2)).should == [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2]
+      expect(TestEnumeration.values_for(%w(VALUE_1 VALUE_2))).to eq([TestEnumeration::VALUE_1, TestEnumeration::VALUE_2])
     end
 
     it "returns a nil value if the a constant named after one of the given strings cannot be found" do
-      TestEnumeration.values_for(%w(VALUE_1 THIS_IS_WRONG)).should == [TestEnumeration::VALUE_1, nil]
+      expect(TestEnumeration.values_for(%w(VALUE_1 THIS_IS_WRONG))).to eq([TestEnumeration::VALUE_1, nil])
     end
   end
 
   describe ".value_for" do
     it "returns the enumeration's value" do
-      TestEnumeration.value_for("VALUE_1").should == TestEnumeration::VALUE_1
+      expect(TestEnumeration.value_for("VALUE_1")).to eq(TestEnumeration::VALUE_1)
     end
 
     context "when a constant named after the received value cannot be found" do
       it "returns nil" do
-        TestEnumeration.value_for("THIS_IS_WRONG").should be_nil
+        expect(TestEnumeration.value_for("THIS_IS_WRONG")).to be_nil
       end
     end
   end
 
   describe ".value_from_key" do
     it "returns the correct value when the key is a string" do
-      TestEnumeration.value_from_key("value_1").should == TestEnumeration::VALUE_1
+      expect(TestEnumeration.value_from_key("value_1")).to eq(TestEnumeration::VALUE_1)
     end
 
     it "returns the correct value when the key is a symbol" do
-      TestEnumeration.value_from_key(:value_1).should == TestEnumeration::VALUE_1
+      expect(TestEnumeration.value_from_key(:value_1)).to eq(TestEnumeration::VALUE_1)
     end
 
     it "returns nil when the key does not exist in the enumeration" do
-      TestEnumeration.value_from_key("wrong").should be_nil
+      expect(TestEnumeration.value_from_key("wrong")).to be_nil
     end
 
     it "returns nil when the given value is nil" do
-      TestEnumeration.value_from_key(nil).should be_nil
+      expect(TestEnumeration.value_from_key(nil)).to be_nil
     end
   end
 
   describe ".keys" do
     it "returns a list with the keys used to define the enumeration" do
-      TestEnumeration.keys.should == [:value_1, :value_2, :value_3]
+      expect(TestEnumeration.keys).to eq([:value_1, :value_2, :value_3])
     end
   end
 
   describe ".key_for" do
     it "returns the key for the given value inside the enumeration" do
-      TestEnumeration.key_for(TestEnumeration::VALUE_1).should == :value_1
+      expect(TestEnumeration.key_for(TestEnumeration::VALUE_1)).to eq(:value_1)
     end
 
     it "returns nil if the enumeration does not have the given value" do
-      TestEnumeration.key_for("foo").should be_nil
+      expect(TestEnumeration.key_for("foo")).to be_nil
     end
   end
 
   context 'associate values with a list' do
     it "creates constants for each enumeration value" do
-      TestEnumerationWithList::FIRST.should == "first"
-      TestEnumerationWithList::SECOND.should == "second"
+      expect(TestEnumerationWithList::FIRST).to eq("first")
+      expect(TestEnumerationWithList::SECOND).to eq("second")
     end
 
     it "returns an array with the values and human representations" do
-      TestEnumerationWithList.to_a.should == [['First', 'first'], ['Second', 'second']]
+      expect(TestEnumerationWithList.to_a).to eq([['First', 'first'], ['Second', 'second']])
     end
   end
 
@@ -204,25 +205,25 @@ describe EnumerateIt::Base do
     context "by value" do
       let(:sort_mode) { :value }
 
-      it { should == [["jkl", "0"], ["xyz", "1"], ["fgh", "2"], ["abc", "3"]] }
+      it { is_expected.to eq([["jkl", "0"], ["xyz", "1"], ["fgh", "2"], ["abc", "3"]]) }
     end
 
     context "by name" do
       let(:sort_mode) { :name }
 
-      it { should == [["fgh", "2"], ["xyz", "1"], ["abc", "3"], ["jkl", "0"]] }
+      it { is_expected.to eq([["fgh", "2"], ["xyz", "1"], ["abc", "3"], ["jkl", "0"]]) }
     end
 
     context "by translation" do
       let(:sort_mode) { :translation }
 
-      it { should == [["abc", "3"] ,["fgh", "2"], ["jkl", "0"], ["xyz", "1"]] }
+      it { is_expected.to eq([["abc", "3"] ,["fgh", "2"], ["jkl", "0"], ["xyz", "1"]]) }
     end
 
     context "by nothing" do
       let(:sort_mode) { :none }
 
-      it { should == [["xyz", "1"], ["fgh", "2"], ["abc", "3"], ["jkl", "0"] ] }
+      it { is_expected.to eq([["xyz", "1"], ["fgh", "2"], ["abc", "3"], ["jkl", "0"] ]) }
     end
   end
 
@@ -237,12 +238,12 @@ describe EnumerateIt::Base do
         end
       end
 
-      ActiveRecordStub.stub(:validates_inclusion_of).and_return(true)
+      allow(ActiveRecordStub).to receive(:validates_inclusion_of).and_return(true)
       ActiveRecordStub.extend EnumerateIt
     end
 
     it "creates a validation for inclusion" do
-      ActiveRecordStub.should_receive(:validates_inclusion_of).with(:bla, :in => TestEnumeration.list, :allow_blank => true)
+      expect(ActiveRecordStub).to receive(:validates_inclusion_of).with(:bla, :in => TestEnumeration.list, :allow_blank => true)
       class ActiveRecordStub
         has_enumeration_for :bla, :with => TestEnumeration
       end
@@ -250,25 +251,25 @@ describe EnumerateIt::Base do
 
     context "using the :required option" do
       before :each do
-        ActiveRecordStub.stub(:validates_presence_of).and_return(true)
+        allow(ActiveRecordStub).to receive(:validates_presence_of).and_return(true)
       end
 
       it "creates a validation for presence" do
-        ActiveRecordStub.should_receive(:validates_presence_of)
+        expect(ActiveRecordStub).to receive(:validates_presence_of)
         class ActiveRecordStub
           has_enumeration_for :bla, :with => TestEnumeration, :required => true
         end
       end
 
       it "passes the given options to the validation method" do
-        ActiveRecordStub.should_receive(:validates_presence_of).with(:bla, :if => :some_method)
+        expect(ActiveRecordStub).to receive(:validates_presence_of).with(:bla, :if => :some_method)
         class ActiveRecordStub
           has_enumeration_for :bla, :with => TestEnumeration, :required => { :if => :some_method }
         end
       end
 
       it "do not require the attribute by default" do
-        ActiveRecordStub.should_not_receive(:validates_presence_of)
+        expect(ActiveRecordStub).to_not receive(:validates_presence_of)
         class ActiveRecordStub
           has_enumeration_for :bla, :with => TestEnumeration
         end
