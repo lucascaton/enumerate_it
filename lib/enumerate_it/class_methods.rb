@@ -21,6 +21,7 @@ module EnumerateIt
     end
 
     private
+
     def store_enumeration(klass, attribute)
       enumerations[attribute] = klass
     end
@@ -45,6 +46,9 @@ module EnumerateIt
           end
         end
       end
+
+      category_helpers = helpers.is_a?(Hash) && helpers[:category]
+      create_category_helper_methods(klass, attribute_name, helpers) if category_helpers
     end
 
     def create_scopes(klass, attribute_name, helpers)
@@ -80,6 +84,19 @@ module EnumerateIt
           value = self.public_send(attribute_name)
 
           klass.const_get(klass.key_for(value).to_s.camelize).new if value
+        end
+      end
+    end
+
+    def create_category_helper_methods(klass, attribute_name, helpers)
+      prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
+
+      class_eval do
+        klass.categories.keys.each do |category|
+          define_method "#{prefix_name}#{category}?" do
+            list = "#{klass}::#{category.to_s.camelize}".constantize.list
+            list.include? self.send(attribute_name)
+          end
         end
       end
     end

@@ -2,3 +2,8 @@ pt:
   enumerations:
     test_enumeration_without_array:
       value_one: Primeiro Valor
+
+    enum_with_categories:
+      bird: 'Pássaro'
+      dog: 'Cachorro'
+      cat: 'Gato'

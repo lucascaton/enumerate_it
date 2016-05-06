@@ -2,6 +2,7 @@
 module EnumerateIt
   class Base
     @@registered_enumerations = {}
+    @@registered_categories = {}
 
     class << self
       attr_reader :sort_mode
@@ -12,6 +13,13 @@ module EnumerateIt
 
       register_enumeration normalize_enumeration(values_hash)
       values_hash.each_pair { |value_name, attributes| define_enumeration_constant value_name, attributes[0] }
+    end
+
+    def self.categories(hash = nil)
+      return @@registered_categories[self] unless hash
+
+      register_category hash
+      create_category_methods(hash)
     end
 
     def self.sort_by(sort_mode)
@@ -115,8 +123,31 @@ module EnumerateIt
       @@registered_enumerations[self] = values_hash
     end
 
+    def self.register_category(hash)
+      @@registered_categories[self] = hash
+    end
+
     def self.define_enumeration_constant(name, value)
       const_set name.to_s.gsub(/-/, '_').upcase, value
+    end
+
+    def self.create_category_methods(hash)
+      hash.each do |category, values|
+        values = [values] unless values.is_a?(Array)
+
+        # create module
+        self.const_set(category.to_s.camelize.to_sym, Module.new).class_eval do
+          # create #list method
+          self.define_singleton_method(:list) do
+            values.map { |v| parent.value_from_key(v) }
+          end
+
+          # create #to_a method
+          self.define_singleton_method(:to_a) do
+            self.list.map { |l| [parent.t(l), l] }
+          end
+        end
+      end
     end
   end
 end

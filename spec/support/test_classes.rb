@@ -65,6 +65,11 @@ class PolymorphicEnum < EnumerateIt::Base
   end
 end
 
+class EnumWithCategories < EnumerateIt::Base
+  associate_values :bird, :dog, :cat
+  categories mammal: [:dog, :cat], oviparous: :bird
+end
+
 class BaseClass
   extend EnumerateIt
   has_enumeration_for :foobar, with: TestEnumeration

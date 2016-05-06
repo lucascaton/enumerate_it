@@ -22,6 +22,13 @@ describe EnumerateIt::Base do
       expect(TestEnumeration.list).to eq(['1', '2', '3'])
     end
 
+    context 'with categories' do
+      it 'list by category' do
+        expect(EnumWithCategories::Mammal.list).to eq(['dog', 'cat'])
+        expect(EnumWithCategories::Oviparous.list).to eq(['bird'])
+      end
+    end
+
     context "specifying a default sort mode" do
       subject { create_enumeration_class_with_sort_mode(sort_mode).list }
 
@@ -49,7 +56,7 @@ describe EnumerateIt::Base do
         it { should eq(%w(1 2 3 0)) }
       end
     end
- end
+  end
 
   it "creates a method that returns the enumeration specification" do
     expect(TestEnumeration.enumeration).to eq(
@@ -105,6 +112,18 @@ describe EnumerateIt::Base do
 
     it "can be extended from the enumeration class" do
       expect(TestEnumerationWithExtendedBehaviour.to_a).to eq([['Second', '2'],['First','1']])
+    end
+
+    context 'with categories' do
+      it 'returns an array by category' do
+        I18n.locale = :en
+        expect(EnumWithCategories::Mammal.to_a).to eq([['Dog', 'dog'], ['Cat', 'cat']])
+        expect(EnumWithCategories::Oviparous.to_a).to eq([['Bird', 'bird']])
+
+        I18n.locale = :pt
+        expect(EnumWithCategories::Mammal.to_a).to eq([['Cachorro', 'dog'], ['Gato', 'cat']])
+        expect(EnumWithCategories::Oviparous.to_a).to eq([['Pássaro', 'bird']])
+      end
     end
   end
 

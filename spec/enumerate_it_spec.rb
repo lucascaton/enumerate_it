@@ -243,6 +243,32 @@ describe EnumerateIt do
         end
       end
     end
+
+    context 'with :category option' do
+      context 'category without prefix' do
+        it 'creates helpers methods with question marks for each category option' do
+          class TestClassWithHelper
+            has_enumeration_for :foobar, with: EnumWithCategories, create_helpers: { category: true }
+          end
+
+          target = TestClassWithHelper.new(EnumWithCategories::BIRD)
+          expect(target).to be_bird
+          expect(target).to be_oviparous
+        end
+      end
+
+      context 'category with prefix' do
+        it 'creates helpers methods with question marks and prefixes for each category option' do
+          class TestClassWithHelper
+            has_enumeration_for :foobar, with: EnumWithCategories, create_helpers: { category: true, prefix: true }
+          end
+
+          target = TestClassWithHelper.new(EnumWithCategories::BIRD)
+          expect(target).to be_foobar_bird
+          expect(target).to be_foobar_oviparous
+        end
+      end
+    end
   end
 
   describe "using the :create_scopes option" do
