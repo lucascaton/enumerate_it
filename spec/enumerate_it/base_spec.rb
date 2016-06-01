@@ -288,7 +288,7 @@ describe EnumerateIt::Base do
       it "doesn't create a validation for presence" do
         expect(ActiveRecordStub).to_not receive(:validates_presence_of)
         class ActiveRecordStub
-          has_enumeration_for :bla, with: TestEnumeration, skip_validation: true
+          has_enumeration_for :bla, with: TestEnumeration, require: true, skip_validation: true
         end
       end
     end
