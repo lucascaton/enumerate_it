@@ -24,6 +24,7 @@ module EnumerateIt
     end
 
     private
+
     def store_enumeration(klass, attribute)
       enumerations[attribute] = klass
     end
