@@ -405,6 +405,18 @@ This will create:
     #=> "can't be blank"
     ```
 
+* If you pass the `:skip_validation` option as `true`, it will not create any validations:
+
+    ```ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, with: RelationshipStatus, skip_validation: true
+    end
+
+    p = Person.new(relationship_status: 1_000_000)
+    p.valid?
+    #=> true
+    ```
+
 Remember that you can add validations to any kind of class and not only to
 those derived from ActiveRecord::Base.
 

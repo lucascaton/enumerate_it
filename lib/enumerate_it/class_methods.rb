@@ -5,9 +5,12 @@ module EnumerateIt
       self.enumerations = self.enumerations.dup
 
       define_enumeration_class attribute, options
-      set_validations attribute, options
       create_enumeration_humanize_method options[:with], attribute
       store_enumeration options[:with], attribute
+
+      unless options[:skip_validation]
+        set_validations attribute, options
+      end
 
       if options[:create_helpers]
         create_helper_methods options[:with], attribute, options[:create_helpers]
