@@ -195,6 +195,23 @@ The `sort_by` methods accept one of the following values:
 *   `:none`: Will return values in order that was passed to associate_values
     call.
 
+
+### Defining a last value
+
+Sometimes it's needed to set an value that will always be on the last position of the sorted list.
+To do this, we can use `set_last_value` with the associated value we want on last position
+
+```ruby
+class RelationshipStatus < EnumerateIt::Base
+  associate_values married: 1, single: 2, other: 3, widowed: 4
+
+  set_last_value :value
+end
+```
+
+The `set_last_value` method accepts only one attribute and need to be an associated value.
+
+
 ## Using enumerations
 
 The cool part is that you can use these enumerations with any class, be it an

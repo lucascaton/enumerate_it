@@ -82,3 +82,16 @@ def create_enumeration_class_with_sort_mode(sort_mode)
     )
   end
 end
+
+def create_enumeration_class_setting_last_value(last_value)
+  Class.new(EnumerateIt::Base) do
+    set_last_value last_value
+
+    associate_values(
+      foo:  ["1", "xyz"],
+      bar:  ["2", "fgh"],
+      omg:  ["3", "abc"],
+      zomg: ["0", "jkl"]
+    )
+  end
+end

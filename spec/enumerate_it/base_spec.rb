@@ -49,6 +49,14 @@ describe EnumerateIt::Base do
         it { should eq(%w(1 2 3 0)) }
       end
     end
+
+    context "specifying a last_value" do
+      subject { create_enumeration_class_setting_last_value(last_value).list }
+
+      let(:last_value) { :bar }
+
+      it { should eq(%w(3 0 1 2)) }
+    end
  end
 
   it "creates a method that returns the enumeration specification" do
