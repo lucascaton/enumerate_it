@@ -4,7 +4,7 @@ module EnumerateIt
     @@registered_enumerations = {}
 
     class << self
-      attr_reader :sort_mode
+      attr_reader :sort_mode, :last_value
     end
 
     def self.associate_values(*args)
@@ -16,6 +16,10 @@ module EnumerateIt
 
     def self.sort_by(sort_mode)
       @sort_mode = sort_mode
+    end
+
+    def self.set_last_value(last_value)
+      @last_value = last_value
     end
 
     def self.list
@@ -87,7 +91,9 @@ module EnumerateIt
     def self.sorted_map
       return enumeration if sort_mode == :none
 
-      enumeration.sort_by { |k, v| sort_lambda.call(k, v) }
+      sorted = enumeration.sort_by { |k, v| sort_lambda.call(k, v) }
+      sorted << sorted.delete_at(sorted.index { |i| i[0] == last_value }) if last_value
+      return sorted
     end
 
     def self.sort_lambda
