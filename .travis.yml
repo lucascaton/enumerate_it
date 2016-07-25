@@ -7,8 +7,8 @@ cache: bundler
 rvm:
   - 1.9.3
   - 2.0.0
-  - 2.1.5
-  - 2.2.1
+  - 2.1.10
+  - 2.2.5
   - 2.3.1
 
 gemfile:
@@ -18,3 +18,14 @@ gemfile:
   - gemfiles/activesupport_4_0.gemfile
   - gemfiles/activesupport_4_1.gemfile
   - gemfiles/activesupport_4_2.gemfile
+  - gemfiles/activesupport_5_0.gemfile
+
+matrix:
+  # Rails 5 requires Ruby version 2.2+
+  exclude:
+  - rvm: 1.9.3
+    gemfile: gemfiles/activesupport_5_0.gemfile
+  - rvm: 2.0.0
+    gemfile: gemfiles/activesupport_5_0.gemfile
+  - rvm: 2.1.10
+    gemfile: gemfiles/activesupport_5_0.gemfile

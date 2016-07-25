@@ -248,9 +248,7 @@ describe EnumerateIt do
   describe "using the :create_scopes option" do
     context "if the hosting class responds to :scope" do
       before do
-        if ActiveSupport::VERSION::STRING =~ /3\.1/
-          Object.send :remove_const, 'TestClassWithScope' if defined?(TestClassWithScope)
-        end
+        Object.send :remove_const, 'TestClassWithScope' if defined?(TestClassWithScope)
 
         class TestClassWithScope < ActiveRecord::Base
           extend EnumerateIt
@@ -267,7 +265,7 @@ describe EnumerateIt do
       it "when called, the scopes create the correct query" do
         TestEnumeration.enumeration.each do |symbol, pair|
           expect(TestClassWithScope).to receive(:where).with(foobar: pair.first)
-          TestClassWithScope.send symbol
+          TestClassWithScope.send(symbol)
         end
       end
     end
