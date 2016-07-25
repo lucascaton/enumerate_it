@@ -13,8 +13,8 @@ module EnumerateIt
       end
 
       if options[:create_helpers]
-        create_helper_methods options[:with], attribute, options[:create_helpers]
-        create_mutator_methods options[:with], attribute, options[:create_helpers]
+        create_helper_methods options[:with],      attribute, options[:create_helpers]
+        create_mutator_methods options[:with],     attribute, options[:create_helpers]
         create_polymorphic_methods options[:with], attribute, options[:create_helpers]
       end
 
