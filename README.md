@@ -51,9 +51,7 @@ Changes are maintained under [Releases](https://github.com/lucascaton/enumerate_
 
 ## Creating enumerations
 
-Enumerations are created as models, but you can put them anywhere in your
-application. In Rails applications, you should put them inside
-`app/enumerations` folder.
+Enumerations are created as classes and you should put them inside `app/enumerations` folder.
 
 ```ruby
 class RelationshipStatus < EnumerateIt::Base
@@ -187,13 +185,10 @@ end
 
 The `sort_by` methods accept one of the following values:
 
-*   `:translation`: The default behavior, will sort the returned values based
-    on translations.
-*   `:value`: Will sort the returned values based on values.
-*   `:name`: Will sort the returned values based on the name of each
-    enumeration option.
-*   `:none`: Will return values in order that was passed to associate_values
-    call.
+* `:translation`: The default behavior, will sort the returned values based on translations.
+* `:value`: Will sort the returned values based on values.
+* `:name`: Will sort the returned values based on the name of each enumeration option.
+* `:none`: Will return values in order that was passed to associate_values call.
 
 ## Using enumerations
 
