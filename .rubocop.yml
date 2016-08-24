@@ -1,0 +1,12 @@
+require: rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 2.3
+  DisplayCopNames: true
+
+  Include:
+    - '**/Appraisals'
+    - '**/Gemfile'
+    - '**/Rakefile'
+  Exclude:
+    - 'lib/generators/enumerate_it/enum/templates/**/*'
