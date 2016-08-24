@@ -12,20 +12,20 @@ rvm:
   - 2.3.1
 
 gemfile:
-  - gemfiles/activesupport_3_0.gemfile
-  - gemfiles/activesupport_3_1.gemfile
-  - gemfiles/activesupport_3_2.gemfile
-  - gemfiles/activesupport_4_0.gemfile
-  - gemfiles/activesupport_4_1.gemfile
-  - gemfiles/activesupport_4_2.gemfile
-  - gemfiles/activesupport_5_0.gemfile
+  - gemfiles/rails_3_0.gemfile
+  - gemfiles/rails_3_1.gemfile
+  - gemfiles/rails_3_2.gemfile
+  - gemfiles/rails_4_0.gemfile
+  - gemfiles/rails_4_1.gemfile
+  - gemfiles/rails_4_2.gemfile
+  - gemfiles/rails_5_0.gemfile
 
 matrix:
   # Rails 5 requires Ruby version 2.2+
   exclude:
   - rvm: 1.9.3
-    gemfile: gemfiles/activesupport_5_0.gemfile
+    gemfile: gemfiles/rails_5_0.gemfile
   - rvm: 2.0.0
-    gemfile: gemfiles/activesupport_5_0.gemfile
+    gemfile: gemfiles/rails_5_0.gemfile
   - rvm: 2.1.10
-    gemfile: gemfiles/activesupport_5_0.gemfile
+    gemfile: gemfiles/rails_5_0.gemfile
