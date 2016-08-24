@@ -49,7 +49,7 @@ describe EnumerateIt::Base do
         it { should eq(%w(1 2 3 0)) }
       end
     end
- end
+  end
 
   it "creates a method that returns the enumeration specification" do
     expect(TestEnumeration.enumeration).to eq(
@@ -234,8 +234,8 @@ describe EnumerateIt::Base do
         attr_accessor :bla
 
         class << self
-          def validates_inclusion_of(options); true; end
-          def validates_presence_of; true; end
+          def validates_inclusion_of(_); true; end
+          def validates_presence_of;     true; end
         end
       end
 

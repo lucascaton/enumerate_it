@@ -82,41 +82,43 @@ module EnumerateIt
       (list.min..list.max)
     end
 
-    private
+    class << self
+      def translate(value)
+        return value unless value.is_a? Symbol
 
-    def self.sorted_map
-      return enumeration if sort_mode == :none
-
-      enumeration.sort_by { |k, v| sort_lambda.call(k, v) }
-    end
-
-    def self.sort_lambda
-      {
-        value:       lambda { |_k, v| v[0] },
-        name:        lambda { |k, _v| k },
-        translation: lambda { |_k, v| translate(v[1]) }
-      }[sort_mode || :translation]
-    end
-
-    def self.translate(value)
-      return value unless value.is_a? Symbol
-
-      default = value.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
-      I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", default: default)
-    end
-
-    def self.normalize_enumeration(values_hash)
-      values_hash.each_pair do |key, value|
-        values_hash[key] = [value, key] unless value.is_a? Array
+        default = value.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
+        I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", default: default)
       end
-    end
 
-    def self.register_enumeration(values_hash)
-      @@registered_enumerations[self] = values_hash
-    end
+      private
 
-    def self.define_enumeration_constant(name, value)
-      const_set name.to_s.gsub(/-/, '_').upcase, value
+      def sorted_map
+        return enumeration if sort_mode == :none
+
+        enumeration.sort_by { |k, v| sort_lambda.call(k, v) }
+      end
+
+      def sort_lambda
+        {
+          value:       lambda { |_k, v| v[0] },
+          name:        lambda { |k, _v| k },
+          translation: lambda { |_k, v| translate(v[1]) }
+        }[sort_mode || :translation]
+      end
+
+      def normalize_enumeration(values_hash)
+        values_hash.each_pair do |key, value|
+          values_hash[key] = [value, key] unless value.is_a? Array
+        end
+      end
+
+      def register_enumeration(values_hash)
+        @@registered_enumerations[self] = values_hash
+      end
+
+      def define_enumeration_constant(name, value)
+        const_set name.to_s.gsub(/-/, '_').upcase, value
+      end
     end
   end
 end
