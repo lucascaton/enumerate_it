@@ -1,12 +1,14 @@
 # encoding: utf-8
 
-require 'bundler'
+require 'rspec/core/rake_task'
+require 'appraisal'
+
 Bundler::GemHelper.install_tasks
 
-require 'rspec/core'
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = FileList['spec/**/*_spec.rb']
-end
+RSpec::Core::RakeTask.new(:spec)
 
-task default: :spec
+if ENV['APPRAISAL_INITIALIZED'] || ENV['TRAVIS']
+  task default: :spec
+else
+  task default: :appraisal
+end

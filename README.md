@@ -494,7 +494,7 @@ their locale files. Take a look at how to use it running:
 rails generate enumerate_it:enum --help
 ```
 
-## Supported Ruby and Rails (ActiveSupport) versions
+## Supported Ruby and Rails versions
 
 Check [travis config file](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
 
@@ -516,7 +516,7 @@ codes. I had both situations in my legacy database.
 *   Make your feature addition or bug fix.
 *   Add tests for it. This is important so I don't break it in a future
     version unintentionally.
-*   Run the tests agaist all supported versions: `$ appraisal rake`.
+*   Run the tests agaist all supported versions: `$ rake`.
 *   Commit, do not mess with Rakefile, version, or history. (if you want to
     have your own version, that is fine but bump version in a commit by itself
     I can ignore when I pull)
