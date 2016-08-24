@@ -26,8 +26,8 @@ matrix:
   # Rails 5 requires Ruby version 2.2+
   exclude:
   - rvm: 1.9.3
-    gemfile: gemfiles/rails_5_0.gemfile
+    gemfile: gemfiles/rails_5.0.gemfile
   - rvm: 2.0.0
-    gemfile: gemfiles/rails_5_0.gemfile
+    gemfile: gemfiles/rails_5.0.gemfile
   - rvm: 2.1.10
-    gemfile: gemfiles/rails_5_0.gemfile
+    gemfile: gemfiles/rails_5.0.gemfile
