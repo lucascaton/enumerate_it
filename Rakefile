@@ -1,14 +1,14 @@
 # encoding: utf-8
 
-require 'rspec/core/rake_task'
-require 'appraisal'
+if ENV['APPRAISAL_INITIALIZED'] || ENV['TRAVIS'] || RUBY_VERSION < '2.0.0'
+  require 'rspec/core/rake_task'
 
-Bundler::GemHelper.install_tasks
+  Bundler::GemHelper.install_tasks
+  RSpec::Core::RakeTask.new(:spec)
 
-RSpec::Core::RakeTask.new(:spec)
-
-if ENV['APPRAISAL_INITIALIZED'] || ENV['TRAVIS']
   task default: :spec
 else
+  require 'appraisal'
+
   task default: :appraisal
 end
