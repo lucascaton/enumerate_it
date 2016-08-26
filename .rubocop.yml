@@ -10,6 +10,9 @@ AllCops:
   Exclude:
     - 'lib/generators/enumerate_it/enum/templates/**/*'
 
+Lint/EndAlignment:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 100
 
@@ -19,7 +22,13 @@ Style/AlignHash:
 Style/Documentation:
   Enabled: false
 
+Style/ElseAlignment:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/IndentationWidth:
   Enabled: false
 
 Style/MultilineMethodCallIndentation:
