@@ -18,7 +18,7 @@ module EnumerateIt
       set_validations(attribute, options) unless options[:skip_validation]
 
       if options[:create_helpers]
-        %i(create_helper_methods create_mutator_methods create_polymorphic_methods).each do |method|
+        %w(create_helper_methods create_mutator_methods create_polymorphic_methods).each do |method|
           send(method, options[:with], attribute, options[:create_helpers])
         end
       end
