@@ -2,8 +2,8 @@ require File.expand_path('../lib/enumerate_it/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.authors       = ['Cássio Marques', 'Lucas Caton']
-  gem.description   = 'Enumerations for Ruby with some magic powers!'
   gem.summary       = 'Ruby Enumerations'
+  gem.description   = 'Enumerations for Ruby with some magic powers!'
   gem.homepage      = 'https://github.com/lucascaton/enumerate_it'
 
   gem.files         = `git ls-files`.split("\n")
