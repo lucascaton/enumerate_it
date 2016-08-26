@@ -1,7 +1,6 @@
 require: rubocop-rspec
 
 AllCops:
-  TargetRubyVersion: 2.3
   DisplayCopNames: true
 
   Include:
@@ -10,3 +9,22 @@ AllCops:
     - '**/Rakefile'
   Exclude:
     - 'lib/generators/enumerate_it/enum/templates/**/*'
+
+Metrics/LineLength:
+  Max: 100
+
+Style/AlignHash:
+  EnforcedLastArgumentHashStyle: ignore_implicit
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Style/PredicateName:
+  Exclude:
+    - 'lib/enumerate_it/class_methods.rb'

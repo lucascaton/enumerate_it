@@ -9,14 +9,14 @@ module EnumerateIt
 
       class_option :lang, type: 'string', desc: 'Lang to use in i18n', default: 'en'
 
-      desc "Creates a locale file on config/locales"
+      desc 'Creates a locale file on config/locales'
       def create_locale
-        template "locale.yml", File.join('config/locales', "#{singular_name}.yml")
+        template 'locale.yml', File.join('config/locales', "#{singular_name}.yml")
       end
 
-      desc "Creates an initializer file on config/initializers that extends ActiveRecord::Base with Enumerate_it"
+      desc 'Creates an initializer file that extends ActiveRecord::Base with Enumerate_it'
       def create_enumerate_it
-        template "enumerate_it.rb", File.join('app/enumerations', "#{singular_name}.rb")
+        template 'enumerate_it.rb', File.join('app/enumerations', "#{singular_name}.rb")
       end
 
       protected
@@ -37,9 +37,7 @@ module EnumerateIt
         if attributes.first.type == :string
           attributes.map(&:name)
         else
-          attributes.map do |attribute|
-            [attribute.name, attribute.type]
-          end
+          attributes.map { |attribute| [attribute.name, attribute.type] }
         end
       end
     end

@@ -75,10 +75,10 @@ def create_enumeration_class_with_sort_mode(sort_mode)
     sort_by sort_mode
 
     associate_values(
-      foo:  ["1", "xyz"],
-      bar:  ["2", "fgh"],
-      omg:  ["3", "abc"],
-      zomg: ["0", "jkl"]
+      foo:  %w(1 xyz),
+      bar:  %w(2 fgh),
+      omg:  %w(3 abc),
+      zomg: %w(0 jkl)
     )
   end
 end

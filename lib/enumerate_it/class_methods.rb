@@ -1,29 +1,30 @@
 # encoding: utf-8
+
 module EnumerateIt
   module ClassMethods
     def has_enumeration_for(attribute, options = {})
-      self.enumerations = self.enumerations.dup
+      self.enumerations = enumerations.dup
 
-      define_enumeration_class attribute, options
-      create_enumeration_humanize_method options[:with], attribute
-      store_enumeration options[:with], attribute
+      define_enumeration_class(attribute, options)
+      create_enumeration_humanize_method(options[:with], attribute)
+      store_enumeration(options[:with], attribute)
 
-      unless options[:skip_validation]
-        set_validations attribute, options
-      end
-
-      if options[:create_helpers]
-        create_helper_methods options[:with],      attribute, options[:create_helpers]
-        create_mutator_methods options[:with],     attribute, options[:create_helpers]
-        create_polymorphic_methods options[:with], attribute, options[:create_helpers]
-      end
-
-      if options[:create_scopes]
-        create_scopes options[:with], attribute, options[:create_scopes]
-      end
+      handle_options(attribute, options)
     end
 
     private
+
+    def handle_options(attribute, options)
+      set_validations(attribute, options) unless options[:skip_validation]
+
+      if options[:create_helpers]
+        %i(create_helper_methods create_mutator_methods create_polymorphic_methods).each do |method|
+          send(method, options[:with], attribute, options[:create_helpers])
+        end
+      end
+
+      create_scopes options[:with], attribute, options[:create_scopes] if options[:create_scopes]
+    end
 
     def store_enumeration(klass, attribute)
       enumerations[attribute] = klass
@@ -32,7 +33,7 @@ module EnumerateIt
     def create_enumeration_humanize_method(klass, attribute_name)
       class_eval do
         define_method "#{attribute_name}_humanize" do
-          values = klass.enumeration.values.detect { |v| v[0] == self.send(attribute_name) }
+          values = klass.enumeration.values.detect { |v| v[0] == send(attribute_name) }
 
           values ? klass.translate(values[1]) : nil
         end
@@ -45,7 +46,7 @@ module EnumerateIt
       class_eval do
         klass.enumeration.keys.each do |option|
           define_method "#{prefix_name}#{option}?" do
-            self.send(attribute_name) == klass.enumeration[option].first
+            send(attribute_name) == klass.enumeration[option].first
           end
         end
       end
@@ -56,7 +57,7 @@ module EnumerateIt
 
       klass.enumeration.keys.each do |key|
         if respond_to? :scope
-          scope "#{prefix_name}#{key}", lambda { where(attribute_name => klass.enumeration[key].first) }
+          scope "#{prefix_name}#{key}", -> { where(attribute_name => klass.enumeration[key].first) }
         end
       end
     end
@@ -67,7 +68,7 @@ module EnumerateIt
       class_eval do
         klass.enumeration.each_pair do |key, values|
           define_method "#{prefix_name}#{key}!" do
-            self.send "#{attribute_name}=", values.first
+            send "#{attribute_name}=", values.first
           end
         end
       end
@@ -77,11 +78,11 @@ module EnumerateIt
       return unless helpers.is_a?(Hash) && helpers[:polymorphic]
       options = helpers[:polymorphic]
       suffix = options.is_a?(Hash) && options[:suffix]
-      suffix ||= "_object"
+      suffix ||= '_object'
 
       class_eval do
         define_method "#{attribute_name}#{suffix}" do
-          value = self.public_send(attribute_name)
+          value = public_send(attribute_name)
 
           klass.const_get(klass.key_for(value).to_s.camelize).new if value
         end
@@ -89,14 +90,21 @@ module EnumerateIt
     end
 
     def define_enumeration_class(attribute, options)
-      if options[:with].nil?
-        inner_enum_class_name = attribute.to_s.camelize.to_sym
-        options[:with] = self.constants.include?(inner_enum_class_name) ? self.const_get(inner_enum_class_name) : attribute.to_s.camelize.constantize
+      return if options[:with]
+
+      inner_enum_class_name = attribute.to_s.camelize.to_sym
+
+      options[:with] = if constants.include?(inner_enum_class_name)
+        const_get(inner_enum_class_name)
+      else
+        attribute.to_s.camelize.constantize
       end
     end
 
     def set_validations(attribute, options)
-      validates_inclusion_of(attribute, in: options[:with].list, allow_blank: true) if self.respond_to?(:validates_inclusion_of)
+      if respond_to?(:validates_inclusion_of)
+        validates_inclusion_of(attribute, in: options[:with].list, allow_blank: true)
+      end
 
       if options[:required] && respond_to?(:validates_presence_of)
         opts = options[:required].is_a?(Hash) ? options[:required] : {}

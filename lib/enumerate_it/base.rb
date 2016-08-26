@@ -100,9 +100,9 @@ module EnumerateIt
 
       def sort_lambda
         {
-          value:       lambda { |_k, v| v[0] },
-          name:        lambda { |k, _v| k },
-          translation: lambda { |_k, v| translate(v[1]) }
+          value:       ->(_k, v) { v[0] },
+          name:        ->(k, _v) { k },
+          translation: ->(_k, v) { translate(v[1]) }
         }[sort_mode || :translation]
       end
 
@@ -122,7 +122,12 @@ module EnumerateIt
       end
 
       def values_hash(args)
-        args.first.is_a?(Hash) ? args.first : args.each_with_object({}) { |v, h| h[v] = v.to_s; h }
+        return args.first if args.first.is_a?(Hash)
+
+        args.each_with_object({}) do |value, hash|
+          hash[value] = value.to_s
+          hash
+        end
       end
     end
   end
