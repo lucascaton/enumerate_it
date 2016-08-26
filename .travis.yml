@@ -4,7 +4,9 @@ sudo: false
 
 cache: bundler
 
-script: "((if [[ ruby -e 'exit RUBY_VERSION > \'2.2.0\'' ]]; then bundle exec rubocop; else return 0; fi) && bundle exec rake spec)"
+script:
+- ruby -e "RUBY_VERSION > '2.2.0' ? system('bundle exec rubocop') : exit(0)"
+- bundle exec rake spec
 
 rvm:
   - 1.9.3
