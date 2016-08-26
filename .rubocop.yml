@@ -9,6 +9,7 @@ AllCops:
     - '**/Rakefile'
   Exclude:
     - 'lib/generators/enumerate_it/enum/templates/**/*'
+    - 'gemfiles/vendor/**/*'
 
 Lint/EndAlignment:
   Enabled: false
