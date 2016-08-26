@@ -1,93 +1,93 @@
 # encoding: utf-8
+
 module EnumerateIt
   class Base
-    @@registered_enumerations = {}
-
     class << self
       attr_reader :sort_mode
-    end
 
-    def self.associate_values(*args)
-      values_hash = args.first.is_a?(Hash) ? args.first : args.inject({}) { |h, v| h[v] = v.to_s; h }
+      def associate_values(*args)
+        values = values_hash(args)
 
-      register_enumeration normalize_enumeration(values_hash)
-      values_hash.each_pair { |value_name, attributes| define_enumeration_constant value_name, attributes[0] }
-    end
+        register_enumeration(normalize_enumeration(values))
 
-    def self.sort_by(sort_mode)
-      @sort_mode = sort_mode
-    end
+        values.each_pair do |value_name, attributes|
+          define_enumeration_constant value_name, attributes[0]
+        end
+      end
 
-    def self.list
-      sorted_map.map { |_k, v| v.first }
-    end
+      def sort_by(sort_mode)
+        @sort_mode = sort_mode
+      end
 
-    def self.enumeration
-      @@registered_enumerations[self]
-    end
+      def list
+        sorted_map.map { |_k, v| v.first }
+      end
 
-    def self.to_a
-      sorted_map.map { |_k, v| [translate(v[1]), v[0]] }
-    end
+      def enumeration
+        @registered_enumerations[self]
+      end
 
-    def self.length
-      list.length
-    end
+      def to_a
+        sorted_map.map { |_k, v| [translate(v[1]), v[0]] }
+      end
 
-    def self.each_translation
-      each_value { |value| yield t(value) }
-    end
+      def length
+        list.length
+      end
 
-    def self.translations
-      list.map { |value| t(value) }
-    end
+      def each_translation
+        each_value { |value| yield t(value) }
+      end
 
-    def self.each_value
-      list.each { |value| yield value }
-    end
+      def translations
+        list.map { |value| t(value) }
+      end
 
-    def self.to_json
-      sorted_map.map { |_k, v| { value: v[0], label: translate(v[1]) } }.to_json
-    end
+      def each_value
+        list.each { |value| yield value }
+      end
 
-    def self.t(value)
-      target = to_a.detect { |item| item[1] == value }
-      target ? target[0] : value
-    end
+      def to_json
+        sorted_map.map { |_k, v| { value: v[0], label: translate(v[1]) } }.to_json
+      end
 
-    def self.values_for(values)
-      values.map { |v| self.value_for v.to_sym }
-    end
+      def t(value)
+        target = to_a.detect { |item| item[1] == value }
+        target ? target[0] : value
+      end
 
-    def self.value_for(value)
-      self.const_get(value.to_sym)
-    rescue NameError
-      nil
-    end
+      def values_for(values)
+        values.map { |v| value_for v.to_sym }
+      end
 
-    def self.value_from_key(key)
-      return if key.nil?
-      (enumeration[key.to_sym] || []).first
-    end
+      def value_for(value)
+        const_get(value.to_sym)
+      rescue NameError
+        nil
+      end
 
-    def self.keys
-      enumeration.keys
-    end
+      def value_from_key(key)
+        return if key.nil?
+        (enumeration[key.to_sym] || []).first
+      end
 
-    def self.key_for(value)
-      enumeration.map { |e| e[0] if e[1][0] == value }.compact.first
-    end
+      def keys
+        enumeration.keys
+      end
 
-    def self.to_range
-      (list.min..list.max)
-    end
+      def key_for(value)
+        enumeration.map { |e| e[0] if e[1][0] == value }.compact.first
+      end
 
-    class << self
+      def to_range
+        (list.min..list.max)
+      end
+
       def translate(value)
         return value unless value.is_a? Symbol
 
-        default = value.to_s.gsub(/_/, ' ').split.map(&:capitalize).join(' ')
-        I18n.t("enumerations.#{self.name.underscore}.#{value.to_s.underscore}", default: default)
+        default = value.to_s.tr('_', ' ').split.map(&:capitalize).join(' ')
+        I18n.t("enumerations.#{name.underscore}.#{value.to_s.underscore}", default: default)
       end
 
       private
@@ -113,11 +113,16 @@ module EnumerateIt
       end
 
       def register_enumeration(values_hash)
-        @@registered_enumerations[self] = values_hash
+        @registered_enumerations ||= {}
+        @registered_enumerations[self] = values_hash
       end
 
       def define_enumeration_constant(name, value)
-        const_set name.to_s.gsub(/-/, '_').upcase, value
+        const_set name.to_s.tr('-', '_').upcase, value
+      end
+
+      def values_hash(args)
+        args.first.is_a?(Hash) ? args.first : args.each_with_object({}) { |v, h| h[v] = v.to_s; h }
       end
     end
   end
