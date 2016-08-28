@@ -1,3 +1,3 @@
 module EnumerateIt
-  VERSION = '1.3.1.rc1'.freeze
+  VERSION = '1.3.1'.freeze
 end
