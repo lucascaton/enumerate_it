@@ -33,3 +33,7 @@ matrix:
     gemfile: gemfiles/rails_5.0.gemfile
   - rvm: 2.1.10
     gemfile: gemfiles/rails_5.0.gemfile
+
+addons:
+  code_climate:
+    repo_token: 60e4a18e2a4bc86a98f92847f16756876c13d1e772058a9b3296643b04a697d7
