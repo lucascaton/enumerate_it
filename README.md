@@ -386,6 +386,19 @@ This will create:
     #=> "is not included in the list"
     ```
 
+*   If you pass the `:validate_inclusion` option as `false`,
+    it will not create inclusion validate:
+
+    ```ruby
+    class Person < ActiveRecord::Base
+      has_enumeration_for :relationship_status, with: RelationshipStatus, validate_inclusion: false
+    end
+
+    p = Person.new(relationship_status: 6) # there is no '6' value in the enumeration
+    p.valid?
+    #=> true
+    ```
+
 *   If your class can manage validations and responds to
     `:validates_presence_of`, you can pass the :required options as true and
     this validation will be created for you (this option defaults to false):
