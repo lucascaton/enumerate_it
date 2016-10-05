@@ -306,5 +306,14 @@ describe EnumerateIt::Base do
         end
       end
     end
+
+    context 'using :validate_inclusion option as false' do
+      it "doesn't create a validation for inclusion" do
+        expect(ActiveRecordStub).not_to receive(:validates_inclusion_of)
+        class ActiveRecordStub
+          has_enumeration_for :bla, with: TestEnumeration, validate_inclusion: false
+        end
+      end
+    end
   end
 end

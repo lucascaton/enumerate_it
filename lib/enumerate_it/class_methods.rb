@@ -102,7 +102,9 @@ module EnumerateIt
     end
 
     def set_validations(attribute, options)
-      if respond_to?(:validates_inclusion_of)
+      options.fetch(:validate_inclusion) { |k| options[k] = true }
+
+      if options[:validate_inclusion] && respond_to?(:validates_inclusion_of)
         validates_inclusion_of(attribute, in: options[:with].list, allow_blank: true)
       end
 
