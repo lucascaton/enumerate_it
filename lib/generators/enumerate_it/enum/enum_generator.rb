@@ -7,7 +7,7 @@ module EnumerateIt
 
       class_option :singular, type: 'string', desc: 'Singular name for i18n'
 
-      class_option :lang, type: 'string', desc: 'Lang to use in i18n', default: 'en'
+      class_option :lang, type: 'string', desc: 'Language to use in i18n', default: 'en'
 
       desc 'Creates a locale file on config/locales'
       def create_locale
