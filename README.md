@@ -498,11 +498,11 @@ Changes are maintained under [Releases](https://github.com/lucascaton/enumerate_
 
 * Fork the project.
 * Make your feature addition or bug fix.
-* Add tests for it. This is important so I don't break it in a future version unintentionally.
+* Add tests for it. This is important so we don't break it in a future version unintentionally.
+* [Optional] Run the tests agaist a specific Gemfile: `$ appraisal rails_5.0 rake spec`.
 * Run the tests agaist all supported versions: `$ rake`.
-* Commit, do not mess with Rakefile, version, or history. (if you want to have your own version,
-  that is fine but bump version in a commit by itself I can ignore when I pull)
-* Send me a pull request. Bonus points for topic branches.
+* Commit, but please do not mess with `Rakefile`, version, or history.
+* Send a Pull Request. Bonus points for topic branches.
 
 ## Copyright
 
