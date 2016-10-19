@@ -1,6 +1,6 @@
 ![EnumerateIt Logo](https://raw.github.com/lucascaton/enumerate_it/master/enumerate_it.png)
 
-Ruby Enumerations
+Ruby Enumerations with magic powers!
 
 [![Build Status](https://travis-ci.org/lucascaton/enumerate_it.svg?branch=master)](https://travis-ci.org/lucascaton/enumerate_it)
 [![Gem Version](https://badge.fury.io/rb/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
