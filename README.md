@@ -1,3 +1,4 @@
+
 ![EnumerateIt Logo](https://raw.github.com/lucascaton/enumerate_it/master/enumerate_it.png)
 
 Ruby Enumerations
@@ -19,6 +20,15 @@ Secondly, Rails' enumerations has a problem:
 `integers` instead of `strings`, which means that if you change your enumeration list oder in your
 model, your database will no longer be consistent.
 Database storage pricing is not a problem nowadays, so it's recommended to use `strings` columns.
+
+- [Installation](#installation)
+- [Using with Rails](#using-with-rails)
+- [Creating enumerations](#creating-enumerations)
+- [Sorting](#sorting)
+- [Using enumerations](#using-enumerations)
+- [I18n](#i18n)
+- [Using enumerations to handle a legacy database](#using-enumerations-to-handle-a-legacy-database)
+- [FAQ](#faq)
 
 ## Installation
 
