@@ -163,17 +163,17 @@ mode, you can use the `sort_by` class method.
 class RelationshipStatus < EnumerateIt::Base
   associate_values married: 1, single: 2
 
-  sort_by :name
+  sort_by :translation
 end
 ```
 
 The `sort_by` methods accept one of the following values:
 
-| Value          | Behavior                                                                   |
-| :------------- | :------------------------------------------------------------------------- |
-| `:translation` | The default behavior, will sort the returned values based on translations  |
-| `:name`        | Will sort the returned values based on the name of each enumeration option |
-| `:none`        | Will return values in order that was passed to `associate_values` call     |
+| Value          | Behavior                                                                                     |
+| :------------- | :------------------------------------------------------------------------------------------- |
+| `:none`        | The default behavior, will return values in order that was passed to `associate_values` call |
+| `:translation` | will sort the returned values based on translations                                          |
+| `:name`        | Will sort the returned values based on the name of each enumeration option                   |
 
 ## Using enumerations
 

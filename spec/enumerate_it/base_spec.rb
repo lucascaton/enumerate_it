@@ -207,6 +207,14 @@ describe EnumerateIt::Base do
     end
   end
 
+  context 'not specifying a sort mode' do
+    subject { create_enumeration_class_with_sort_mode(nil).to_a }
+
+    it 'does not sort' do
+      is_expected.to eq([%w(xyz 1), %w(fgh 2), %w(abc 3), %w(jkl 0)])
+    end
+  end
+
   context 'specifying a sort mode' do
     subject { create_enumeration_class_with_sort_mode(sort_mode).to_a }
 
