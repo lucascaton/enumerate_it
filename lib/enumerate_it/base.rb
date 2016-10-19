@@ -93,7 +93,7 @@ module EnumerateIt
       private
 
       def sorted_map
-        return enumeration if sort_mode == :none
+        return enumeration if sort_mode.nil? || sort_mode == :none
 
         enumeration.sort_by { |k, v| sort_lambda.call(k, v) }
       end
@@ -103,7 +103,7 @@ module EnumerateIt
           value:       ->(_k, v) { v[0] },
           name:        ->(k, _v) { k },
           translation: ->(_k, v) { translate(v[1]) }
-        }[sort_mode || :translation]
+        }[sort_mode]
       end
 
       def normalize_enumeration(values_hash)

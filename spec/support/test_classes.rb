@@ -7,17 +7,12 @@ class TestEnumeration < EnumerateIt::Base
 end
 
 class TestEnumerationWithoutArray < EnumerateIt::Base
-  associate_values(
-    value_one: '1',
-    value_two: '2'
-  )
+  associate_values value_one: '1', value_two: '2'
 end
 
 class TestEnumerationWithExtendedBehaviour < EnumerateIt::Base
-  associate_values(
-    first:  '1',
-    second: '2'
-  )
+  associate_values first: '1', second: '2'
+
   def self.to_a
     super.reverse
   end
@@ -32,21 +27,15 @@ class TestEnumerationWithReservedWords < EnumerateIt::Base
 end
 
 class TestEnumerationWithDash < EnumerateIt::Base
-  associate_values(
-    'pt-BR'
-  )
+  associate_values 'pt-BR'
 end
 
 class TestEnumerationWithCamelCase < EnumerateIt::Base
-  associate_values(
-    'iPhone'
-  )
+  associate_values 'iPhone'
 end
 
 class Foobar < EnumerateIt::Base
-  associate_values(
-    bar: 'foo'
-  )
+  associate_values bar: 'foo'
 end
 
 class PolymorphicEnum < EnumerateIt::Base
@@ -67,12 +56,13 @@ end
 
 class BaseClass
   extend EnumerateIt
+
   has_enumeration_for :foobar, with: TestEnumeration
 end
 
 def create_enumeration_class_with_sort_mode(sort_mode)
   Class.new(EnumerateIt::Base) do
-    sort_by sort_mode
+    sort_by(sort_mode)
 
     associate_values(
       foo:  %w(1 xyz),

@@ -38,3 +38,15 @@ Style/MultilineMethodCallIndentation:
 Style/PredicateName:
   Exclude:
     - 'lib/enumerate_it/class_methods.rb'
+
+Style/GuardClause:
+  MinBodyLength: 3
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/MessageExpectation:
+  Enabled: false
