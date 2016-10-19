@@ -472,6 +472,10 @@ You can also sort it by its value: `sort_by :value`.
 
 ## FAQ
 
+#### What versions of Ruby and Rails are supported?
+
+Please check out [travis config file](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
+
 #### Can I set a value to always be at the end of a sorted list?
 
 Yes, please see [issue #60](https://github.com/lucascaton/enumerate_it/issues/60).
@@ -479,10 +483,6 @@ Yes, please see [issue #60](https://github.com/lucascaton/enumerate_it/issues/60
 ## Changelog
 
 Changes are maintained under [Releases](https://github.com/lucascaton/enumerate_it/releases).
-
-## Supported Ruby and Rails versions
-
-Check [travis config file](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
 
 ## Note on Patches/Pull Requests
 
