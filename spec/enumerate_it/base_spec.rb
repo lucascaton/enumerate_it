@@ -198,7 +198,7 @@ describe EnumerateIt::Base do
 
   context 'associate values with a list' do
     it 'creates constants for each enumeration value' do
-      expect(TestEnumerationWithList::FIRST).to eq('first')
+      expect(TestEnumerationWithList::FIRST).to  eq('first')
       expect(TestEnumerationWithList::SECOND).to eq('second')
     end
 
@@ -207,7 +207,7 @@ describe EnumerateIt::Base do
     end
   end
 
-  context 'specifying a default sort mode' do
+  context 'specifying a sort mode' do
     subject { create_enumeration_class_with_sort_mode(sort_mode).to_a }
 
     context 'by value' do
