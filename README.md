@@ -1,4 +1,3 @@
-
 ![EnumerateIt Logo](https://raw.github.com/lucascaton/enumerate_it/master/enumerate_it.png)
 
 Ruby Enumerations
@@ -24,11 +23,12 @@ Database storage pricing is not a problem nowadays, so it's recommended to use `
 - [Installation](#installation)
 - [Using with Rails](#using-with-rails)
 - [Creating enumerations](#creating-enumerations)
-- [Sorting enumerations](#sorting-enumerations)
+  - [Sorting enumerations](#sorting-enumerations)
 - [Using enumerations](#using-enumerations)
 - [I18n](#i18n)
 - [Using enumerations to handle a legacy database](#using-enumerations-to-handle-a-legacy-database)
 - [FAQ](#faq)
+- [Changelog](#changelog)
 
 ## Installation
 
@@ -427,7 +427,7 @@ RelationshipStatus.t(status)
 #=> 'Casado'
 ```
 
-# Using enumerations to handle a legacy database
+## Using enumerations to handle a legacy database
 
 **EnumerateIt** can help you to build a Rails application around a legacy database which was filled
 with those small and unchangeable tables used to create foreign key constraints everywhere, like the
