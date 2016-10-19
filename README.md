@@ -24,7 +24,7 @@ Database storage pricing is not a problem nowadays, so it's recommended to use `
 - [Installation](#installation)
 - [Using with Rails](#using-with-rails)
 - [Creating enumerations](#creating-enumerations)
-- [Sorting](#sorting)
+- [Sorting enumerations](#sorting-enumerations)
 - [Using enumerations](#using-enumerations)
 - [I18n](#i18n)
 - [Using enumerations to handle a legacy database](#using-enumerations-to-handle-a-legacy-database)
@@ -153,7 +153,7 @@ This will create some nice stuff:
   #=> 3
   ```
 
-### Sorting
+### Sorting enumerations
 
 When calling methods like `to_a`, `to_json` and `list`, the returned values will be sorted using
 the translation for each one of the enumeration values. If you want to overwrite the default sort
