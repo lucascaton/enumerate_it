@@ -276,7 +276,7 @@ This will create:
   p = Person.new
   p.relationship_status = RelationshipStatus::MARRIED
   p.relationship_status_object.saturday_night
-  #=> ''At home with the kids'
+  #=> 'At home with the kids'
 
   p.relationship_status = RelationshipStatus::SINGLE
   p.relationship_status_object.saturday_night
@@ -374,7 +374,7 @@ Remember that you can add validations to any kind of class and not only to those
 
 ### Why to define enumerations outside the class that uses them?
 
-* It's clear.
+* It's clearer.
 * You can add behaviour to the enumeration class.
 * You can reuse the enumeration inside other classes.
 
