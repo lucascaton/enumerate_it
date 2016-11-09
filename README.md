@@ -14,7 +14,7 @@ Ruby Enumerations with magic powers!
 Firstly, **EnumerateIt** works amazingly well along with **Rails** but it is not required!
 It means you can add it to any **Ruby** project! 😀
 
-Secondly, Rails' enumerations has a problem:
+Secondly, Rails' enumerations have a problem:
 [`ActiveRecord::Enum`](http://edgeapi.rubyonrails.org/classes/ActiveRecord/Enum.html) uses
 `integers` instead of `strings`, which means that if you change your enumeration list oder in your
 model, your database will no longer be consistent.
@@ -254,7 +254,7 @@ This will create:
   p.relationship_status_married?
   #=> true
 
-  p.relationship_status_divoced?
+  p.relationship_status_divorced?
   #=> false
   ```
 
@@ -337,7 +337,7 @@ This will create:
   Person.relationship_status_married.to_sql
   ```
 
-* An inclustion validation (if your class can manage validations and responds to
+* An inclusion validation (if your class can manage validations and responds to
   `validates_inclusion_of`):
 
   ```ruby
@@ -429,7 +429,7 @@ RelationshipStatus.t(status)
 
 ## Using enumerations to handle a legacy database
 
-**EnumerateIt** can help you to build a Rails application around a legacy database which was filled
+**EnumerateIt** can help you build a Rails application around a legacy database which was filled
 with those small and unchangeable tables used to create foreign key constraints everywhere, like the
 following example:
 
