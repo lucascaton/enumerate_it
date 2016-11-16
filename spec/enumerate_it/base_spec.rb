@@ -30,25 +30,25 @@ describe EnumerateIt::Base do
       context 'by value' do
         let(:sort_mode) { :value }
 
-        it { should eq(%w(0 1 2 3)) }
+        it { is_expected.to eq(%w(0 1 2 3)) }
       end
 
       context 'by name' do
         let(:sort_mode) { :name }
 
-        it { should eq(%w(2 1 3 0)) }
+        it { is_expected.to eq(%w(2 1 3 0)) }
       end
 
       context 'by translation' do
         let(:sort_mode) { :translation }
 
-        it { should eq(%w(3 2 0 1)) }
+        it { is_expected.to eq(%w(3 2 0 1)) }
       end
 
       context 'by nothing' do
         let(:sort_mode) { :none }
 
-        it { should eq(%w(1 2 3 0)) }
+        it { is_expected.to eq(%w(1 2 3 0)) }
       end
     end
   end
