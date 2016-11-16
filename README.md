@@ -1,4 +1,4 @@
-![EnumerateIt Logo](https://raw.github.com/lucascaton/enumerate_it/master/enumerate_it.png)
+# EnumerateIt
 
 Ruby Enumerations with magic powers!
 
