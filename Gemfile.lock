@@ -23,7 +23,7 @@ GEM
     i18n (0.7.0)
     method_source (0.8.2)
     minitest (5.9.1)
-    parser (2.3.1.4)
+    parser (2.3.2.0)
       ast (~> 2.2)
     powerpack (0.1.1)
     pry (0.10.4)
