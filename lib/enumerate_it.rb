@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'active_support/core_ext/class/attribute'
+require 'active_support/inflector'
 require 'enumerate_it/base'
 require 'enumerate_it/class_methods'
 
