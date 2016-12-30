@@ -26,14 +26,21 @@ gemfile:
   - gemfiles/rails_5.0.gemfile
 
 matrix:
-  # Rails 5 requires Ruby version 2.2+
   exclude:
+  # Rails 5 requires Ruby version 2.2+
   - rvm: 1.9.3
     gemfile: gemfiles/rails_5.0.gemfile
   - rvm: 2.0.0
     gemfile: gemfiles/rails_5.0.gemfile
   - rvm: 2.1.10
     gemfile: gemfiles/rails_5.0.gemfile
+
+  # Rails 4 requires an old version of `json` gem, which isn't compatible with Ruby 2.4+
+  # https://github.com/flori/json/issues/308
+  - rvm: 2.4.0
+    gemfile: gemfiles/rails_4.0.gemfile
+    gemfile: gemfiles/rails_4.1.gemfile
+    gemfile: gemfiles/rails_4.2.gemfile
 
 addons:
   code_climate:
