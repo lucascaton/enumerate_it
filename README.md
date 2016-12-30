@@ -506,4 +506,4 @@ Changes are maintained under [Releases](https://github.com/lucascaton/enumerate_
 
 ## Copyright
 
-Copyright (c) 2010-2016 Cássio Marques and Lucas Caton. See `LICENSE` file for details.
+Copyright (c) 2010-2017 Cássio Marques and Lucas Caton. See `LICENSE` file for details.
