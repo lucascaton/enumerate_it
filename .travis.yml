@@ -39,7 +39,9 @@ matrix:
   # https://github.com/flori/json/issues/308
   - rvm: 2.4.0
     gemfile: gemfiles/rails_4.0.gemfile
+  - rvm: 2.4.0
     gemfile: gemfiles/rails_4.1.gemfile
+  - rvm: 2.4.0
     gemfile: gemfiles/rails_4.2.gemfile
 
 addons:
