@@ -60,6 +60,7 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicode-display_width (1.1.2)
+    wwtd (1.3.0)
 
 PLATFORMS
   ruby
@@ -73,6 +74,7 @@ DEPENDENCIES
   rspec
   rubocop
   rubocop-rspec
+  wwtd
 
 BUNDLED WITH
    1.13.7
