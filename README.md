@@ -1,6 +1,6 @@
 # EnumerateIt
 
-Ruby Enumerations with magic powers!
+💎 Ruby Enumerations with magic powers! 🎩
 
 [![Build Status](https://travis-ci.org/lucascaton/enumerate_it.svg?branch=master)](https://travis-ci.org/lucascaton/enumerate_it)
 [![Gem Version](https://badge.fury.io/rb/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
@@ -11,24 +11,26 @@ Ruby Enumerations with magic powers!
 
 ### Why would I want a gem if Rails already has native enumerations support?
 
-Firstly, **EnumerateIt** works amazingly well along with **Rails** but it is not required!
-It means you can add it to any **Ruby** project! 😀
+Firstly, although **EnumerateIt** works well with **Rails**, it isn't required!
+It means you can add it to any **Ruby** project! Secondly, you can
+[define your enumerations in classes](https://github.com/lucascaton/enumerate_it#creating-enumerations),
+so you can **add behaviour** and also **reuse** them! 😀
 
-Secondly, Rails' enumerations have a problem:
-[`ActiveRecord::Enum`](http://edgeapi.rubyonrails.org/classes/ActiveRecord/Enum.html) uses
-`integers` instead of `strings`, which means that if you change your enumeration list oder in your
-model, your database will no longer be consistent.
-Database storage pricing is not a problem nowadays, so it's recommended to use `strings` columns.
+---
+
+<!-- Tocer[start]: Auto-generated, don't remove. -->
 
 - [Installation](#installation)
 - [Using with Rails](#using-with-rails)
 - [Creating enumerations](#creating-enumerations)
   - [Sorting enumerations](#sorting-enumerations)
 - [Using enumerations](#using-enumerations)
+- [FAQ](#faq)
 - [I18n](#i18n)
 - [Using enumerations to handle a legacy database](#using-enumerations-to-handle-a-legacy-database)
-- [FAQ](#faq)
 - [Changelog](#changelog)
+
+<!-- Tocer[finish]: Auto-generated, don't remove. -->
 
 ## Installation
 
@@ -382,11 +384,28 @@ This will create:
 Remember that you can add validations to any kind of class and not only to those derived from
 `ActiveRecord::Base`.
 
-### Why to define enumerations outside the class that uses them?
+## FAQ
+
+#### Why to define enumerations outside the class that uses them?
 
 * It's clearer.
 * You can add behaviour to the enumeration class.
 * You can reuse the enumeration inside other classes.
+
+#### Can I use `enumerate_it` gem without Rails?
+
+You sure can! 😄
+
+#### What versions of Ruby and Rails are supported?
+
+* Ruby `1.9.3`, `2.0`, `2.1`, `2.2`, `2.3`, and `2.4`
+* Rails `3.0`, `3.1`, `3.2`, `4.0`, `4.1`, `4.2`, and `5.0`
+
+All these versions are tested via [Travis](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
+
+#### Can I set a value to always be at the end of a sorted list?
+
+Yes, please see [issue #60](https://github.com/lucascaton/enumerate_it/issues/60).
 
 ## I18n
 
@@ -479,16 +498,6 @@ RelationshipStatus::MARRIED
 ```
 
 You can also sort it by its value: `sort_by :value`.
-
-## FAQ
-
-#### What versions of Ruby and Rails are supported?
-
-Please check out [travis config file](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
-
-#### Can I set a value to always be at the end of a sorted list?
-
-Yes, please see [issue #60](https://github.com/lucascaton/enumerate_it/issues/60).
 
 ## Changelog
 
