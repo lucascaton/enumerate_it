@@ -35,14 +35,12 @@ matrix:
   - rvm: 2.1.10
     gemfile: gemfiles/rails_5.0.gemfile
 
-  # Rails 4 requires an old version of `json` gem, which isn't compatible with Ruby 2.4+
+  # Rails 4.0 and 4.1 requires an old version of `json` gem, which isn't compatible with Ruby 2.4+
   # https://github.com/flori/json/issues/308
   - rvm: 2.4.1
     gemfile: gemfiles/rails_4.0.gemfile
   - rvm: 2.4.1
     gemfile: gemfiles/rails_4.1.gemfile
-  - rvm: 2.4.1
-    gemfile: gemfiles/rails_4.2.gemfile
 
 addons:
   code_climate:
