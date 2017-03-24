@@ -17,6 +17,10 @@ Lint/EndAlignment:
 Metrics/LineLength:
   Max: 100
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+
 Style/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
 
@@ -49,4 +53,7 @@ RSpec/NestedGroups:
   Enabled: false
 
 RSpec/MessageExpectation:
+  Enabled: false
+
+RSpec/MessageSpies:
   Enabled: false
