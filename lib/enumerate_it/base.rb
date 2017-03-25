@@ -126,7 +126,6 @@ module EnumerateIt
 
         args.each_with_object({}) do |value, hash|
           hash[value] = value.to_s
-          hash
         end
       end
     end
