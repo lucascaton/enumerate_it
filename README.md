@@ -27,7 +27,7 @@ so you can **add behaviour** and also **reuse** them! 😀
 - [Using enumerations](#using-enumerations)
 - [FAQ](#faq)
 - [I18n](#i18n)
-- [Using enumerations to handle a legacy database](#using-enumerations-to-handle-a-legacy-database)
+- [Handling a legacy database](#handling-a-legacy-database)
 - [Changelog](#changelog)
 
 <!-- Tocer[finish]: Auto-generated, don't remove. -->
@@ -81,7 +81,7 @@ This will create some nice stuff:
 
   ```ruby
   RelationshipStatus::SINGLE
-  # => 'single'
+  #=> 'single'
 
   RelationshipStatus::MARRIED
   #=> 'married'
@@ -101,8 +101,8 @@ This will create some nice stuff:
   #=> "[{\"value\":\"divorced\",\"label\":\"Divorced\"},{\"value\":\"married\", ...
   ```
 
-* You can get an array of options, ready to use with the 'select',
-  'select_tag', etc family of Rails helpers.
+* You can get an array of options, ready to use with the `select`, `select_tag`, etc. family of
+  Rails helpers.
 
   ```ruby
   RelationshipStatus.to_a
@@ -157,25 +157,28 @@ This will create some nice stuff:
 
 ### Sorting enumerations
 
-When calling methods like `to_a`, `to_json` and `list`, the returned values will be sorted using
-the translation for each one of the enumeration values. If you want to overwrite the default sort
-mode, you can use the `sort_by` class method.
+When calling methods like `to_a`, `to_json` and `list`, the returned values will be sorted by
+default in the same order passed to `associate_values` call.
+
+However, if you want to overwrite the default sort mode, you can use the `sort_by` class method:
+
 
 ```ruby
 class RelationshipStatus < EnumerateIt::Base
-  associate_values married: 1, single: 2
+  associate_values :single, :married
 
   sort_by :translation
 end
 ```
 
-The `sort_by` methods accept one of the following values:
+The `sort_by` method accepts one of the following values:
 
 | Value          | Behavior                                                                                     |
 | :------------- | :------------------------------------------------------------------------------------------- |
 | `:none`        | The default behavior, will return values in order that was passed to `associate_values` call |
-| `:translation` | will sort the returned values based on translations                                          |
 | `:name`        | Will sort the returned values based on the name of each enumeration option                   |
+| `:translation` | will sort the returned values based on their translations                                    |
+| `:value`       | See [Handling a legacy database](#handling-a-legacy-database) section for more details       |
 
 ## Using enumerations
 
@@ -208,7 +211,7 @@ This will create:
   ```
 
 * A translation for your options, if you include a locale to represent it
-  (see more in the [#i18n](I18n section):
+  (see more in the [I18n section](#i18n)).
 
   ```ruby
   p = Person.new
@@ -328,7 +331,7 @@ This will create:
   #=> SELECT "users".* FROM "users" WHERE "users"."relationship_status" = "married"
   ```
 
-  The `:create_scopes` also accepts :prefix option.
+  The `:create_scopes` also accepts `prefix` option.
 
   ```ruby
   class Person < ActiveRecord::Base
@@ -398,14 +401,15 @@ You sure can! 😄
 
 #### What versions of Ruby and Rails are supported?
 
-* Ruby `1.9.3`, `2.0`, `2.1`, `2.2`, `2.3`, and `2.4`
-* Rails `3.0`, `3.1`, `3.2`, `4.0`, `4.1`, `4.2`, and `5.0`
+* **Ruby** `1.9.3` or higher
+* **Rails** `3.0` or higher
 
-All these versions are tested via [Travis](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
+All versions are tested via
+[Travis](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
 
 #### Can I set a value to always be at the end of a sorted list?
 
-Yes, please see [issue #60](https://github.com/lucascaton/enumerate_it/issues/60).
+Yes, [see more details here](https://github.com/lucascaton/enumerate_it/issues/60).
 
 ## I18n
 
@@ -430,7 +434,7 @@ end
 
 p = Person.new
 p.relationship_status = RelationshipStatus::MARRIED
-p.relationship_status_humanize
+p.relationship_status_humanize # Existent key
 #=> 'Casado'
 
 p.relationship_status = RelationshipStatus::SINGLE
@@ -446,7 +450,7 @@ RelationshipStatus.t(status)
 #=> 'Casado'
 ```
 
-## Using enumerations to handle a legacy database
+## Handling a legacy database
 
 **EnumerateIt** can help you build a Rails application around a legacy database which was filled
 with those small and unchangeable tables used to create foreign key constraints everywhere, like the
@@ -477,10 +481,11 @@ key pointing to the `relationship_status` table.
 
 While this is a good thing from the database normalization perspective, managing these values in
 tests is very hard. Doing database joins just to get the description of some value is absurd.
-And, more than this, referencing them in the code using magic numbers was terrible and meaningless:
-What does it mean when we say that someone or something is `2`?
+And, more than this, referencing them in the code using
+[magic numbers](https://en.wikipedia.org/wiki/Magic_number_(programming)) was terrible and
+meaningless: what does it mean when we say that someone or something is `2`?
 
-In this case, you can pass a hash:
+To solve this, you can pass a **hash** to your enumeration values:
 
 ```ruby
 class RelationshipStatus < EnumerateIt::Base
@@ -497,7 +502,7 @@ RelationshipStatus::MARRIED
 #=> 2
 ```
 
-You can also sort it by its value: `sort_by :value`.
+You can also sort it by its **value** using `sort_by :value`.
 
 ## Changelog
 
