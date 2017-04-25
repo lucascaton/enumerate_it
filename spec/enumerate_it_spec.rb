@@ -275,7 +275,7 @@ describe EnumerateIt do
       end
     end
 
-    context 'when the hosting class do not respond to :scope' do
+    context 'when the hosting class does not respond to :scope' do
       before do
         class GenericClass
           extend EnumerateIt

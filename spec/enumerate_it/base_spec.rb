@@ -291,7 +291,7 @@ describe EnumerateIt::Base do
         end
       end
 
-      it 'do not require the attribute by default' do
+      it 'does not require the attribute by default' do
         expect(ActiveRecordStub).not_to receive(:validates_presence_of)
         class ActiveRecordStub
           has_enumeration_for :bla, with: TestEnumeration
