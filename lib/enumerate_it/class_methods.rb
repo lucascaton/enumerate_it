@@ -18,7 +18,7 @@ module EnumerateIt
       set_validations(attribute, options) unless options[:skip_validation]
 
       if options[:create_helpers]
-        %w(create_helper_methods create_mutator_methods create_polymorphic_methods).each do |method|
+        %w[create_helper_methods create_mutator_methods create_polymorphic_methods].each do |method|
           send(method, options[:with], attribute, options[:create_helpers])
         end
       end
@@ -53,12 +53,12 @@ module EnumerateIt
     end
 
     def create_scopes(klass, attribute_name, helpers)
+      return unless respond_to? :scope
+
       prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
 
       klass.enumeration.keys.each do |key|
-        if respond_to? :scope
-          scope "#{prefix_name}#{key}", -> { where(attribute_name => klass.enumeration[key].first) }
-        end
+        scope("#{prefix_name}#{key}", -> { where(attribute_name => klass.enumeration[key].first) })
       end
     end
 

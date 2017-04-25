@@ -21,7 +21,7 @@ describe EnumerateIt::Base do
 
   describe '.list' do
     it "creates a method that returns the allowed values in the enumeration's class" do
-      expect(TestEnumeration.list).to eq(%w(1 2 3))
+      expect(TestEnumeration.list).to eq(%w[1 2 3])
     end
 
     context 'specifying a default sort mode' do
@@ -30,25 +30,25 @@ describe EnumerateIt::Base do
       context 'by value' do
         let(:sort_mode) { :value }
 
-        it { is_expected.to eq(%w(0 1 2 3)) }
+        it { is_expected.to eq(%w[0 1 2 3]) }
       end
 
       context 'by name' do
         let(:sort_mode) { :name }
 
-        it { is_expected.to eq(%w(2 1 3 0)) }
+        it { is_expected.to eq(%w[2 1 3 0]) }
       end
 
       context 'by translation' do
         let(:sort_mode) { :translation }
 
-        it { is_expected.to eq(%w(3 2 0 1)) }
+        it { is_expected.to eq(%w[3 2 0 1]) }
       end
 
       context 'by nothing' do
         let(:sort_mode) { :none }
 
-        it { is_expected.to eq(%w(1 2 3 0)) }
+        it { is_expected.to eq(%w[1 2 3 0]) }
       end
     end
   end
@@ -107,7 +107,7 @@ describe EnumerateIt::Base do
     end
 
     it 'can be extended from the enumeration class' do
-      expect(TestEnumerationWithExtendedBehaviour.to_a).to eq([%w(Second 2), %w(First 1)])
+      expect(TestEnumerationWithExtendedBehaviour.to_a).to eq([%w[Second 2], %w[First 1]])
     end
   end
 
@@ -140,12 +140,12 @@ describe EnumerateIt::Base do
 
   describe '.values_for' do
     it "returns an array representing some of the enumeration's values" do
-      expect(TestEnumeration.values_for(%w(VALUE_1 VALUE_2)))
+      expect(TestEnumeration.values_for(%w[VALUE_1 VALUE_2]))
         .to eq([TestEnumeration::VALUE_1, TestEnumeration::VALUE_2])
     end
 
     it 'returns nil if the a constant named after one of the given strings cannot be found' do
-      expect(TestEnumeration.values_for(%w(VALUE_1 THIS_IS_WRONG)))
+      expect(TestEnumeration.values_for(%w[VALUE_1 THIS_IS_WRONG]))
         .to eq([TestEnumeration::VALUE_1, nil])
     end
   end
@@ -182,7 +182,7 @@ describe EnumerateIt::Base do
 
   describe '.keys' do
     it 'returns a list with the keys used to define the enumeration' do
-      expect(TestEnumeration.keys).to eq([:value_1, :value_2, :value_3])
+      expect(TestEnumeration.keys).to eq(%i[value_1 value_2 value_3])
     end
   end
 
@@ -203,7 +203,7 @@ describe EnumerateIt::Base do
     end
 
     it 'returns an array with the values and human representations' do
-      expect(TestEnumerationWithList.to_a).to eq([%w(First first), %w(Second second)])
+      expect(TestEnumerationWithList.to_a).to eq([%w[First first], %w[Second second]])
     end
   end
 
@@ -211,7 +211,7 @@ describe EnumerateIt::Base do
     subject { create_enumeration_class_with_sort_mode(nil).to_a }
 
     it 'does not sort' do
-      is_expected.to eq([%w(xyz 1), %w(fgh 2), %w(abc 3), %w(jkl 0)])
+      is_expected.to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[jkl 0]])
     end
   end
 
@@ -221,25 +221,25 @@ describe EnumerateIt::Base do
     context 'by value' do
       let(:sort_mode) { :value }
 
-      it { is_expected.to eq([%w(jkl 0), %w(xyz 1), %w(fgh 2), %w(abc 3)]) }
+      it { is_expected.to eq([%w[jkl 0], %w[xyz 1], %w[fgh 2], %w[abc 3]]) }
     end
 
     context 'by name' do
       let(:sort_mode) { :name }
 
-      it { is_expected.to eq([%w(fgh 2), %w(xyz 1), %w(abc 3), %w(jkl 0)]) }
+      it { is_expected.to eq([%w[fgh 2], %w[xyz 1], %w[abc 3], %w[jkl 0]]) }
     end
 
     context 'by translation' do
       let(:sort_mode) { :translation }
 
-      it { is_expected.to eq([%w(abc 3), %w(fgh 2), %w(jkl 0), %w(xyz 1)]) }
+      it { is_expected.to eq([%w[abc 3], %w[fgh 2], %w[jkl 0], %w[xyz 1]]) }
     end
 
     context 'by nothing' do
       let(:sort_mode) { :none }
 
-      it { is_expected.to eq([%w(xyz 1), %w(fgh 2), %w(abc 3), %w(jkl 0)]) }
+      it { is_expected.to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[jkl 0]]) }
     end
   end
 
@@ -291,7 +291,7 @@ describe EnumerateIt::Base do
         end
       end
 
-      it 'do not require the attribute by default' do
+      it 'does not require the attribute by default' do
         expect(ActiveRecordStub).not_to receive(:validates_presence_of)
         class ActiveRecordStub
           has_enumeration_for :bla, with: TestEnumeration
