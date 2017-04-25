@@ -120,12 +120,12 @@ describe EnumerateIt do
       context 'when using a nested class as the enumeration' do
         before do
           class NestedEnum < EnumerateIt::Base
-            associate_values foo: %w(1 Fooo), bar: %w(2 Barrrr)
+            associate_values foo: %w[1 Fooo], bar: %w[2 Barrrr]
           end
 
           class ClassWithNestedEnum
             class NestedEnum < EnumerateIt::Base
-              associate_values foo: %w(1 Blerrgh), bar: ['2' => 'Blarghhh']
+              associate_values foo: %w[1 Blerrgh], bar: ['2' => 'Blarghhh']
             end
 
             extend EnumerateIt
@@ -165,7 +165,7 @@ describe EnumerateIt do
     end
 
     it 'creates a mutator method for each enumeration value' do
-      [:value_1, :value_2, :value_3].each do |value|
+      %i[value_1 value_2 value_3].each do |value|
         expect(TestClassWithHelper.new(TestEnumeration::VALUE_1)).to respond_to(:"#{value}!")
       end
     end
@@ -189,7 +189,7 @@ describe EnumerateIt do
       end
 
       it 'creates a mutator method for each enumeration value' do
-        [:value_1, :value_2, :value_3].each do |value|
+        %i[value_1 value_2 value_3].each do |value|
           expect(TestClassWithHelper.new(TestEnumeration::VALUE_1))
             .to respond_to(:"foobar_#{value}!")
         end
