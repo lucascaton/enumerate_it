@@ -402,8 +402,8 @@ You sure can! 😄
 
 #### What versions of Ruby and Rails are supported?
 
-* **Ruby** `2.0` or higher
-* **Rails** `3.0` or higher
+* **Ruby** `2.0` - `2.4`
+* **Rails** `3.0` - `5.1`
 
 All versions are tested via
 [Travis](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
@@ -514,7 +514,7 @@ Changes are maintained under [Releases](https://github.com/lucascaton/enumerate_
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so we don't break it in a future version unintentionally.
-* [Optional] Run the tests agaist a specific Gemfile: `$ bundle exec appraisal rails_5.0 rake spec`.
+* [Optional] Run the tests agaist a specific Gemfile: `$ bundle exec appraisal rails_5.1 rake spec`.
 * Run the tests agaist all supported versions: `$ bundle exec rake` (or `$ bundle exec wwtd`)
 * Commit, but please do not mess with `Rakefile`, version, or history.
 * Send a Pull Request. Bonus points for topic branches.
