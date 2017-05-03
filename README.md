@@ -358,7 +358,7 @@ This will create:
   #=> 'is not included in the list'
   ```
 
-* An presence validation (if your class can manage validations and responds to
+* A presence validation (if your class can manage validations and responds to
   `validates_presence_of` and you pass the `required` options as `true`):
 
   ```ruby
