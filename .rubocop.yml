@@ -21,23 +21,23 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
-Style/AlignHash:
+Layout/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
 
-Style/Documentation:
+Layout/ElseAlignment:
   Enabled: false
 
-Style/ElseAlignment:
+Layout/IndentationWidth:
   Enabled: false
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Style/IndentationWidth:
+Style/Documentation:
   Enabled: false
-
-Style/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
 
 Style/PredicateName:
   Exclude:
