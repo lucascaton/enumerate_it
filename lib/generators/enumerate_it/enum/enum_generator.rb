@@ -3,7 +3,7 @@ module EnumerateIt
     class EnumGenerator < Rails::Generators::NamedBase
       source_root File.expand_path('../templates', __FILE__)
 
-      argument :attributes, type: 'array', default: []
+      argument :attributes, type: 'array'
 
       class_option :singular, type: 'string', desc: 'Singular name for i18n'
 
