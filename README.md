@@ -47,13 +47,7 @@ Add the gem to your Gemfile:
 gem 'enumerate_it'
 ```
 
-Run the install generator:
-
-```bash
-rails generate enumerate_it:install
-```
-
-There is also a Rails Generator which generates enumerations and their locale files:
+You can use a Rails generator, which generates enumerations and their locale files:
 
 ```bash
 rails generate enumerate_it:enum --help

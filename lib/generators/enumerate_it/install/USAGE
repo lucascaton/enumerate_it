@@ -1,8 +1,0 @@
-Description:
-    Creates an initializer file for EnumerateIt
-
-Example:
-    rails generate enumerate_it:install
-
-    This will create:
-        config/initializers/enumerate_it.rb
