@@ -11,3 +11,5 @@ module EnumerateIt
     receiver.extend ClassMethods
   end
 end
+
+ActiveSupport.on_load(:active_record) { ActiveRecord::Base.extend EnumerateIt }

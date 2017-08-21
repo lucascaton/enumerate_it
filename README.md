@@ -188,12 +188,13 @@ instance or not.
 
 ```ruby
 class Person
-  extend EnumerateIt
   attr_accessor :relationship_status
 
   has_enumeration_for :relationship_status
 end
 ```
+
+For non-Rails apps, add `extend EnumerateIt` to your class.
 
 > **Note:** **EnumerateIt** will try to load an enumeration class based on the camelized attribute
 > name. If you have a different name, you can specify it by using the `with` option:

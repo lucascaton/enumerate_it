@@ -254,7 +254,6 @@ describe EnumerateIt do
         Object.send :remove_const, 'TestClassWithScope' if defined?(TestClassWithScope)
 
         class TestClassWithScope < ActiveRecord::Base
-          extend EnumerateIt
           has_enumeration_for :foobar, with: TestEnumeration, create_scopes: true
         end
       end
@@ -290,7 +289,6 @@ describe EnumerateIt do
     context 'with :prefix option' do
       before do
         class OtherTestClass < ActiveRecord::Base
-          extend EnumerateIt
           has_enumeration_for :foobar, with: TestEnumerationWithReservedWords,
             create_scopes: { prefix: true }
         end
