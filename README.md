@@ -47,13 +47,7 @@ Add the gem to your Gemfile:
 gem 'enumerate_it'
 ```
 
-Run the install generator:
-
-```bash
-rails generate enumerate_it:install
-```
-
-There is also a Rails Generator which generates enumerations and their locale files:
+You can use a Rails generator, which generates enumerations and their locale files:
 
 ```bash
 rails generate enumerate_it:enum --help
@@ -183,10 +177,17 @@ The `sort_by` method accepts one of the following values:
 
 ## Using enumerations
 
-The cool part is that you can use these enumerations with any class, be it an `ActiveRecord`
-instance or not.
+The cool part is that you can use these enumerations with any class:
 
 ```ruby
+# ActiveRecord instance
+class Person < ApplicationRecord
+  has_enumeration_for :relationship_status
+end
+```
+
+```ruby
+# Non-ActiveRecord instance
 class Person
   extend EnumerateIt
   attr_accessor :relationship_status
@@ -231,7 +232,7 @@ This will create:
 * A helper method for each enumeration option, if you pass the `create_helpers` option as `true`:
 
   ```ruby
-  class Person < ActiveRecord::Base
+  class Person < ApplicationRecord
     has_enumeration_for :relationship_status, with: RelationshipStatus, create_helpers: true
   end
 
@@ -249,7 +250,7 @@ This will create:
   option. This can be useful when two or more of the enumerations used share the same constants:
 
   ```ruby
-  class Person < ActiveRecord::Base
+  class Person < ApplicationRecord
     has_enumeration_for :relationship_status,
       with: RelationshipStatus, create_helpers: { prefix: true }
   end
@@ -279,12 +280,12 @@ This will create:
 
     class Single
       def saturday_night
-        'Party Hard!'
+        'Party hard!'
       end
     end
   end
 
-  class Person < ActiveRecord::Base
+  class Person < ApplicationRecord
     has_enumeration_for :relationship_status,
       with: RelationshipStatus, create_helpers: { polymorphic: true }
   end
@@ -296,13 +297,13 @@ This will create:
 
   p.relationship_status = RelationshipStatus::SINGLE
   p.relationship_status_object.saturday_night
-  #=> 'Party Hard!'
+  #=> 'Party hard!'
   ```
 
   You can also change the suffix `_object`, using the `suffix` option:
 
   ```ruby
-  class Person < ActiveRecord::Base
+  class Person < ApplicationRecord
     has_enumeration_for :relationship_status,
       with: RelationshipStatus, create_helpers: { polymorphic: { suffix: '_mode' } }
   end
@@ -324,7 +325,7 @@ This will create:
 * A scope method for each enumeration option if you pass the `create_scopes` option as `true`:
 
   ```ruby
-  class Person < ActiveRecord::Base
+  class Person < ApplicationRecord
     has_enumeration_for :relationship_status, with: RelationshipStatus, create_scopes: true
   end
 
@@ -335,7 +336,7 @@ This will create:
   The `:create_scopes` also accepts `prefix` option.
 
   ```ruby
-  class Person < ActiveRecord::Base
+  class Person < ApplicationRecord
     has_enumeration_for :relationship_status,
       with: RelationshipStatus, create_scopes: { prefix: true }
   end
@@ -347,7 +348,7 @@ This will create:
   `validates_inclusion_of`):
 
   ```ruby
-  class Person < ActiveRecord::Base
+  class Person < ApplicationRecord
     has_enumeration_for :relationship_status, with: RelationshipStatus
   end
 
@@ -362,7 +363,7 @@ This will create:
   `validates_presence_of` and you pass the `required` options as `true`):
 
   ```ruby
-  class Person < ActiveRecord::Base
+  class Person < ApplicationRecord
     has_enumeration_for :relationship_status, required: true
   end
 
@@ -376,7 +377,7 @@ This will create:
   If you pass the `skip_validation` option as `true`, it will not create any validations:
 
   ```ruby
-  class Person < ActiveRecord::Base
+  class Person < ApplicationRecord
     has_enumeration_for :relationship_status, with: RelationshipStatus, skip_validation: true
   end
 
@@ -385,8 +386,7 @@ This will create:
   #=> true
   ```
 
-Remember that you can add validations to any kind of class and not only to those derived from
-`ActiveRecord::Base`.
+Remember that you can add validations to any kind of class and not only `ActiveRecord` ones.
 
 ## FAQ
 
