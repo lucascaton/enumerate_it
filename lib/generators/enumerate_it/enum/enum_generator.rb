@@ -14,7 +14,7 @@ module EnumerateIt
         template 'locale.yml', File.join('config/locales', "#{singular_name}.yml")
       end
 
-      desc 'Creates an initializer file that extends ActiveRecord::Base with Enumerate_it'
+      desc 'Creates the enumeration'
       def create_enumerate_it
         template 'enumerate_it.rb', File.join('app/enumerations', "#{singular_name}.rb")
       end
