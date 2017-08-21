@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 require 'bundler/gem_tasks'
 
 if ENV['APPRAISAL_INITIALIZED'] || ENV['TRAVIS'] || RUBY_VERSION < '2.0.0'

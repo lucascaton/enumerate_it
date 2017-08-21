@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 module EnumerateIt
   module ClassMethods
     def has_enumeration_for(attribute, options = {})
