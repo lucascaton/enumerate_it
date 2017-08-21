@@ -19,7 +19,7 @@ module EnumerateIt
         template 'enumerate_it.rb', File.join('app/enumerations', "#{singular_name}.rb")
       end
 
-      protected
+      private
 
       def default_lang
         options[:lang]
