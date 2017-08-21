@@ -402,8 +402,8 @@ You sure can! 😄
 
 #### What versions of Ruby and Rails are supported?
 
-* **Ruby** `2.0` - `2.4`
-* **Rails** `3.0` - `5.1`
+* **Ruby** from `2.0` to `2.4`
+* **Rails** from `3.0` to `5.1`
 
 All versions are tested via
 [Travis](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
@@ -507,7 +507,7 @@ You can also sort it by its **value** using `sort_by :value`.
 
 ## Changelog
 
-Changes are maintained under [Releases](https://github.com/lucascaton/enumerate_it/releases).
+Changes are maintained under [Releases page](https://github.com/lucascaton/enumerate_it/releases).
 
 ## Note on Patches/Pull Requests
 
