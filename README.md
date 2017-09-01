@@ -6,6 +6,7 @@ Ruby Enumerations with magic powers! 🎩
 [![Gem Version](https://badge.fury.io/rb/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
 [![Dependency Status](https://gemnasium.com/badges/github.com/lucascaton/enumerate_it.svg)](https://gemnasium.com/github.com/lucascaton/enumerate_it)
 [![Code Climate](https://codeclimate.com/github/lucascaton/enumerate_it/badges/gpa.svg)](https://codeclimate.com/github/lucascaton/enumerate_it)
+[![Downloads](https://img.shields.io/gem/dt/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
 [![Changelog](https://img.shields.io/badge/changelog--brightgreen.svg?style=flat)](https://github.com/lucascaton/enumerate_it/releases)
 
 **EnumerateIt** helps you to declare and use enumerations in a very simple and flexible way.
