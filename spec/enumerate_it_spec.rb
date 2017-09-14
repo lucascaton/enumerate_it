@@ -259,7 +259,7 @@ describe EnumerateIt do
       end
 
       it 'creates a scope for each enumeration value' do
-        TestEnumeration.enumeration.keys.each do |symbol|
+        TestEnumeration.enumeration.each_key do |symbol|
           expect(TestClassWithScope).to respond_to(symbol)
         end
       end
@@ -295,7 +295,7 @@ describe EnumerateIt do
       end
 
       it 'creates a scope with prefix for each enumeration value' do
-        TestEnumerationWithReservedWords.enumeration.keys.each do |symbol|
+        TestEnumerationWithReservedWords.enumeration.each_key do |symbol|
           expect(OtherTestClass).to respond_to(:"foobar_#{symbol}")
         end
       end

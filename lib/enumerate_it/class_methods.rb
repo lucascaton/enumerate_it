@@ -42,7 +42,7 @@ module EnumerateIt
       prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
 
       class_eval do
-        klass.enumeration.keys.each do |option|
+        klass.enumeration.each_key do |option|
           define_method "#{prefix_name}#{option}?" do
             send(attribute_name) == klass.enumeration[option].first
           end
@@ -55,7 +55,7 @@ module EnumerateIt
 
       prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
 
-      klass.enumeration.keys.each do |key|
+      klass.enumeration.each_key do |key|
         scope("#{prefix_name}#{key}", -> { where(attribute_name => klass.enumeration[key].first) })
       end
     end
