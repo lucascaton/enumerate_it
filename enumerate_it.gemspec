@@ -5,6 +5,7 @@ Gem::Specification.new do |gem|
   gem.summary       = 'Ruby Enumerations'
   gem.description   = 'Enumerations for Ruby with some magic powers!'
   gem.homepage      = 'https://github.com/lucascaton/enumerate_it'
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split("\n")
   gem.test_files    = `git ls-files -- spec/*`.split("\n")
