@@ -11,6 +11,9 @@ AllCops:
     - 'lib/generators/enumerate_it/enum/templates/**/*'
     - 'gemfiles/vendor/**/*'
 
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
 Lint/EndAlignment:
   Enabled: false
 
@@ -39,12 +42,12 @@ Style/FrozenStringLiteralComment:
 Style/Documentation:
   Enabled: false
 
-Style/PredicateName:
-  Exclude:
-    - 'lib/enumerate_it/class_methods.rb'
-
 Style/GuardClause:
   MinBodyLength: 3
+
+Naming/PredicateName:
+  Exclude:
+    - 'lib/enumerate_it/class_methods.rb'
 
 RSpec/MultipleExpectations:
   Enabled: false
@@ -56,4 +59,7 @@ RSpec/MessageExpectation:
   Enabled: false
 
 RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/ContextWording:
   Enabled: false
