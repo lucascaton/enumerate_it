@@ -1,6 +1,6 @@
 # EnumerateIt
 
-Ruby Enumerations with magic powers! 🎩
+Enumerations for Ruby with some magic powers! 🎩
 
 [![Build Status](https://travis-ci.org/lucascaton/enumerate_it.svg?branch=master)](https://travis-ci.org/lucascaton/enumerate_it)
 [![Gem Version](https://badge.fury.io/rb/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
@@ -522,4 +522,4 @@ Changes are maintained under [Releases page](https://github.com/lucascaton/enume
 
 ## Copyright
 
-Copyright (c) 2010-2017 Cássio Marques and Lucas Caton. See `LICENSE` file for details.
+Copyright (c) 2010-2018 Cássio Marques and Lucas Caton. See `LICENSE` file for details.
