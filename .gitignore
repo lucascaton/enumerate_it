@@ -1,4 +1,5 @@
 /.bundle/
 /pkg/
 /gemfiles/*.lock
+/gemfiles/.bundle/
 .ruby-gemset
