@@ -52,6 +52,11 @@ matrix:
   - rvm: 2.5.0
     gemfile: gemfiles/rails_4.1.gemfile
 
+  # Rails 3.0 doesn't work with Ruby 2.5
+  # (`undefined method `yaml_as' for BigDecimal:Class`)
+  - rvm: 2.5.0
+    gemfile: gemfiles/rails_3.0.gemfile
+
 addons:
   code_climate:
     repo_token: 60e4a18e2a4bc86a98f92847f16756876c13d1e772058a9b3296643b04a697d7
