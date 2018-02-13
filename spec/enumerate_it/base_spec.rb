@@ -17,6 +17,10 @@ describe EnumerateIt::Base do
     expect(TestEnumerationWithDash::PT_BR).to eq('pt-BR')
   end
 
+  it 'creates constants for values with spaces' do
+    expect(TestEnumerationWithSpaces::SPA_CES).to eq('spa ces')
+  end
+
   describe '.list' do
     it "creates a method that returns the allowed values in the enumeration's class" do
       expect(TestEnumeration.list).to eq(%w[1 2 3])
