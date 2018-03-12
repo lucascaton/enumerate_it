@@ -251,7 +251,7 @@ describe EnumerateIt::Base do
         attr_accessor :bla
 
         class << self
-          def validates_inclusion_of(_)
+          def validates_inclusion_of(_attribute)
             true
           end
 
