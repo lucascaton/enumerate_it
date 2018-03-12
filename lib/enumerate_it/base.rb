@@ -116,7 +116,7 @@ module EnumerateIt
       end
 
       def define_enumeration_constant(name, value)
-        const_set name.to_s.tr('-', '_').upcase, value
+        const_set name.to_s.tr('-', '_').gsub(/\p{blank}/, '_').upcase, value
       end
 
       def values_hash(args)

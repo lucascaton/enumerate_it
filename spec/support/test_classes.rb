@@ -34,6 +34,10 @@ class TestEnumerationWithCamelCase < EnumerateIt::Base
   associate_values 'iPhone'
 end
 
+class TestEnumerationWithSpaces < EnumerateIt::Base
+  associate_values 'spa ces'
+end
+
 class Foobar < EnumerateIt::Base
   associate_values bar: 'foo'
 end
