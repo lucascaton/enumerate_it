@@ -14,7 +14,7 @@ AllCops:
 Gemspec/RequiredRubyVersion:
   Enabled: false
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   Enabled: false
 
 Metrics/LineLength:
