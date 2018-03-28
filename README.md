@@ -452,6 +452,19 @@ RelationshipStatus.t(status)
 #=> 'Casado'
 ```
 
+### Translate a name-spaced enumeration
+
+In order to translate an enumeration in a specific namespace (say `Design::Color`),
+you can add the following:
+
+```yaml
+pt-BR:
+  enumerations:
+    'design/color':
+      blue: Azul
+      red: Vermelho
+```
+
 ## Handling a legacy database
 
 **EnumerateIt** can help you build a Rails application around a legacy database which was filled
