@@ -2,5 +2,5 @@
   enumerations:
     <%= singular_name %>:
     <%- locale_fields.each do |name| -%>
-      <%= name %>: "<%= name.capitalize %>"
+      <%= name %>: '<%= name.capitalize %>'
     <%- end -%>
