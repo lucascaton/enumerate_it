@@ -49,7 +49,7 @@ Add the gem to your Gemfile:
 gem 'enumerate_it'
 ```
 
-You can use a Rails generator, which generates enumerations and their locale files:
+You can use a Rails generator to create both an enumeration and its locale file:
 
 ```bash
 rails generate enumerate_it:enum --help
