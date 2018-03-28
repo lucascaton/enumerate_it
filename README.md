@@ -29,6 +29,7 @@ so you can **add behaviour** and also **reuse** them! 😀
 - [Using enumerations](#using-enumerations)
 - [FAQ](#faq)
 - [I18n](#i18n)
+  - [Translate a name-spaced enumeration](#translate-a-name-spaced-enumeration)
 - [Handling a legacy database](#handling-a-legacy-database)
 - [Changelog](#changelog)
 
