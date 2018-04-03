@@ -6,6 +6,7 @@ cache: bundler
 
 before_install:
   - gem update --system
+  - gem install bundler
 
 script:
   - "ruby -e \"RUBY_VERSION == '2.5.1' ? system('bundle exec rubocop') : exit(0)\""
