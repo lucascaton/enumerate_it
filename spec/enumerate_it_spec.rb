@@ -265,9 +265,12 @@ describe EnumerateIt do
       end
 
       it 'when called, the scopes create the correct query' do
+        ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:')
+        ActiveRecord::Schema.define { create_table :test_class_with_scopes }
+
         TestEnumeration.enumeration.each do |symbol, pair|
-          expect(TestClassWithScope).to receive(:where).with(foobar: pair.first)
-          TestClassWithScope.send(symbol)
+          expect(TestClassWithScope.public_send(symbol).to_sql)
+            .to match(/WHERE "test_class_with_scopes"."foobar" = \'#{pair.first}\'/)
         end
       end
     end
