@@ -42,7 +42,7 @@ gem install enumerate_it
 
 ## Using with Rails
 
-Add the gem to your Gemfile:
+Add the gem to your `Gemfile`:
 
 ```ruby
 gem 'enumerate_it'
