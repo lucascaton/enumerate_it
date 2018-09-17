@@ -74,6 +74,7 @@ module EnumerateIt
 
     def create_polymorphic_methods(klass, attribute_name, helpers)
       return unless helpers.is_a?(Hash) && helpers[:polymorphic]
+
       options = helpers[:polymorphic]
       suffix = options.is_a?(Hash) && options[:suffix]
       suffix ||= '_object'

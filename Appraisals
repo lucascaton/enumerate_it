@@ -8,8 +8,7 @@ rails_versions = JSON.parse(Net::HTTP.get(URI('https://rubygems.org/api/v1/versi
   appraise "rails_#{version}" do
     current_version = rails_versions
       .select { |key| key.match(/\A#{version}/) }
-      .sort { |a, b| Gem::Version.new(a) <=> Gem::Version.new(b) }
-      .last
+      .max { |a, b| Gem::Version.new(a) <=> Gem::Version.new(b) }
 
     gem 'activesupport', "~> #{current_version}"
     gem 'activerecord',  "~> #{current_version}"

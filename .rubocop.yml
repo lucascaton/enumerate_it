@@ -1,12 +1,13 @@
 require: rubocop-rspec
 
+inherit_mode:
+  merge:
+    - Exclude
+
 AllCops:
+  TargetRubyVersion: 2.5
   DisplayCopNames: true
 
-  Include:
-    - '**/Appraisals'
-    - '**/Gemfile'
-    - '**/Rakefile'
   Exclude:
     - 'lib/generators/enumerate_it/enum/templates/**/*'
     - 'gemfiles/vendor/**/*'
