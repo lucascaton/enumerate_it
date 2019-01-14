@@ -11,6 +11,9 @@ I18n.config.enforce_available_locales = false
 I18n.load_path = Dir['spec/i18n/*.yml']
 
 RSpec.configure do |config|
-  config.filter_run :focus
-  config.run_all_when_everything_filtered = true
+  config.filter_run_when_matching :focus
+
+  config.before(:each, sqlite: true) do
+    ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:')
+  end
 end
