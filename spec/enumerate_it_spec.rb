@@ -264,8 +264,7 @@ describe EnumerateIt do
         end
       end
 
-      it 'when called, the scopes create the correct query' do
-        ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:')
+      it 'when called, the scopes create the correct query', sqlite: true do
         ActiveRecord::Schema.define { create_table :test_class_with_scopes }
 
         TestEnumeration.enumeration.each do |symbol, pair|

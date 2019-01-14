@@ -26,6 +26,7 @@ Metrics/BlockLength:
     - 'spec/**/*'
 
 Layout/AlignHash:
+  EnforcedColonStyle: table
   EnforcedLastArgumentHashStyle: ignore_implicit
 
 Layout/ElseAlignment:

@@ -210,38 +210,38 @@ describe EnumerateIt::Base do
   end
 
   context 'not specifying a sort mode' do
-    subject { create_enumeration_class_with_sort_mode(nil).to_a }
+    subject(:enumeration) { create_enumeration_class_with_sort_mode(nil) }
 
     it 'does not sort' do
-      expect(subject).to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[jkl 0]])
+      expect(enumeration.to_a).to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[jkl 0]])
     end
   end
 
   context 'specifying a sort mode' do
-    subject { create_enumeration_class_with_sort_mode(sort_mode).to_a }
+    subject(:enumeration) { create_enumeration_class_with_sort_mode(sort_mode) }
 
     context 'by value' do
       let(:sort_mode) { :value }
 
-      it { is_expected.to eq([%w[jkl 0], %w[xyz 1], %w[fgh 2], %w[abc 3]]) }
+      it { expect(enumeration.to_a).to eq([%w[jkl 0], %w[xyz 1], %w[fgh 2], %w[abc 3]]) }
     end
 
     context 'by name' do
       let(:sort_mode) { :name }
 
-      it { is_expected.to eq([%w[fgh 2], %w[xyz 1], %w[abc 3], %w[jkl 0]]) }
+      it { expect(enumeration.to_a).to eq([%w[fgh 2], %w[xyz 1], %w[abc 3], %w[jkl 0]]) }
     end
 
     context 'by translation' do
       let(:sort_mode) { :translation }
 
-      it { is_expected.to eq([%w[abc 3], %w[fgh 2], %w[jkl 0], %w[xyz 1]]) }
+      it { expect(enumeration.to_a).to eq([%w[abc 3], %w[fgh 2], %w[jkl 0], %w[xyz 1]]) }
     end
 
     context 'by nothing' do
       let(:sort_mode) { :none }
 
-      it { is_expected.to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[jkl 0]]) }
+      it { expect(enumeration.to_a).to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[jkl 0]]) }
     end
   end
 
