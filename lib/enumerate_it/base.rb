@@ -21,6 +21,10 @@ module EnumerateIt
         sorted_map.map { |_k, v| v.first }
       end
 
+      def to_h
+        sorted_map.map { |k, v| [k, v.first] }.to_h
+      end
+
       def enumeration
         @registered_enumerations[self]
       end
