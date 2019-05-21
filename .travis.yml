@@ -12,8 +12,6 @@ script:
   - bundle exec rake spec
 
 rvm:
-  - 2.0.0
-  - 2.1.10
   - 2.2.10
   - 2.3.8
   - 2.4.6
@@ -33,20 +31,6 @@ gemfile:
 
 matrix:
   exclude:
-  # Rails 5+ requires Ruby 2.2+
-  - rvm: 2.0.0
-    gemfile: gemfiles/rails_5.0.gemfile
-  - rvm: 2.0.0
-    gemfile: gemfiles/rails_5.1.gemfile
-  - rvm: 2.0.0
-    gemfile: gemfiles/rails_5.2.gemfile
-  - rvm: 2.1.10
-    gemfile: gemfiles/rails_5.0.gemfile
-  - rvm: 2.1.10
-    gemfile: gemfiles/rails_5.1.gemfile
-  - rvm: 2.1.10
-    gemfile: gemfiles/rails_5.2.gemfile
-
   # Rails 4.0 and 4.1 requires an old version of `json` gem, which isn't compatible with Ruby 2.4+
   # https://github.com/flori/json/issues/308
   - rvm: 2.4.6
