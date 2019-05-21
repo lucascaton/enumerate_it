@@ -13,6 +13,6 @@ rails_versions = JSON.parse(Net::HTTP.get(URI('https://rubygems.org/api/v1/versi
     gem 'activesupport', "~> #{current_version}"
     gem 'activerecord',  "~> #{current_version}"
 
-    gem 'sqlite3'
+    gem 'sqlite3', Gem::Version.new(version) > Gem::Version.new(5.0) ? '~> 1.4.1' : '< 1.4'
   end
 end
