@@ -19,9 +19,6 @@ rvm:
   - 2.6.3
 
 gemfile:
-  - gemfiles/rails_3.0.gemfile
-  - gemfiles/rails_3.1.gemfile
-  - gemfiles/rails_3.2.gemfile
   - gemfiles/rails_4.0.gemfile
   - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_4.2.gemfile
@@ -45,13 +42,6 @@ matrix:
     gemfile: gemfiles/rails_4.0.gemfile
   - rvm: 2.6.3
     gemfile: gemfiles/rails_4.1.gemfile
-
-  # Rails 3.0 doesn't work with Ruby 2.5+
-  # (`undefined method `yaml_as' for BigDecimal:Class`)
-  - rvm: 2.5.5
-    gemfile: gemfiles/rails_3.0.gemfile
-  - rvm: 2.6.6
-    gemfile: gemfiles/rails_3.0.gemfile
 
 addons:
   code_climate:
