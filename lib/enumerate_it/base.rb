@@ -45,8 +45,8 @@ module EnumerateIt
         list.each { |value| yield value }
       end
 
-      def to_json
-        sorted_map.map { |_k, v| { value: v[0], label: translate(v[1]) } }.to_json
+      def to_json(options = nil)
+        sorted_map.map { |_k, v| { value: v[0], label: translate(v[1]) } }.to_json(options)
       end
 
       def t(value)
