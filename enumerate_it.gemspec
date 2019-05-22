@@ -12,19 +12,16 @@ Gem::Specification.new do |gem|
   gem.name          = 'enumerate_it'
   gem.require_paths = ['lib']
   gem.version       = EnumerateIt::VERSION
-  gem.required_ruby_version = '>= 2.0.0'
+  gem.required_ruby_version = '>= 2.2.0'
 
-  gem.add_dependency 'activesupport', '>= 3.0.0'
+  gem.add_dependency 'activesupport', '>= 4.0.0'
 
   gem.add_development_dependency 'appraisal'
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'pry'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rubocop'
+  gem.add_development_dependency 'rubocop-rspec'
   gem.add_development_dependency 'wwtd'
-
-  if RUBY_VERSION >= '2.2.0'
-    gem.add_development_dependency 'rubocop'
-    gem.add_development_dependency 'rubocop-rspec'
-  end
 end

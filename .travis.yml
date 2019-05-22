@@ -8,22 +8,17 @@ before_install:
   - ruby .ci/prepare
 
 script:
-  - "ruby -e \"RUBY_VERSION == '2.6.0' ? system('bundle exec rubocop') : exit(0)\""
+  - "ruby -e \"RUBY_VERSION == '2.6.3' ? system('bundle exec rubocop') : exit(0)\""
   - bundle exec rake spec
 
 rvm:
-  - 2.0.0
-  - 2.1.10
   - 2.2.10
   - 2.3.8
-  - 2.4.5
-  - 2.5.3
-  - 2.6.0
+  - 2.4.6
+  - 2.5.5
+  - 2.6.3
 
 gemfile:
-  - gemfiles/rails_3.0.gemfile
-  - gemfiles/rails_3.1.gemfile
-  - gemfiles/rails_3.2.gemfile
   - gemfiles/rails_4.0.gemfile
   - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_4.2.gemfile
@@ -33,41 +28,20 @@ gemfile:
 
 matrix:
   exclude:
-  # Rails 5+ requires Ruby 2.2+
-  - rvm: 2.0.0
-    gemfile: gemfiles/rails_5.0.gemfile
-  - rvm: 2.0.0
-    gemfile: gemfiles/rails_5.1.gemfile
-  - rvm: 2.0.0
-    gemfile: gemfiles/rails_5.2.gemfile
-  - rvm: 2.1.10
-    gemfile: gemfiles/rails_5.0.gemfile
-  - rvm: 2.1.10
-    gemfile: gemfiles/rails_5.1.gemfile
-  - rvm: 2.1.10
-    gemfile: gemfiles/rails_5.2.gemfile
-
   # Rails 4.0 and 4.1 requires an old version of `json` gem, which isn't compatible with Ruby 2.4+
   # https://github.com/flori/json/issues/308
-  - rvm: 2.4.5
+  - rvm: 2.4.6
     gemfile: gemfiles/rails_4.0.gemfile
-  - rvm: 2.4.5
+  - rvm: 2.4.6
     gemfile: gemfiles/rails_4.1.gemfile
-  - rvm: 2.5.3
+  - rvm: 2.5.5
     gemfile: gemfiles/rails_4.0.gemfile
-  - rvm: 2.5.3
+  - rvm: 2.5.5
     gemfile: gemfiles/rails_4.1.gemfile
-  - rvm: 2.6.0
+  - rvm: 2.6.3
     gemfile: gemfiles/rails_4.0.gemfile
-  - rvm: 2.6.0
+  - rvm: 2.6.3
     gemfile: gemfiles/rails_4.1.gemfile
-
-  # Rails 3.0 doesn't work with Ruby 2.5+
-  # (`undefined method `yaml_as' for BigDecimal:Class`)
-  - rvm: 2.5.3
-    gemfile: gemfiles/rails_3.0.gemfile
-  - rvm: 2.6.0
-    gemfile: gemfiles/rails_3.0.gemfile
 
 addons:
   code_climate:
