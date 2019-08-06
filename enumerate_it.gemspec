@@ -14,6 +14,11 @@ Gem::Specification.new do |gem|
   gem.version       = EnumerateIt::VERSION
   gem.required_ruby_version = '>= 2.2.0'
 
+  gem.metadata = {
+    'source_code_uri' => 'https://github.com/lucascaton/enumerate_it',
+    'changelog_uri' => 'https://github.com/lucascaton/enumerate_it/releases'
+  }
+
   gem.add_dependency 'activesupport', '>= 4.0.0'
 
   gem.add_development_dependency 'appraisal'
