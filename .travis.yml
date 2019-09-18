@@ -5,15 +5,15 @@ sudo: false
 cache: bundler
 
 script:
-  - "ruby -e \"RUBY_VERSION == '2.6.3' ? system('bundle exec rubocop') : exit(0)\""
+  - "ruby -e \"RUBY_VERSION == '2.6.4' ? system('bundle exec rubocop') : exit(0)\""
   - bundle exec rake spec
 
 rvm:
   - 2.2.10
   - 2.3.8
-  - 2.4.6
-  - 2.5.5
-  - 2.6.3
+  - 2.4.7
+  - 2.5.6
+  - 2.6.4
 
 gemfile:
   - gemfiles/rails_4.0.gemfile
@@ -27,17 +27,17 @@ matrix:
   exclude:
   # Rails 4.0 and 4.1 requires an old version of `json` gem, which isn't compatible with Ruby 2.4+
   # https://github.com/flori/json/issues/308
-  - rvm: 2.4.6
+  - rvm: 2.4.7
     gemfile: gemfiles/rails_4.0.gemfile
-  - rvm: 2.4.6
+  - rvm: 2.4.7
     gemfile: gemfiles/rails_4.1.gemfile
-  - rvm: 2.5.5
+  - rvm: 2.5.6
     gemfile: gemfiles/rails_4.0.gemfile
-  - rvm: 2.5.5
+  - rvm: 2.5.6
     gemfile: gemfiles/rails_4.1.gemfile
-  - rvm: 2.6.3
+  - rvm: 2.6.4
     gemfile: gemfiles/rails_4.0.gemfile
-  - rvm: 2.6.3
+  - rvm: 2.6.4
     gemfile: gemfiles/rails_4.1.gemfile
 
 addons:
