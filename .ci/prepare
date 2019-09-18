@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-
-RUBY_GEMS_VERSION = RUBY_VERSION >= '2.6.0' ? ''     : '2.7.8'
-BUNDLER_VERSION   = RUBY_VERSION >= '2.6.0' ? '>= 2' : '> 2'
-
-system("gem update --system '#{RUBY_GEMS_VERSION}'")
-system("gem install bundler -v '#{BUNDLER_VERSION}'")
