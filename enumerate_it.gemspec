@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
     'changelog_uri' => 'https://github.com/lucascaton/enumerate_it/releases'
   }
 
-  gem.add_dependency 'activesupport', '>= 4.0.0'
+  gem.add_dependency 'activesupport', '>= 4.2.0'
 
   gem.add_development_dependency 'appraisal'
   gem.add_development_dependency 'bundler'
