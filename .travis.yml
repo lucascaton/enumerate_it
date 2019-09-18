@@ -4,9 +4,6 @@ sudo: false
 
 cache: bundler
 
-before_install:
-  - ruby .ci/prepare
-
 script:
   - "ruby -e \"RUBY_VERSION == '2.6.3' ? system('bundle exec rubocop') : exit(0)\""
   - bundle exec rake spec
