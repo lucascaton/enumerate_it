@@ -113,6 +113,18 @@ describe EnumerateIt::Base do
     end
   end
 
+  describe '.to_h' do
+    before do
+      class SomeEnum < EnumerateIt::Base
+        associate_values a: '1', b: '2', c: '3'
+      end
+    end
+
+    it 'returns a hash' do
+      expect(SomeEnum.to_h).to eq(a: '1', b: '2', c: '3')
+    end
+  end
+
   describe '.to_json' do
     it 'gives a valid json back' do
       I18n.locale = :inexsistent
