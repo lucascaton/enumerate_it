@@ -67,6 +67,7 @@ module EnumerateIt
         klass.enumeration.each_pair do |key, values|
           define_method "#{prefix_name}#{key}!" do
             send "#{attribute_name}=", values.first
+            save! if respond_to?(:save!)
           end
         end
       end
