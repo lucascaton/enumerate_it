@@ -403,8 +403,8 @@ You sure can! 😄
 
 #### What versions of Ruby and Rails are supported?
 
-* **Ruby**: `2.2+`
-* **Rails** `4.0+`
+* **Ruby**: `2.4+`
+* **Rails** `4.2+`
 
 All versions are tested via
 [Travis](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
