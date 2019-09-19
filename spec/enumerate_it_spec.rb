@@ -163,6 +163,15 @@ describe EnumerateIt do
       expect(target.foobar).to eq(TestEnumeration::VALUE_3)
     end
 
+    context 'when class responds to save! method' do
+      it 'calls save!' do
+        target = test_class_with_helper.new(TestEnumeration::VALUE_2)
+        allow(target).to receive(:save!)
+        target.value_3!
+        expect(target).to have_received(:save!)
+      end
+    end
+
     context 'with :prefix option' do
       let :test_class_with_prefixed_helper do
         Class.new do
@@ -192,6 +201,15 @@ describe EnumerateIt do
         target = test_class_with_prefixed_helper.new(TestEnumeration::VALUE_2)
         target.foobar_value_3!
         expect(target.foobar).to eq(TestEnumeration::VALUE_3)
+      end
+
+      context 'when class responds to save! method' do
+        it 'calls save!' do
+          target = test_class_with_prefixed_helper.new(TestEnumeration::VALUE_2)
+          allow(target).to receive(:save!)
+          target.foobar_value_3!
+          expect(target).to have_received(:save!)
+        end
       end
     end
 
