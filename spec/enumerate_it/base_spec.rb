@@ -246,12 +246,14 @@ describe EnumerateIt::Base do
   end
 
   context 'when included in ActiveRecord::Base' do
-    before do
-      class ActiveRecordStub
+    let(:active_record_stub_class) do
+      Class.new do
+        extend EnumerateIt
+
         attr_accessor :bla
 
         class << self
-          def validates_inclusion_of(_attribute)
+          def validates_inclusion_of(_attribute, _options)
             true
           end
 
@@ -260,42 +262,41 @@ describe EnumerateIt::Base do
           end
         end
       end
-
-      allow(ActiveRecordStub).to receive(:validates_inclusion_of).and_return(true)
-      ActiveRecordStub.extend EnumerateIt
     end
 
     it 'creates a validation for inclusion' do
-      expect(ActiveRecordStub)
+      expect(active_record_stub_class)
         .to receive(:validates_inclusion_of).with(:bla, in: TestEnumeration.list, allow_blank: true)
 
-      class ActiveRecordStub
+      active_record_stub_class.class_eval do
         has_enumeration_for :bla, with: TestEnumeration
       end
     end
 
     context 'using the :required option' do
       before do
-        allow(ActiveRecordStub).to receive(:validates_presence_of).and_return(true)
+        allow(active_record_stub_class).to receive(:validates_presence_of).and_return(true)
       end
 
       it 'creates a validation for presence' do
-        expect(ActiveRecordStub).to receive(:validates_presence_of)
-        class ActiveRecordStub
+        expect(active_record_stub_class).to receive(:validates_presence_of)
+        active_record_stub_class.class_eval do
           has_enumeration_for :bla, with: TestEnumeration, required: true
         end
       end
 
       it 'passes the given options to the validation method' do
-        expect(ActiveRecordStub).to receive(:validates_presence_of).with(:bla, if: :some_method)
-        class ActiveRecordStub
+        expect(active_record_stub_class)
+          .to receive(:validates_presence_of).with(:bla, if: :some_method)
+
+        active_record_stub_class.class_eval do
           has_enumeration_for :bla, with: TestEnumeration, required: { if: :some_method }
         end
       end
 
       it 'does not require the attribute by default' do
-        expect(ActiveRecordStub).not_to receive(:validates_presence_of)
-        class ActiveRecordStub
+        expect(active_record_stub_class).not_to receive(:validates_presence_of)
+        active_record_stub_class.class_eval do
           has_enumeration_for :bla, with: TestEnumeration
         end
       end
@@ -303,15 +304,15 @@ describe EnumerateIt::Base do
 
     context 'using :skip_validation option' do
       it "doesn't create a validation for inclusion" do
-        expect(ActiveRecordStub).not_to receive(:validates_inclusion_of)
-        class ActiveRecordStub
+        expect(active_record_stub_class).not_to receive(:validates_inclusion_of)
+        active_record_stub_class.class_eval do
           has_enumeration_for :bla, with: TestEnumeration, skip_validation: true
         end
       end
 
       it "doesn't create a validation for presence" do
-        expect(ActiveRecordStub).not_to receive(:validates_presence_of)
-        class ActiveRecordStub
+        expect(active_record_stub_class).not_to receive(:validates_presence_of)
+        active_record_stub_class.class_eval do
           has_enumeration_for :bla, with: TestEnumeration, require: true, skip_validation: true
         end
       end
