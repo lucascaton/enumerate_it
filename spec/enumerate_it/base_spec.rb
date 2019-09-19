@@ -114,14 +114,8 @@ describe EnumerateIt::Base do
   end
 
   describe '.to_h' do
-    before do
-      class SomeEnum < EnumerateIt::Base
-        associate_values a: '1', b: '2', c: '3'
-      end
-    end
-
     it 'returns a hash' do
-      expect(SomeEnum.to_h).to eq(a: '1', b: '2', c: '3')
+      expect(TestEnumerationWithoutArray.to_h).to eq(value_one: '1', value_two: '2')
     end
   end
 
