@@ -391,7 +391,7 @@ Remember that you can add validations to any kind of class and not only `ActiveR
 
 ## FAQ
 
-#### Why to define enumerations outside the class that uses them?
+#### Why define enumerations outside the class that uses them?
 
 * It's clearer.
 * You can add behaviour to the enumeration class.
