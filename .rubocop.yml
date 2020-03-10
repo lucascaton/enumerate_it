@@ -47,6 +47,15 @@ Style/Documentation:
 Style/GuardClause:
   MinBodyLength: 3
 
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
 Naming/PredicateName:
   Exclude:
     - 'lib/enumerate_it/class_methods.rb'
