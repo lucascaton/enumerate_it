@@ -1,7 +1,13 @@
+require 'forwardable'
+
 module EnumerateIt
   class Base
     class << self
+      extend Forwardable
+
       attr_reader :sort_mode
+
+      def_delegators :enumeration, :keys
 
       def associate_values(*args)
         values = values_hash(args)
@@ -72,10 +78,6 @@ module EnumerateIt
         return if key.nil?
 
         (enumeration[key.to_sym] || []).first
-      end
-
-      def keys
-        enumeration.keys
       end
 
       def key_for(value)
