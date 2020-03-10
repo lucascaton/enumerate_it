@@ -85,6 +85,16 @@ describe EnumerateIt::Base do
     end
   end
 
+  describe '.each_key' do
+    it "yields each enumeration's key" do
+      keys = []
+      TestEnumeration.each_key do |key|
+        keys << key
+      end
+      expect(keys).to eq(%i[value_1 value_2 value_3])
+    end
+  end
+
   describe '.each_value' do
     it "yields each enumeration's value" do
       values = []
