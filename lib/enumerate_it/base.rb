@@ -7,7 +7,7 @@ module EnumerateIt
 
       attr_reader :sort_mode
 
-      def_delegators :enumeration, :keys
+      def_delegators :enumeration, :keys, :each_key
 
       def associate_values(*args)
         values = values_hash(args)
