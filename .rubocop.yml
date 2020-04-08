@@ -21,6 +21,12 @@ Layout/EndAlignment:
 Layout/LineLength:
   Max: 100
 
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
