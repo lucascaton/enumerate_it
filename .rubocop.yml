@@ -5,8 +5,8 @@ inherit_mode:
     - Exclude
 
 AllCops:
+  NewCops: enable
   TargetRubyVersion: 2.4
-  DisplayCopNames: true
 
   Exclude:
     - 'lib/generators/enumerate_it/enum/templates/**/*'
