@@ -404,7 +404,7 @@ You sure can! 😄
 #### What versions of Ruby and Rails are supported?
 
 * **Ruby**: `2.5+`
-* **Rails** `4.2+`
+* **Rails** `5.0+`
 
 All versions are tested via
 [Travis](https://github.com/lucascaton/enumerate_it/blob/master/.travis.yml).
