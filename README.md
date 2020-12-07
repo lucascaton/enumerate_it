@@ -403,7 +403,7 @@ You sure can! 😄
 
 #### What versions of Ruby and Rails are supported?
 
-* **Ruby**: `2.4+`
+* **Ruby**: `2.5+`
 * **Rails** `4.2+`
 
 All versions are tested via

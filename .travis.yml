@@ -9,7 +9,6 @@ script:
   - bundle exec rake spec
 
 rvm:
-  - 2.4.10
   - 2.5.8
   - 2.6.6
   - 2.7.2
@@ -26,9 +25,6 @@ matrix:
     # Rails 4.2 isn't compatible with Ruby 2.7+
     - rvm: 2.7.2
       gemfile: gemfiles/rails_4.2.gemfile
-    # Rails 6 requires Ruby 2.5+
-    - rvm: 2.4.10
-      gemfile: gemfiles/rails_6.0.gemfile
 
 addons:
   code_climate:
