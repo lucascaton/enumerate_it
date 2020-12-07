@@ -1,4 +1,5 @@
-require File.expand_path('lib/enumerate_it/version', __dir__)
+$LOAD_PATH << File.expand_path('lib', __dir__)
+require 'enumerate_it/version'
 
 Gem::Specification.new do |gem|
   gem.authors       = ['Cássio Marques', 'Lucas Caton']

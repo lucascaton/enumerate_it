@@ -66,6 +66,9 @@ Naming/PredicateName:
   Exclude:
     - 'lib/enumerate_it/class_methods.rb'
 
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
 RSpec/MultipleExpectations:
   Enabled: false
 

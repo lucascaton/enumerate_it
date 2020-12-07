@@ -1,10 +1,11 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'spec_helper'
 
 describe EnumerateIt do
   let :test_class do
     Class.new do
       extend EnumerateIt
       attr_accessor :foobar
+
       has_enumeration_for :foobar, with: TestEnumeration
 
       def initialize(foobar)
@@ -62,6 +63,7 @@ describe EnumerateIt do
         Class.new do
           extend EnumerateIt
           attr_accessor :foobar
+
           has_enumeration_for :foobar, with: TestEnumerationWithoutArray
 
           def initialize(foobar)
@@ -92,6 +94,7 @@ describe EnumerateIt do
         Class.new do
           extend EnumerateIt
           attr_accessor :test_enumeration
+
           has_enumeration_for :test_enumeration
 
           def initialize(test_enumeration_value)
@@ -109,14 +112,17 @@ describe EnumerateIt do
       context 'when using a nested class as the enumeration' do
         let :class_with_nested_enum do
           Class.new do
+            # rubocop:disable Lint/ConstantDefinitionInBlock
             # rubocop:disable RSpec/LeakyConstantDeclaration
             class NestedEnum < EnumerateIt::Base
               associate_values foo: %w[1 Blerrgh], bar: ['2' => 'Blarghhh']
             end
             # rubocop:enable RSpec/LeakyConstantDeclaration
+            # rubocop:enable Lint/ConstantDefinitionInBlock
 
             extend EnumerateIt
             attr_accessor :nested_enum
+
             has_enumeration_for :nested_enum
 
             def initialize(nested_enum_value)
@@ -137,6 +143,7 @@ describe EnumerateIt do
       Class.new do
         extend EnumerateIt
         attr_accessor :foobar
+
         has_enumeration_for :foobar, with: TestEnumeration, create_helpers: true
 
         def initialize(foobar)
@@ -177,6 +184,7 @@ describe EnumerateIt do
         Class.new do
           extend EnumerateIt
           attr_accessor :foobar
+
           has_enumeration_for :foobar, with: TestEnumeration, create_helpers: { prefix: true }
 
           def initialize(foobar)
@@ -218,6 +226,7 @@ describe EnumerateIt do
         Class.new do
           extend EnumerateIt
           attr_accessor :foo
+
           has_enumeration_for :foo, with: PolymorphicEnum, create_helpers: { polymorphic: true }
         end
       end
@@ -243,6 +252,7 @@ describe EnumerateIt do
           Class.new do
             extend EnumerateIt
             attr_accessor :foo
+
             has_enumeration_for :foo, with: PolymorphicEnum,
               create_helpers: { polymorphic: { suffix: '_strategy' } }
           end
@@ -283,7 +293,7 @@ describe EnumerateIt do
 
         TestEnumeration.enumeration.each do |symbol, pair|
           expect(test_class_with_scope.public_send(symbol).to_sql)
-            .to match(/WHERE "test_class_with_scopes"."foobar" = \'#{pair.first}\'/)
+            .to match(/WHERE "test_class_with_scopes"."foobar" = '#{pair.first}'/)
         end
       end
     end

@@ -43,16 +43,16 @@ module EnumerateIt
         list.length
       end
 
-      def each_translation
-        each_value { |value| yield t(value) }
+      def each_translation(&block)
+        each_value { |value| block.call t(value) }
       end
 
       def translations
         list.map { |value| t(value) }
       end
 
-      def each_value
-        list.each { |value| yield value }
+      def each_value(&block)
+        list.each(&block)
       end
 
       def to_json(options = nil)
