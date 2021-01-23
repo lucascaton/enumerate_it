@@ -1,0 +1,51 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+
+      matrix:
+        ruby:
+          - 2.5
+          - 2.6
+          - 2.7
+          - 3.0
+        gemfile:
+          - gemfiles/rails_5.0.gemfile
+          - gemfiles/rails_5.1.gemfile
+          - gemfiles/rails_5.2.gemfile
+          - gemfiles/rails_6.0.gemfile
+          - gemfiles/rails_6.1.gemfile
+        exclude:
+          # Rails < 6 does not support Ruby 3+:
+          # https://github.com/rails/rails/issues/40938#issuecomment-751357907
+          - ruby: 3.0
+            gemfile: gemfiles/rails_5.0.gemfile
+          - ruby: 3.0
+            gemfile: gemfiles/rails_5.1.gemfile
+          - ruby: 3.0
+            gemfile: gemfiles/rails_5.2.gemfile
+
+    env:
+      BUNDLE_GEMFILE: "${{ matrix.gemfile }}"
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+
+    - name: Rubocop
+      if: ${{ matrix.ruby == '3.0' }}
+      run: "bundle exec rubocop"
+
+    - name: Tests
+      run: bundle exec rake spec
