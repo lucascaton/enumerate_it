@@ -4,7 +4,7 @@ require 'json'
 rails_versions = JSON.parse(Net::HTTP.get(URI('https://rubygems.org/api/v1/versions/rails.json')))
   .group_by { |version| version['number'] }.keys.reject { |key| key =~ /rc|racecar|beta|pre/ }
 
-%w[5.0 5.1 5.2 6.0].each do |version|
+%w[5.0 5.1 5.2 6.0 6.1].each do |version|
   appraise "rails_#{version}" do
     current_version = rails_versions
       .select { |key| key.match(/\A#{version}/) }
