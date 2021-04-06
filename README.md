@@ -535,4 +535,4 @@ Changes are maintained under [Releases page](https://github.com/lucascaton/enume
 
 ## Copyright
 
-Copyright (c) 2010-2020 Cássio Marques and Lucas Caton. See `LICENSE` file for details.
+Copyright (c) 2010-2021 Cássio Marques and Lucas Caton. See `LICENSE` file for details.
