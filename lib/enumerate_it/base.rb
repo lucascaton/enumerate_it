@@ -69,7 +69,7 @@ module EnumerateIt
       end
 
       def value_for(value)
-        const_get(value.to_sym)
+        const_get(value.to_sym, false)
       rescue NameError
         nil
       end

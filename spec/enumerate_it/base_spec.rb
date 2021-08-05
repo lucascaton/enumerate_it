@@ -178,6 +178,12 @@ describe EnumerateIt::Base do
         expect(TestEnumeration.value_for('THIS_IS_WRONG')).to be_nil
       end
     end
+
+    context 'when a constant named after the received value exists as an ancestor' do
+      it 'returns nil' do
+        expect(TestEnumeration.value_for('Module')).to be_nil
+      end
+    end
   end
 
   describe '.value_from_key' do
