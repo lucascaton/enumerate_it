@@ -2,7 +2,7 @@
 
 Enumerations for Ruby with some magic powers! 🎩
 
-[![Build Status](https://travis-ci.org/lucascaton/enumerate_it.svg?branch=main)](https://travis-ci.org/lucascaton/enumerate_it)
+[![CI Status](https://github.com/lucascaton/enumerate_it/workflows/CI/badge.svg)](https://github.com/lucascaton/enumerate_it/actions?query=workflow%3ACI)
 [![Gem Version](https://badge.fury.io/rb/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
 [![Code Climate](https://codeclimate.com/github/lucascaton/enumerate_it/badges/gpa.svg)](https://codeclimate.com/github/lucascaton/enumerate_it)
 [![Downloads](https://img.shields.io/gem/dt/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
@@ -407,7 +407,7 @@ You sure can! 😄
 * **Rails** `5.0+`
 
 All versions are tested via
-[Travis](https://github.com/lucascaton/enumerate_it/blob/main/.travis.yml).
+[GitHub Actions](https://github.com/lucascaton/enumerate_it/blob/HEAD/.github/workflows/ci.yml).
 
 #### Can I set a value to always be at the end of a sorted list?
 
