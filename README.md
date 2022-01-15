@@ -528,7 +528,7 @@ Changes are maintained under [Releases page](https://github.com/lucascaton/enume
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so we don't break it in a future version unintentionally.
-* [Optional] Run the tests agaist a specific Gemfile: `$ bundle exec appraisal rails_6.1 rake spec`.
+* [Optional] Run the tests agaist a specific Gemfile: `$ bundle exec appraisal rails_7.0 rake spec`.
 * Run the tests agaist all supported versions: `$ bundle exec rake` (or `$ bundle exec wwtd`)
 * Commit, but please do not mess with `Rakefile`, version, or history.
 * Send a Pull Request. Bonus points for topic branches.

@@ -13,12 +13,14 @@ jobs:
           - 2.6
           - 2.7
           - 3.0
+          - 3.1
         gemfile:
           - gemfiles/rails_5.0.gemfile
           - gemfiles/rails_5.1.gemfile
           - gemfiles/rails_5.2.gemfile
           - gemfiles/rails_6.0.gemfile
           - gemfiles/rails_6.1.gemfile
+          - gemfiles/rails_7.0.gemfile
         exclude:
           # Rails < 6 does not support Ruby 3+:
           # https://github.com/rails/rails/issues/40938#issuecomment-751357907
@@ -28,6 +30,18 @@ jobs:
             gemfile: gemfiles/rails_5.1.gemfile
           - ruby: 3.0
             gemfile: gemfiles/rails_5.2.gemfile
+          - ruby: 3.1
+            gemfile: gemfiles/rails_5.0.gemfile
+          - ruby: 3.1
+            gemfile: gemfiles/rails_5.1.gemfile
+          - ruby: 3.1
+            gemfile: gemfiles/rails_5.2.gemfile
+
+          # Rails 7.0 requires Ruby 2.7+
+          - ruby: 2.5
+            gemfile: gemfiles/rails_7.0.gemfile
+          - ruby: 2.6
+            gemfile: gemfiles/rails_7.0.gemfile
 
     env:
       BUNDLE_GEMFILE: "${{ matrix.gemfile }}"
@@ -44,7 +58,7 @@ jobs:
         bundler-cache: true
 
     - name: Rubocop
-      if: ${{ matrix.ruby == '3.0' }}
+      if: ${{ matrix.ruby == '3.1' }}
       run: "bundle exec rubocop"
 
     - name: Tests
