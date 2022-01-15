@@ -17,7 +17,8 @@ Gem::Specification.new do |gem|
 
   gem.metadata = {
     'source_code_uri' => 'https://github.com/lucascaton/enumerate_it',
-    'changelog_uri' => 'https://github.com/lucascaton/enumerate_it/releases'
+    'changelog_uri' => 'https://github.com/lucascaton/enumerate_it/releases',
+    'rubygems_mfa_required' => 'true'
   }
 
   gem.add_dependency 'activesupport', '>= 5.0.7.2'
