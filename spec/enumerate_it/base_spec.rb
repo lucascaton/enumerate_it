@@ -308,12 +308,12 @@ describe EnumerateIt::Base do
       end
 
       it 'passes the given options to the validation method' do
-        expect(active_record_stub_class)
-          .to receive(:validates_presence_of).with(:bla, if: :some_method)
-
         active_record_stub_class.class_eval do
           has_enumeration_for :bla, with: TestEnumeration, required: { if: :some_method }
         end
+
+        expect(active_record_stub_class)
+          .to have_received(:validates_presence_of).with(:bla, if: :some_method)
       end
 
       it 'does not require the attribute by default' do
