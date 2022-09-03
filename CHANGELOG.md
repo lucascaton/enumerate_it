@@ -1,1 +1,4 @@
-Changes are maintained under [Releases](https://github.com/lucascaton/enumerate_it/releases).
+# CHANGELOG
+
+Changes follows the [Semantic Versioning](https://semver.org/) specification and
+you can see them on the [releases page](../../releases).

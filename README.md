@@ -521,7 +521,8 @@ You can also sort it by its **value** using `sort_by :value`.
 
 ## Changelog
 
-Changes are maintained under [Releases page](https://github.com/lucascaton/enumerate_it/releases).
+Changes follows the [Semantic Versioning](https://semver.org/) specification and
+you can see them on the [releases page](../../releases).
 
 ## Note on Patches/Pull Requests
 
