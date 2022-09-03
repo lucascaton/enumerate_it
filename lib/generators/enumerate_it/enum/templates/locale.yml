@@ -1,6 +1,6 @@
 <%= default_lang %>:
   enumerations:
     <%= singular_name %>:
-    <%- locale_fields.each do |name| -%>
+    <%- locale_fields.each do |name, _| -%>
       <%= name %>: '<%= name.humanize %>'
     <%- end -%>
