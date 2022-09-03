@@ -1,5 +1,5 @@
 Description:
-    Creates an EnumerateIt class an its locale file
+    Creates an EnumerateIt class and its locale file
 
 Example:
     rails g enumerate_it:enum CivilStatus single married divorced widower concubinage separated stable
@@ -11,5 +11,5 @@ Example:
     rails g enumerate_it:enum CivilStatus single:1 married:2 divorced:3 widower:4
 
     This will create:
-        app/enumerations/civil_status.rb with `associate_values :single => 1, :married => 2, :divorced => 2, :widower => 4`
+        app/enumerations/civil_status.rb with `associate_values single: 1, married: 2, divorced: 3, widower: 4`
         config/locales/civil_status.yml
