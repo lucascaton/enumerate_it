@@ -34,7 +34,9 @@ module EnumerateIt
       end
 
       def fields
-        if attributes.first.type == :string
+        if attributes.empty? 
+          args
+        elsif attributes.first.type == :string
           attributes.map(&:name)
         else
           attributes.map { |attribute| [attribute.name, attribute.type] }
