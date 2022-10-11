@@ -29,10 +29,6 @@ module EnumerateIt
         singular_name
       end
 
-      def locale_fields
-        attributes.map(&:name)
-      end
-
       def fields
         if attributes.empty? 
           args
