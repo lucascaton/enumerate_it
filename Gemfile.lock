@@ -1,13 +1,13 @@
 PATH
   remote: .
   specs:
-    enumerate_it (3.2.3)
+    enumerate_it (3.2.4)
       activesupport (>= 5.0.7.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activesupport (7.0.3.1)
+    activesupport (7.0.4)
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
