@@ -30,7 +30,7 @@ module EnumerateIt
       end
 
       def fields
-        if attributes.empty? 
+        if attributes.empty?
           args
         elsif attributes.first.type == :string
           attributes.map(&:name)
