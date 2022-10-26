@@ -29,12 +29,10 @@ module EnumerateIt
         singular_name
       end
 
-      def locale_fields
-        attributes.map(&:name)
-      end
-
       def fields
-        if attributes.first.type == :string
+        if attributes.empty?
+          args
+        elsif attributes.first.type == :string
           attributes.map(&:name)
         else
           attributes.map { |attribute| [attribute.name, attribute.type] }
