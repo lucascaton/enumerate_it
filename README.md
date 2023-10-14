@@ -536,4 +536,4 @@ you can see them on the [releases page](../../releases).
 
 ## Copyright
 
-Copyright (c) 2010-2021 Cássio Marques and Lucas Caton. See `LICENSE` file for details.
+Copyright (c) 2010-2023 Cássio Marques and Lucas Caton. See `LICENSE` file for details.
