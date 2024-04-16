@@ -5,6 +5,7 @@ module EnumerateIt
 
       define_enumeration_class(attribute, options)
       create_enumeration_humanize_method(options[:with], attribute)
+      create_enumeration_key_method(options[:with], attribute)
       store_enumeration(options[:with], attribute)
 
       handle_options(attribute, options)
@@ -34,6 +35,16 @@ module EnumerateIt
           values = klass.enumeration.values.detect { |v| v[0] == send(attribute_name) }
 
           values ? klass.translate(values[1]) : nil
+        end
+      end
+    end
+
+    def create_enumeration_key_method(klass, attribute_name)
+      class_eval do
+        define_method "#{attribute_name}_key" do
+          value = public_send(attribute_name)
+
+          value ? klass.key_for(value) : nil
         end
       end
     end

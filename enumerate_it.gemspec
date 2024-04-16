@@ -22,6 +22,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'activesupport', '>= 5.0.7.2'
 
+  gem.add_development_dependency 'activerecord'
   gem.add_development_dependency 'appraisal'
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'pry'
@@ -30,5 +31,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rubocop'
   gem.add_development_dependency 'rubocop-rake'
   gem.add_development_dependency 'rubocop-rspec'
+  gem.add_development_dependency 'sqlite3'
   gem.add_development_dependency 'wwtd'
 end
