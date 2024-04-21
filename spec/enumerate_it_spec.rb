@@ -28,6 +28,15 @@ describe EnumerateIt do
       expect(target.foobar_humanize).to be_nil
     end
 
+    it 'creates the key method' do
+      expect(target.foobar_key).to eq(:value_2)
+    end
+
+    it 'if the attribute is blank, the key method returns nil' do
+      target.foobar = nil
+      expect(target.foobar_key).to be_nil
+    end
+
     it 'defaults to not creating helper methods' do
       expect(target).not_to respond_to(:value_1?)
     end
