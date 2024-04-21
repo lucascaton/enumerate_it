@@ -31,5 +31,4 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rubocop-rake'
   gem.add_development_dependency 'rubocop-rspec'
   gem.add_development_dependency 'sqlite3', '< 2'
-  gem.add_development_dependency 'wwtd'
 end
