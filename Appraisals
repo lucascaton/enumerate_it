@@ -15,10 +15,15 @@ rails_versions = JSON.parse(Net::HTTP.get(URI('https://rubygems.org/api/v1/versi
 
     if Gem::Version.new(rails_version) <= Gem::Version.new(5.0)
       gem 'sqlite3', '< 1.4'
-    elsif Gem::Version.new(RUBY_VERSION) < '3'
-      gem 'sqlite3', '< 2'
     else
-      gem 'sqlite3'
+      # v2.x isn't yet working. See: https://github.com/sparklemotion/sqlite3-ruby/issues/529
+      gem 'sqlite3', '< 2'
     end
+
+    # elsif Gem::Version.new(RUBY_VERSION) < '3'
+    #   gem 'sqlite3', '< 2'
+    # else
+    #   gem 'sqlite3'
+    # end
   end
 end
