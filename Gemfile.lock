@@ -102,7 +102,6 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
-    wwtd (1.4.1)
 
 PLATFORMS
   ruby
@@ -118,8 +117,7 @@ DEPENDENCIES
   rubocop
   rubocop-rake
   rubocop-rspec
-  sqlite3
-  wwtd
+  sqlite3 (< 2)
 
 BUNDLED WITH
    2.4.19
