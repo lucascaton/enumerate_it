@@ -35,6 +35,7 @@ GEM
     json (2.6.3)
     language_server-protocol (3.17.0.3)
     method_source (1.0.0)
+    mini_portile2 (2.8.6)
     minitest (5.20.0)
     mutex_m (0.1.2)
     parallel (1.23.0)
@@ -88,6 +89,8 @@ GEM
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
+    sqlite3 (2.0.1)
+      mini_portile2 (~> 2.8.0)
     thor (1.2.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -107,6 +110,7 @@ DEPENDENCIES
   rubocop
   rubocop-rake
   rubocop-rspec
+  sqlite3
   wwtd
 
 BUNDLED WITH
