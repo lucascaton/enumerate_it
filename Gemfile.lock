@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    enumerate_it (3.3.0)
-      activesupport (>= 5.0.7.2)
+    enumerate_it (4.0.0)
+      activesupport (>= 6.0.0)
 
 GEM
   remote: https://rubygems.org/
