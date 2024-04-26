@@ -21,16 +21,24 @@ so you can **add behaviour** and also **reuse** them! 😀
 
 <!-- Tocer[start]: Auto-generated, don't remove. -->
 
-- [Installation](#installation)
-- [Using with Rails](#using-with-rails)
-- [Creating enumerations](#creating-enumerations)
-  - [Sorting enumerations](#sorting-enumerations)
-- [Using enumerations](#using-enumerations)
-- [FAQ](#faq)
-- [I18n](#i18n)
-  - [Translate a name-spaced enumeration](#translate-a-name-spaced-enumeration)
-- [Handling a legacy database](#handling-a-legacy-database)
-- [Changelog](#changelog)
+- [EnumerateIt](#enumerateit)
+    - [Why would I want a gem if Rails already has native enumerations support?](#why-would-i-want-a-gem-if-rails-already-has-native-enumerations-support)
+  - [Installation](#installation)
+  - [Using with Rails](#using-with-rails)
+  - [Creating enumerations](#creating-enumerations)
+    - [Sorting enumerations](#sorting-enumerations)
+  - [Using enumerations](#using-enumerations)
+  - [FAQ](#faq)
+      - [Why define enumerations outside the class that uses them?](#why-define-enumerations-outside-the-class-that-uses-them)
+      - [Can I use `enumerate_it` gem without Rails?](#can-i-use-enumerate_it-gem-without-rails)
+      - [What versions of Ruby and Rails are supported?](#what-versions-of-ruby-and-rails-are-supported)
+      - [Can I set a value to always be at the end of a sorted list?](#can-i-set-a-value-to-always-be-at-the-end-of-a-sorted-list)
+  - [I18n](#i18n)
+    - [Translate a name-spaced enumeration](#translate-a-name-spaced-enumeration)
+  - [Handling a legacy database](#handling-a-legacy-database)
+  - [Changelog](#changelog)
+  - [Note on Patches/Pull Requests](#note-on-patchespull-requests)
+  - [Copyright](#copyright)
 
 <!-- Tocer[finish]: Auto-generated, don't remove. -->
 
@@ -403,8 +411,8 @@ You sure can! 😄
 
 #### What versions of Ruby and Rails are supported?
 
-* **Ruby**: `2.5+`
-* **Rails** `5.0+`
+* **Ruby**: `3.0+`
+* **Rails** `6.0+`
 
 All versions are tested via
 [GitHub Actions](https://github.com/lucascaton/enumerate_it/blob/HEAD/.github/workflows/ci.yml).

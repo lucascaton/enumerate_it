@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.name          = 'enumerate_it'
   gem.require_paths = ['lib']
   gem.version       = EnumerateIt::VERSION
-  gem.required_ruby_version = '>= 2.5.8'
+  gem.required_ruby_version = '>= 3.0.0'
 
   gem.metadata = {
     'source_code_uri' => 'https://github.com/lucascaton/enumerate_it',
@@ -20,7 +20,7 @@ Gem::Specification.new do |gem|
     'rubygems_mfa_required' => 'true'
   }
 
-  gem.add_dependency 'activesupport', '>= 5.0.7.2'
+  gem.add_dependency 'activesupport', '>= 6.0.0'
 
   gem.add_development_dependency 'activerecord'
   gem.add_development_dependency 'appraisal'
