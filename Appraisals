@@ -13,6 +13,6 @@ rails_versions = JSON.parse(Net::HTTP.get(URI('https://rubygems.org/api/v1/versi
     gem 'activesupport', "~> #{current_version}"
     gem 'activerecord',  "~> #{current_version}"
 
-    gem 'sqlite3', '< 2' # v2.x isn't yet working. See: https://github.com/sparklemotion/sqlite3-ruby/issues/529
+    gem 'sqlite3'
   end
 end
