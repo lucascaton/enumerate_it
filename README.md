@@ -24,19 +24,16 @@ so you can **add behaviour** and also **reuse** them! 😀
 
 ## Table of Contents
 
-- [EnumerateIt](#enumerateit)
-  - [Why would I want a gem if Rails already has native enumerations support?](#why-would-i-want-a-gem-if-rails-already-has-native-enumerations-support)
-  - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Using with Rails](#using-with-rails)
   - [Creating enumerations](#creating-enumerations)
     - [Sorting enumerations](#sorting-enumerations)
   - [Using enumerations](#using-enumerations)
   - [FAQ](#faq)
-    - [Why define enumerations outside the class that uses them?](#why-define-enumerations-outside-the-class-that-uses-them)
-    - [Can I use `enumerate_it` gem without Rails?](#can-i-use-enumerate_it-gem-without-rails)
-    - [What versions of Ruby and Rails are supported?](#what-versions-of-ruby-and-rails-are-supported)
-    - [Can I set a value to always be at the end of a sorted list?](#can-i-set-a-value-to-always-be-at-the-end-of-a-sorted-list)
+      - [Why define enumerations outside the class that uses them?](#why-define-enumerations-outside-the-class-that-uses-them)
+      - [Can I use `enumerate_it` gem without Rails?](#can-i-use-enumerate_it-gem-without-rails)
+      - [What versions of Ruby and Rails are supported?](#what-versions-of-ruby-and-rails-are-supported)
+      - [Can I set a value to always be at the end of a sorted list?](#can-i-set-a-value-to-always-be-at-the-end-of-a-sorted-list)
   - [I18n](#i18n)
     - [Translate a name-spaced enumeration](#translate-a-name-spaced-enumeration)
   - [Handling a legacy database](#handling-a-legacy-database)
