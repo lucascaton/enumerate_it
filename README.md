@@ -560,5 +560,5 @@ you can see them on the [releases page](../../releases).
 
 ## Copyright
 
-Copyright (c) 2010-2024 Cássio Marques and Lucas Caton. See `LICENSE` file for
+Copyright (c) 2010-2025 Cássio Marques and Lucas Caton. See `LICENSE` file for
 details.
