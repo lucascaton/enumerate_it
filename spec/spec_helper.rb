@@ -2,6 +2,7 @@ $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 require 'enumerate_it'
 
+require 'logger' # Required by Rails 7.0 or older - https://stackoverflow.com/a/79385484/1445184
 require 'active_support/all'
 require 'active_record'
 
