@@ -8,15 +8,15 @@ Enumerations for Ruby with some magic powers! 🎩
 [![Downloads](https://img.shields.io/gem/dt/enumerate_it.svg)](https://rubygems.org/gems/enumerate_it)
 [![Changelog](https://img.shields.io/badge/changelog--brightgreen.svg?style=flat)](https://github.com/lucascaton/enumerate_it/releases)
 
-**EnumerateIt** helps you to declare and use enumerations in a very simple and
+**EnumerateIt** helps you declare and use enumerations in a very simple and
 flexible way.
 
-### Why would I want a gem if Rails already has native enumerations support?
+### Why would I want a gem if Rails already has native enumeration support?
 
 Firstly, although **EnumerateIt** works well with **Rails**, it isn't required!
-It means you can add it to any **Ruby** project! Secondly, you can
+This means you can add it to any **Ruby** project! Secondly, you can
 [define your enumerations in classes](https://github.com/lucascaton/enumerate_it#creating-enumerations),
-so you can **add behaviour** and also **reuse** them! 😀
+allowing you to **add behavior** and **reuse** them! 😀
 
 ---
 
@@ -35,7 +35,7 @@ so you can **add behaviour** and also **reuse** them! 😀
       - [What versions of Ruby and Rails are supported?](#what-versions-of-ruby-and-rails-are-supported)
       - [Can I set a value to always be at the end of a sorted list?](#can-i-set-a-value-to-always-be-at-the-end-of-a-sorted-list)
   - [I18n](#i18n)
-    - [Translate a name-spaced enumeration](#translate-a-name-spaced-enumeration)
+    - [Translate a namespaced enumeration](#translate-a-namespaced-enumeration)
   - [Handling a legacy database](#handling-a-legacy-database)
   - [Changelog](#changelog)
   - [Note on Patches/Pull Requests](#note-on-patchespull-requests)
@@ -65,11 +65,11 @@ rails generate enumerate_it:enum --help
 
 ## Creating enumerations
 
-Enumerations are created as classes and you should put them inside
+Enumerations are created as classes and should be placed inside the
 `app/enumerations` folder.
 
-You can pass an array of symbols, so that the respective value for each symbol
-will be the stringified version of the symbol itself:
+You can pass an array of symbols, where each symbol's value will be its
+stringified version:
 
 ```ruby
 class RelationshipStatus < EnumerateIt::Base
@@ -81,9 +81,9 @@ class RelationshipStatus < EnumerateIt::Base
 end
 ```
 
-This will create some nice stuff:
+This will generate some nice stuff:
 
-- Each enumeration's value will turn into a constant:
+- Constants for each enumeration value:
 
   ```ruby
   RelationshipStatus::SINGLE
@@ -93,22 +93,21 @@ This will create some nice stuff:
   #=> 'married'
   ```
 
-- You can retrieve a list with all the enumeration codes:
+- A list of all enumeration codes:
 
   ```ruby
   RelationshipStatus.list
   #=> ['divorced', 'married', 'single']
   ```
 
-- You can retrieve a JSON with all the enumeration codes:
+- A JSON representation:
 
   ```ruby
   RelationshipStatus.to_json
   #=> "[{\"value\":\"divorced\",\"label\":\"Divorced\"},{\"value\":\"married\", ...
   ```
 
-- You can get an array of options, ready to use with the `select`, `select_tag`,
-  etc. family of Rails helpers.
+- An array of options for Rails helpers, such as `select`, `select_tag`, etc.:
 
   ```ruby
   RelationshipStatus.to_a
@@ -163,11 +162,10 @@ This will create some nice stuff:
 
 ### Sorting enumerations
 
-When calling methods like `to_a`, `to_json` and `list`, the returned values will
-be sorted by default in the same order passed to `associate_values` call.
+When calling methods like `to_a`, `to_json` and `list`, values are sorted in the
+order they were passed to `associate_values`, by default.
 
-However, if you want to overwrite the default sort mode, you can use the
-`sort_by` class method:
+You can override this with the `sort_by` class method:
 
 ```ruby
 class RelationshipStatus < EnumerateIt::Base
@@ -177,18 +175,19 @@ class RelationshipStatus < EnumerateIt::Base
 end
 ```
 
-The `sort_by` method accepts one of the following values:
+Accepted values for `sort_by`:
 
 | Value          | Behavior                                                                                     |
-| :------------- | :------------------------------------------------------------------------------------------- |
-| `:none`        | The default behavior, will return values in order that was passed to `associate_values` call |
-| `:name`        | Will sort the returned values based on the name of each enumeration option                   |
-| `:translation` | will sort the returned values based on their translations                                    |
-| `:value`       | See [Handling a legacy database](#handling-a-legacy-database) section for more details       |
+| :------------- | :------------------------------------------------------------------------------------ |
+| `:none`        | Uses the original order from `associate_values`                                       |
+| `:name`        | Sorts by the name of each enumeration option                                          |
+| `:translation` | Sorts by their translations                                                           |
+| `:value`       | Sorts by assigned values (useful for [legacy databases](#handling-a-legacy-database)) |
 
 ## Using enumerations
 
-The cool part is that you can use these enumerations with any class:
+The cool part is that you can use these enumerations in any class, whether
+ActiveRecord-based or not:
 
 ```ruby
 # ActiveRecord instance
@@ -207,9 +206,8 @@ class Person
 end
 ```
 
-> **Note:** **EnumerateIt** will try to load an enumeration class based on the
-> camelized attribute name. If you have a different name, you can specify it by
-> using the `with` option:
+> **Note:** If the enumeration class name differs from the attribute name, use
+> the `with` option:
 >
 > `has_enumeration_for :relationship_status, with: RelationshipStatus`
 
@@ -411,7 +409,7 @@ Remember that you can add validations to any kind of class and not only
 #### Why define enumerations outside the class that uses them?
 
 - It's clearer.
-- You can add behaviour to the enumeration class.
+- You can add behavior to the enumeration class.
 - You can reuse the enumeration inside other classes.
 
 #### Can I use `enumerate_it` gem without Rails?
@@ -421,7 +419,7 @@ You sure can! 😄
 #### What versions of Ruby and Rails are supported?
 
 - **Ruby**: `3.0+`
-- **Rails** `6.0+`
+- **Rails**: `6.0+`
 
 All versions are tested via
 [GitHub Actions](https://github.com/lucascaton/enumerate_it/blob/HEAD/.github/workflows/ci.yml).
@@ -433,7 +431,7 @@ Yes,
 
 ## I18n
 
-I18n lookup is provided on both `_humanized` and `Enumeration#to_a` methods,
+I18n lookup is provided for both `_humanized` and `Enumeration#to_a` methods,
 given the hash key is a Symbol. The I18n strings are located on
 `enumerations.<enumeration_name>.<key>`:
 
@@ -471,10 +469,10 @@ RelationshipStatus.t(status)
 #=> 'Casado'
 ```
 
-### Translate a name-spaced enumeration
+### Translate a namespaced enumeration
 
 In order to translate an enumeration in a specific namespace (say
-`Design::Color`), you can add the following:
+`Design::Color`), use the following structure:
 
 ```yaml
 pt-BR:
