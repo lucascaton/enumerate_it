@@ -2,7 +2,7 @@ require 'net/http'
 require 'json'
 
 rails_versions = JSON.parse(Net::HTTP.get(URI('https://rubygems.org/api/v1/versions/rails.json')))
-  .group_by { |version| version['number'] }.keys.grep_v(/rc|racecar|beta|pre/)
+  .group_by { |version| version['number'] }.keys.grep_v(/rc|racecar|alpha|beta|pre/)
 
 %w[6.0 6.1 7.0 7.1 7.2 8.0].each do |rails_version|
   appraise "rails_#{rails_version}" do
