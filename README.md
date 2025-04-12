@@ -14,8 +14,8 @@ flexible way.
 
 Firstly, although **EnumerateIt** works well with **Rails**, it isn't required!
 This means you can add it to any **Ruby** project! Secondly, you can
-[define your enumerations in classes](https://github.com/lucascaton/enumerate_it#creating-enumerations),
-allowing you to **add behavior** and **reuse** them! 😀
+[define your enumerations in classes](#creating-enumerations), allowing you to
+**add behavior** and **reuse** them! 😀
 
 ---
 
