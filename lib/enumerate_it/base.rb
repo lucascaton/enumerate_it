@@ -105,10 +105,15 @@ module EnumerateIt
 
       def sort_lambda
         {
-          value:       ->(_k, v) { v[0] },
-          name:        ->(k, _v) { k },
-          translation: ->(_k, v) { translate(v[1]) }
+          value:                 ->(_k, v) { v[0] },
+          name:                  ->(k, _v) { k },
+          translation:           ->(_k, v) { translate(v[1]) },
+          normalize_translation: ->(_k, v) { normalize_translation(translate(v[1])) }
         }[sort_mode]
+      end
+
+      def normalize_translation(text)
+        text.unicode_normalize(:nfkd).gsub(/[^\x00-\x7F]/, '')
       end
 
       def normalize_enumeration(values_hash)
