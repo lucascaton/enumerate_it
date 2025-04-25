@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe EnumerateIt::Base do
   it 'creates constants for each enumeration value' do
-    constants = [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2, TestEnumeration::VALUE_3, TestEnumeration::VALUE_4]
+    constants = [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2, TestEnumeration::VALUE_3,
+                 TestEnumeration::VALUE_4]
 
     constants.each_with_index do |constant, idx|
       expect(constant).to eq((idx + 1).to_s)
@@ -63,10 +64,8 @@ describe EnumerateIt::Base do
 
   it 'creates a method that returns the enumeration specification' do
     expect(TestEnumeration.enumeration).to eq(
-      value_1: ['1', 'Hey, I am 1!'],
-      value_2: ['2', 'Hey, I am 2!'],
-      value_3: ['3', 'Hey, I am 3!'],
-      value_4: ['4', 'Héy, I ãm 2!']
+      value_1: ['1', 'Hey, I am 1!'], value_2: ['2', 'Hey, I am 2!'],
+      value_3: ['3', 'Hey, I am 3!'], value_4: ['4', 'Héy, I ãm 2!']
     )
   end
 
@@ -88,7 +87,8 @@ describe EnumerateIt::Base do
 
   describe '.translations' do
     it 'returns all translations' do
-      expect(TestEnumeration.translations).to eq(['Hey, I am 1!', 'Hey, I am 2!', 'Hey, I am 3!', 'Héy, I ãm 2!'])
+      expect(TestEnumeration.translations).to eq(['Hey, I am 1!', 'Hey, I am 2!', 'Hey, I am 3!',
+                                                  'Héy, I ãm 2!'])
     end
   end
 
@@ -115,7 +115,8 @@ describe EnumerateIt::Base do
   describe '.to_a' do
     it 'returns an array with the values and human representations' do
       expect(TestEnumeration.to_a)
-        .to eq([['Hey, I am 1!', '1'], ['Hey, I am 2!', '2'], ['Hey, I am 3!', '3'], ['Héy, I ãm 2!', '4']])
+        .to eq([['Hey, I am 1!', '1'], ['Hey, I am 2!', '2'], ['Hey, I am 3!', '3'],
+                ['Héy, I ãm 2!', '4']])
     end
 
     it 'translates the available values' do
