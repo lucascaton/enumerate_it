@@ -1,8 +1,7 @@
 require 'forwardable'
 
 module EnumerateIt
-  # rubocop:disable Metrics/ClassLength
-  class Base
+  class Base # rubocop:disable Metrics/ClassLength
     class << self
       extend Forwardable
 
@@ -141,5 +140,4 @@ module EnumerateIt
       end
     end
   end
-  # rubocop:enable Metrics/ClassLength
 end
