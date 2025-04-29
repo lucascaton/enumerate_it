@@ -8,7 +8,7 @@ inherit_mode:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 3.0
+  TargetRubyVersion: 3.4
 
   Exclude:
     - 'lib/generators/enumerate_it/enum/templates/**/*'

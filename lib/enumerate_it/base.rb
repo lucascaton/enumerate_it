@@ -51,8 +51,8 @@ module EnumerateIt
         list.map { |value| t(value) }
       end
 
-      def each_value(&block)
-        list.each(&block)
+      def each_value(&)
+        list.each(&)
       end
 
       def to_json(options = nil)
