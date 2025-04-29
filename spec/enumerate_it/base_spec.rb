@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe EnumerateIt::Base do
   it 'creates constants for each enumeration value' do
-    constants = [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2, TestEnumeration::VALUE_3]
+    constants = [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2, TestEnumeration::VALUE_3,
+                 TestEnumeration::VALUE_4]
 
     constants.each_with_index do |constant, idx|
       expect(constant).to eq((idx + 1).to_s)
@@ -23,7 +24,7 @@ describe EnumerateIt::Base do
 
   describe '.list' do
     it "creates a method that returns the allowed values in the enumeration's class" do
-      expect(TestEnumeration.list).to eq(%w[1 2 3])
+      expect(TestEnumeration.list).to eq(%w[1 2 3 4])
     end
 
     context 'specifying a default sort mode' do
@@ -32,40 +33,45 @@ describe EnumerateIt::Base do
       context 'by value' do
         let(:sort_mode) { :value }
 
-        it { is_expected.to eq(%w[0 1 2 3]) }
+        it { is_expected.to eq(%w[0 1 2 3 4]) }
       end
 
       context 'by name' do
         let(:sort_mode) { :name }
 
-        it { is_expected.to eq(%w[2 1 3 0]) }
+        it { is_expected.to eq(%w[2 4 1 3 0]) }
       end
 
       context 'by translation' do
         let(:sort_mode) { :translation }
 
-        it { is_expected.to eq(%w[3 2 0 1]) }
+        it { is_expected.to eq(%w[3 2 0 1 4]) }
+      end
+
+      context 'by normalize translation' do
+        let(:sort_mode) { :normalize_translation }
+
+        it { is_expected.to eq(%w[3 4 2 0 1]) }
       end
 
       context 'by nothing' do
         let(:sort_mode) { :none }
 
-        it { is_expected.to eq(%w[1 2 3 0]) }
+        it { is_expected.to eq(%w[1 2 3 4 0]) }
       end
     end
   end
 
   it 'creates a method that returns the enumeration specification' do
     expect(TestEnumeration.enumeration).to eq(
-      value_1: ['1', 'Hey, I am 1!'],
-      value_2: ['2', 'Hey, I am 2!'],
-      value_3: ['3', 'Hey, I am 3!']
+      value_1: ['1', 'Hey, I am 1!'], value_2: ['2', 'Hey, I am 2!'],
+      value_3: ['3', 'Hey, I am 3!'], value_4: ['4', 'Héy, I ãm 2!']
     )
   end
 
   describe '.length' do
     it 'returns the length of the enumeration' do
-      expect(TestEnumeration.length).to eq(3)
+      expect(TestEnumeration.length).to eq(4)
     end
   end
 
@@ -75,13 +81,14 @@ describe EnumerateIt::Base do
       TestEnumeration.each_translation do |translation|
         translations << translation
       end
-      expect(translations).to eq(['Hey, I am 1!', 'Hey, I am 2!', 'Hey, I am 3!'])
+      expect(translations).to eq(['Hey, I am 1!', 'Hey, I am 2!', 'Hey, I am 3!', 'Héy, I ãm 2!'])
     end
   end
 
   describe '.translations' do
     it 'returns all translations' do
-      expect(TestEnumeration.translations).to eq(['Hey, I am 1!', 'Hey, I am 2!', 'Hey, I am 3!'])
+      expect(TestEnumeration.translations).to eq(['Hey, I am 1!', 'Hey, I am 2!', 'Hey, I am 3!',
+                                                  'Héy, I ãm 2!'])
     end
   end
 
@@ -91,7 +98,7 @@ describe EnumerateIt::Base do
       TestEnumeration.each_key do |key|
         keys << key
       end
-      expect(keys).to eq(%i[value_1 value_2 value_3])
+      expect(keys).to eq(%i[value_1 value_2 value_3 value_4])
     end
   end
 
@@ -108,7 +115,8 @@ describe EnumerateIt::Base do
   describe '.to_a' do
     it 'returns an array with the values and human representations' do
       expect(TestEnumeration.to_a)
-        .to eq([['Hey, I am 1!', '1'], ['Hey, I am 2!', '2'], ['Hey, I am 3!', '3']])
+        .to eq([['Hey, I am 1!', '1'], ['Hey, I am 2!', '2'], ['Hey, I am 3!', '3'],
+                ['Héy, I ãm 2!', '4']])
     end
 
     it 'translates the available values' do
@@ -152,7 +160,7 @@ describe EnumerateIt::Base do
 
   describe '.to_range' do
     it "returns a Range object containing the enumeration's value interval" do
-      expect(TestEnumeration.to_range).to eq('1'..'3')
+      expect(TestEnumeration.to_range).to eq('1'..'4')
     end
   end
 
@@ -206,7 +214,7 @@ describe EnumerateIt::Base do
 
   describe '.keys' do
     it 'returns a list with the keys used to define the enumeration' do
-      expect(TestEnumeration.keys).to eq(%i[value_1 value_2 value_3])
+      expect(TestEnumeration.keys).to eq(%i[value_1 value_2 value_3 value_4])
     end
   end
 
@@ -235,7 +243,7 @@ describe EnumerateIt::Base do
     subject(:enumeration) { create_enumeration_class_with_sort_mode(nil) }
 
     it 'does not sort' do
-      expect(enumeration.to_a).to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[jkl 0]])
+      expect(enumeration.to_a).to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[ábc 4], %w[jkl 0]])
     end
   end
 
@@ -245,25 +253,31 @@ describe EnumerateIt::Base do
     context 'by value' do
       let(:sort_mode) { :value }
 
-      it { expect(enumeration.to_a).to eq([%w[jkl 0], %w[xyz 1], %w[fgh 2], %w[abc 3]]) }
+      it { expect(enumeration.to_a).to eq([%w[jkl 0], %w[xyz 1], %w[fgh 2], %w[abc 3], %w[ábc 4]]) }
     end
 
     context 'by name' do
       let(:sort_mode) { :name }
 
-      it { expect(enumeration.to_a).to eq([%w[fgh 2], %w[xyz 1], %w[abc 3], %w[jkl 0]]) }
+      it { expect(enumeration.to_a).to eq([%w[fgh 2], %w[ábc 4], %w[xyz 1], %w[abc 3], %w[jkl 0]]) }
     end
 
     context 'by translation' do
       let(:sort_mode) { :translation }
 
-      it { expect(enumeration.to_a).to eq([%w[abc 3], %w[fgh 2], %w[jkl 0], %w[xyz 1]]) }
+      it { expect(enumeration.to_a).to eq([%w[abc 3], %w[fgh 2], %w[jkl 0], %w[xyz 1], %w[ábc 4]]) }
+    end
+
+    context 'by normalize translation' do
+      let(:sort_mode) { :normalize_translation }
+
+      it { expect(enumeration.to_a).to eq([%w[abc 3], %w[ábc 4], %w[fgh 2], %w[jkl 0], %w[xyz 1]]) }
     end
 
     context 'by nothing' do
       let(:sort_mode) { :none }
 
-      it { expect(enumeration.to_a).to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[jkl 0]]) }
+      it { expect(enumeration.to_a).to eq([%w[xyz 1], %w[fgh 2], %w[abc 3], %w[ábc 4], %w[jkl 0]]) }
     end
   end
 

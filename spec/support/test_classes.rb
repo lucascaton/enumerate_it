@@ -2,7 +2,8 @@ class TestEnumeration < EnumerateIt::Base
   associate_values(
     value_1: ['1', 'Hey, I am 1!'],
     value_2: ['2', 'Hey, I am 2!'],
-    value_3: ['3', 'Hey, I am 3!']
+    value_3: ['3', 'Hey, I am 3!'],
+    value_4: ['4', 'Héy, I ãm 2!']
   )
 end
 
@@ -72,6 +73,7 @@ def create_enumeration_class_with_sort_mode(sort_mode)
       foo:  %w[1 xyz],
       bar:  %w[2 fgh],
       omg:  %w[3 abc],
+      bra:  %w[4 ábc],
       zomg: %w[0 jkl]
     )
   end

@@ -176,12 +176,13 @@ end
 
 Accepted values for `sort_by`:
 
-| Value          | Behavior                                                                                     |
-| :------------- | :------------------------------------------------------------------------------------ |
-| `:none`        | Uses the original order from `associate_values`                                       |
-| `:name`        | Sorts by the name of each enumeration option                                          |
-| `:translation` | Sorts by their translations                                                           |
-| `:value`       | Sorts by assigned values (useful for [legacy databases](#handling-a-legacy-database)) |
+| Value                    | Behavior                                                                              |
+| :----------------------- | :------------------------------------------------------------------------------------ |
+| `:none`                  | Uses the original order from `associate_values`                                       |
+| `:name`                  | Sorts by the name of each enumeration option                                          |
+| `:translation`           | Sorts by their translations                                                           |
+| `:normalize_translation` | Sorts by their translations normalized with NFKD unicode method (without accents)     |
+| `:value`                 | Sorts by assigned values (useful for [legacy databases](#handling-a-legacy-database)) |
 
 ## Using enumerations
 
