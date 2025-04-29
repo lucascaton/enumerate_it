@@ -5,8 +5,8 @@ describe EnumerateIt::Base do
     constants = [TestEnumeration::VALUE_1, TestEnumeration::VALUE_2, TestEnumeration::VALUE_3,
                  TestEnumeration::VALUE_4]
 
-    constants.each_with_index do |constant, idx|
-      expect(constant).to eq((idx + 1).to_s)
+    constants.each.with_index(1) do |constant, index|
+      expect(constant).to eq(index.to_s)
     end
   end
 
