@@ -4,6 +4,7 @@ describe EnumerateIt do
   let :test_class do
     Class.new do
       extend EnumerateIt
+
       attr_accessor :foobar
 
       has_enumeration_for :foobar, with: TestEnumeration
@@ -71,6 +72,7 @@ describe EnumerateIt do
       let :test_class_for_enumeration_without_array do
         Class.new do
           extend EnumerateIt
+
           attr_accessor :foobar
 
           has_enumeration_for :foobar, with: TestEnumerationWithoutArray
@@ -102,6 +104,7 @@ describe EnumerateIt do
       let :foo_bar_class do
         Class.new do
           extend EnumerateIt
+
           attr_accessor :test_enumeration
 
           has_enumeration_for :test_enumeration
@@ -130,6 +133,7 @@ describe EnumerateIt do
             # rubocop:enable Lint/ConstantDefinitionInBlock
 
             extend EnumerateIt
+
             attr_accessor :nested_enum
 
             has_enumeration_for :nested_enum
@@ -151,6 +155,7 @@ describe EnumerateIt do
     let :test_class_with_helper do
       Class.new do
         extend EnumerateIt
+
         attr_accessor :foobar
 
         has_enumeration_for :foobar, with: TestEnumeration, create_helpers: true
@@ -192,6 +197,7 @@ describe EnumerateIt do
       let :test_class_with_prefixed_helper do
         Class.new do
           extend EnumerateIt
+
           attr_accessor :foobar
 
           has_enumeration_for :foobar, with: TestEnumeration, create_helpers: { prefix: true }
@@ -234,6 +240,7 @@ describe EnumerateIt do
       let :polymorphic_class do
         Class.new do
           extend EnumerateIt
+
           attr_accessor :foo
 
           has_enumeration_for :foo, with: PolymorphicEnum, create_helpers: { polymorphic: true }
@@ -260,6 +267,7 @@ describe EnumerateIt do
         let :polymorphic_class_with_suffix do
           Class.new do
             extend EnumerateIt
+
             attr_accessor :foo
 
             has_enumeration_for :foo, with: PolymorphicEnum,

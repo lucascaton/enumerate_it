@@ -67,7 +67,7 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: true
 
-Naming/PredicateName:
+Naming/PredicatePrefix:
   Exclude:
     - 'lib/enumerate_it/class_methods.rb'
 

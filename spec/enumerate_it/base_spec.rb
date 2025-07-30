@@ -289,11 +289,11 @@ describe EnumerateIt::Base do
         attr_accessor :bla
 
         class << self
-          def validates_inclusion_of(_attribute, _options)
+          def validates_inclusion_of(_attribute, _options) # rubocop:disable Naming/PredicateMethod
             true
           end
 
-          def validates_presence_of
+          def validates_presence_of # rubocop:disable Naming/PredicateMethod
             true
           end
         end
