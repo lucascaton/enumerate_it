@@ -550,7 +550,7 @@ you can see them on the [releases page](../../releases).
 - Add tests for it. This is important so we don't break it in a future version
   unintentionally.
 - [Optional] Run the tests against a specific Gemfile:
-  `bundle exec appraisal rails_8.0 rake spec`.
+  `bundle exec appraisal rails_8.1 rake spec`.
 - Run the tests against all supported versions: `bundle exec rake`
 - Commit, but please do not mess with `Rakefile`, version, or history.
 - Send a Pull Request. Bonus points for topic branches.
