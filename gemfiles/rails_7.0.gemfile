@@ -2,8 +2,8 @@
 
 source 'https://rubygems.org'
 
-gem 'activerecord', '~> 7.0.8.7'
-gem 'activesupport', '~> 7.0.8.7'
+gem 'activerecord', '~> 7.0.10'
+gem 'activesupport', '~> 7.0.10'
 gem 'base64'
 gem 'bigdecimal'
 gem 'mutex_m'
