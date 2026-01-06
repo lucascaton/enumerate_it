@@ -14,6 +14,7 @@ jobs:
           - 3.2
           - 3.3
           - 3.4
+          - 4.0
         gemfile:
           - gemfiles/rails_6.0.gemfile
           - gemfiles/rails_6.1.gemfile
@@ -27,6 +28,13 @@ jobs:
             gemfile: gemfiles/rails_8.0.gemfile
           - ruby: 3.1
             gemfile: gemfiles/rails_8.0.gemfile
+          # Rails 6.x and 7.0 are EOL and don't support Ruby 4+
+          - ruby: 4.0
+            gemfile: gemfiles/rails_6.0.gemfile
+          - ruby: 4.0
+            gemfile: gemfiles/rails_6.1.gemfile
+          - ruby: 4.0
+            gemfile: gemfiles/rails_7.0.gemfile
 
     env:
       BUNDLE_GEMFILE: "${{ matrix.gemfile }}"
@@ -43,7 +51,7 @@ jobs:
         bundler-cache: true
 
     - name: Rubocop
-      if: ${{ matrix.ruby == '3.4' }}
+      if: ${{ matrix.ruby == '4.0' }}
       run: "bundle exec rubocop"
 
     - name: Tests
