@@ -67,6 +67,10 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: true
 
+Style/OneClassPerFile:
+  Exclude:
+    - 'spec/support//**/*'
+
 Naming/PredicatePrefix:
   Exclude:
     - 'lib/enumerate_it/class_methods.rb'

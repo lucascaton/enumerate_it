@@ -127,7 +127,7 @@ describe EnumerateIt do
             # rubocop:disable Lint/ConstantDefinitionInBlock
             # rubocop:disable RSpec/LeakyConstantDeclaration
             class NestedEnum < EnumerateIt::Base
-              associate_values foo: %w[1 Blerrgh], bar: ['2' => 'Blarghhh']
+              associate_values foo: %w[1 Blerrgh], bar: [{ '2' => 'Blarghhh' }]
             end
             # rubocop:enable RSpec/LeakyConstantDeclaration
             # rubocop:enable Lint/ConstantDefinitionInBlock

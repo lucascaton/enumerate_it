@@ -134,9 +134,7 @@ module EnumerateIt
       def values_hash(args)
         return args.first if args.first.is_a?(Hash)
 
-        args.each_with_object({}) do |value, hash|
-          hash[value] = value.to_s
-        end
+        args.to_h { |value| [value, value.to_s] }
       end
     end
   end

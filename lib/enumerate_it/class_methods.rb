@@ -105,7 +105,7 @@ module EnumerateIt
 
       inner_enum_class_name = attribute.to_s.camelize.to_sym
 
-      options[:with] = if constants.include?(inner_enum_class_name)
+      options[:with] = if const_defined?(inner_enum_class_name)
         const_get(inner_enum_class_name)
       else
         attribute.to_s.camelize.constantize
