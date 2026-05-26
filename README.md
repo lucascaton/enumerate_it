@@ -229,7 +229,7 @@ This will create:
   p = Person.new
   p.relationship_status = RelationshipStatus::DIVORCED
   p.relationship_status_humanize
-  #=> 'Divorciado'
+  #=> 'Divorciado' # with a pt-BR locale loaded
   ```
 
 - The associated enumerations, which can be retrieved with the `enumerations`
