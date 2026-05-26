@@ -344,7 +344,7 @@ This will create:
   end
 
   Person.married.to_sql
-  #=> SELECT "users".* FROM "users" WHERE "users"."relationship_status" = "married"
+  #=> SELECT "people".* FROM "people" WHERE "people"."relationship_status" = "married"
   ```
 
   The `:create_scopes` also accepts `prefix` option.
