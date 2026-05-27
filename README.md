@@ -17,6 +17,25 @@ This means you can add it to any **Ruby** project! Secondly, you can
 [define your enumerations in classes](#creating-enumerations), allowing you to
 **add behavior** and **reuse** them! 😀
 
+At a glance:
+
+```ruby
+class RelationshipStatus < EnumerateIt::Base
+  associate_values :single, :married, :divorced
+end
+
+class Person < ApplicationRecord
+  has_enumeration_for :relationship_status, create_helpers: true, create_scopes: true
+end
+
+person = Person.new(relationship_status: RelationshipStatus::MARRIED)
+
+person.married? #=> true
+person.relationship_status_humanize #=> 'Married'
+Person.married.to_sql #=> SELECT "people".* FROM "people" WHERE "people"."relationship_status" = "married"
+RelationshipStatus.to_a #=> [['Divorced', 'divorced'], ['Married', 'married'], ['Single', 'single']]
+```
+
 ---
 
 <!-- Tocer[start]: Auto-generated, don't remove. -->
