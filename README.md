@@ -206,10 +206,13 @@ class Person
 end
 ```
 
-> **Note:** If the enumeration class name differs from the attribute name, use
-> the `with` option:
+<!-- prettier-ignore -->
+> [!NOTE]
+> If the enumeration class name differs from the attribute name, use the `with` option:
 >
-> `has_enumeration_for :relationship_status, with: RelationshipStatus`
+> ```ruby
+> has_enumeration_for :relationship_status, with: RelationshipStatus
+> ```
 
 This will create:
 
