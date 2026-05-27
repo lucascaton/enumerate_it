@@ -338,6 +338,12 @@ This will create:
   #=> true
   ```
 
+  <!-- prettier-ignore -->
+  > [!IMPORTANT]
+  > On ActiveRecord objects, mutator methods like `married!` call `save!`
+  > immediately, running callbacks and raising on validation failure. They are
+  > not pure setters.
+
 - A scope method for each enumeration option if you pass the `create_scopes`
   option as `true`:
 
@@ -403,6 +409,12 @@ This will create:
   p.valid?
   #=> true
   ```
+
+  <!-- prettier-ignore -->
+  > [!NOTE]
+  > `skip_validation: true` disables all validations added by EnumerateIt,
+  > including the presence validation from `required: true`. If both are
+  > passed, `skip_validation` wins and `required` is silently ignored.
 
 Remember that you can add validations to any kind of class and not only
 `ActiveRecord` ones.
