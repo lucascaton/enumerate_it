@@ -453,11 +453,11 @@ end
 
 p = Person.new
 p.relationship_status = RelationshipStatus::MARRIED
-p.relationship_status_humanize # Existent key
+p.relationship_status_humanize # Key found in the locale file
 #=> 'Casado'
 
 p.relationship_status = RelationshipStatus::SINGLE
-p.relationship_status_humanize # Non-existent key
+p.relationship_status_humanize # Key missing, falls back to the humanized name
 #=> 'Single'
 ```
 
