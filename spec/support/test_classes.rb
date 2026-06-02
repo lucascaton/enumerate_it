@@ -78,3 +78,17 @@ def create_enumeration_class_with_sort_mode(sort_mode)
     )
   end
 end
+
+class TestEnumerationWithCustomHelpers < EnumerateIt::Base
+  associate_values value_one: '1', value_two: '2'
+
+  custom_helpers do
+    def lookup(value)
+      { '1' => :one, '2' => :two }[value]
+    end
+
+    def boolean?(value)
+      value == '1'
+    end
+  end
+end

@@ -95,6 +95,23 @@ module EnumerateIt
         I18n.t("enumerations.#{name.underscore}.#{value.to_s.underscore}", default: default)
       end
 
+      def custom_helpers(&block)
+        @custom_helper_methods ||= []
+
+        mod = Module.new(&block)
+        methods = mod.instance_methods(false)
+
+        collisions = methods & singleton_class.instance_methods
+        raise ArgumentError, "#{collisions.join(', ')} already defined." if collisions.any?
+
+        @custom_helper_methods.concat(methods)
+        extend mod
+      end
+
+      def custom_helper_methods
+        @custom_helper_methods || []
+      end
+
       private
 
       def sorted_map

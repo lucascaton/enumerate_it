@@ -228,6 +228,48 @@ describe EnumerateIt::Base do
     end
   end
 
+  describe '.custom_helpers' do
+    context 'when methods are defined inside the block' do
+      it 'become class methods on the enum' do
+        expect(TestEnumerationWithCustomHelpers.lookup('1')).to eq(:one)
+        expect(TestEnumerationWithCustomHelpers.lookup('2')).to eq(:two)
+        expect(TestEnumerationWithCustomHelpers.boolean?('1')).to be(true)
+        expect(TestEnumerationWithCustomHelpers.boolean?('2')).to be(false)
+      end
+    end
+
+    context 'when a custom helper name collides with a built-in method' do
+      it 'raises an ArgumentError' do
+        expect do
+          Class.new(EnumerateIt::Base) do
+            associate_values :collision
+
+            custom_helpers do
+              def list
+                '...'
+              end
+            end
+          end
+        end.to raise_error(ArgumentError, /list/)
+      end
+    end
+  end
+
+  describe '.custom_helper_methods' do
+    context 'when methods are defined inside custom_helpers block' do
+      it 'returns the registered names' do
+        expect(TestEnumerationWithCustomHelpers.custom_helper_methods)
+          .to eq(%i[lookup boolean?])
+      end
+    end
+
+    context 'when there is no .custom_helpers block on an enum' do
+      it 'returns an empty array' do
+        expect(TestEnumeration.custom_helper_methods).to eq([])
+      end
+    end
+  end
+
   context 'associate values with a list' do
     it 'creates constants for each enumeration value' do
       expect(TestEnumerationWithList::FIRST).to  eq('first')
