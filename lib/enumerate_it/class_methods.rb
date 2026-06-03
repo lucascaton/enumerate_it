@@ -17,7 +17,7 @@ module EnumerateIt
       set_validations(attribute, options) unless options[:skip_validation]
 
       if options[:create_helpers]
-        %w[create_helper_methods create_mutator_methods create_polymorphic_methods].each do |method|
+        %w[create_helper_methods create_mutator_methods create_polymorphic_methods create_custom_helper_methods].each do |method|
           send(method, options[:with], attribute, options[:create_helpers])
         end
       end
@@ -96,6 +96,21 @@ module EnumerateIt
           value = public_send(attribute_name)
 
           klass.const_get(klass.key_for(value).to_s.camelize).new if value
+        end
+      end
+    end
+
+    def create_custom_helper_methods(klass, attribute_name, helpers)
+      return unless klass.custom_helper_methods.any?
+
+      prefix_name = "#{attribute_name}_" if helpers.is_a?(Hash) && helpers[:prefix]
+
+      class_eval do
+        klass.custom_helper_methods.each do |method_name|
+          define_method "#{prefix_name}#{method_name}" do
+            value = send(attribute_name)
+            klass.public_send(method_name, value) unless value.nil?
+          end
         end
       end
     end

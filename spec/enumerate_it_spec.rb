@@ -42,6 +42,15 @@ describe EnumerateIt do
       expect(target).not_to respond_to(:value_1?)
     end
 
+    it 'defaults to not creating custom helper methods' do
+      klass = Class.new do
+        extend EnumerateIt
+        attr_accessor :foobar
+        has_enumeration_for :foobar, with: TestEnumerationWithCustomHelpers
+      end
+      expect(klass.new).not_to respond_to(:lookup)
+    end
+
     it 'stores the enumeration class in a class-level hash' do
       expect(test_class.enumerations[:foobar]).to eq(TestEnumeration)
     end
@@ -287,6 +296,59 @@ describe EnumerateIt do
           expect(target.foo_strategy.print('Gol')).to eq('Whoa!: Gol')
         end
       end
+    end
+
+    context 'with custom_helpers defined on the enumeration' do
+      context 'creates methods that delegates to the enum' do
+        let :test_class_with_custom_helpers do
+          Class.new do
+            extend EnumerateIt
+
+            attr_accessor :foobar
+
+            has_enumeration_for :foobar, with: TestEnumerationWithCustomHelpers, create_helpers: true
+
+            def initialize(foobar)
+              @foobar = foobar
+            end
+          end
+        end
+
+        it 'returns value respective to attribute value' do
+          target = test_class_with_custom_helpers.new(TestEnumerationWithCustomHelpers::VALUE_ONE)
+          expect(target.lookup).to eq(:one)
+          expect(target.boolean?).to be(true)
+        end
+
+        it 'returns nil when attribute is nil' do
+          target = test_class_with_custom_helpers.new(nil)
+          expect(target.lookup).to be_nil
+          expect(target.boolean?).to be_nil
+        end
+      end
+
+      context 'create methods with prefix that delegates to the enum' do
+        let :test_class_with_prefixed_custom_helpers do
+          Class.new do
+            extend EnumerateIt
+
+            attr_accessor :foobar
+
+            has_enumeration_for :foobar, with: TestEnumerationWithCustomHelpers, create_helpers: { prefix: true }
+
+            def initialize(foobar)
+              @foobar = foobar
+            end
+          end
+        end
+
+        it 'method is prefixed with the attribute name' do
+          target = test_class_with_prefixed_custom_helpers.new(TestEnumerationWithCustomHelpers::VALUE_ONE)
+          expect(target).to respond_to(:foobar_lookup)
+          expect(target).not_to respond_to(:lookup)
+        end
+      end
+
     end
   end
 
