@@ -348,7 +348,6 @@ describe EnumerateIt do
           expect(target).not_to respond_to(:lookup)
         end
       end
-
     end
   end
 
