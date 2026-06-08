@@ -8,7 +8,7 @@ inherit_mode:
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 4.0
+  TargetRubyVersion: 3.0 # Keep in sync with `required_ruby_version` in the gemspec.
 
   Exclude:
     - 'lib/generators/enumerate_it/enum/templates/**/*'
