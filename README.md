@@ -371,9 +371,7 @@ This will create:
   > not pure setters.
 
   You can also define custom helper methods on the enumeration class using
-  a `custom_helpers` block. These become class methods on the enumeration, and when
-  `create_helpers: true` is used, instance methods on the model that delegate
-  the attribute's current value automatically:
+  a `custom_helpers` block:
 
   ```ruby
   class RelationshipStatus < EnumerateIt::Base
@@ -387,7 +385,7 @@ This will create:
   end
   ```
 
-  Available as a class method on the enumeration:
+  These become class methods on the enumeration:
 
   ```ruby
   RelationshipStatus.ever_married?(RelationshipStatus::MARRIED)  #=> true
@@ -395,18 +393,19 @@ This will create:
   RelationshipStatus.ever_married?(RelationshipStatus::SINGLE)   #=> false
   ```
 
-  Available as instance methods when `create_helpers: true`:
+  When `create_helpers: true` is used, they also become instance methods on the
+  model:
 
   ```ruby
   class Person < ApplicationRecord
     has_enumeration_for :relationship_status, with: RelationshipStatus, create_helpers: true
   end
 
-  p = Person.new(relationship_status: RelationshipStatus::DIVORCED)
-  p.ever_married? #=> true
+  person = Person.new(relationship_status: RelationshipStatus::DIVORCED)
+  person.ever_married? #=> true
   ```
 
-  The `prefix` option works the same as for built-in helpers:
+  The `prefix` option also applies to custom helpers:
 
   ```ruby
   class Person < ApplicationRecord
@@ -414,7 +413,8 @@ This will create:
       with: RelationshipStatus, create_helpers: { prefix: true }
   end
 
-  p.relationship_status_ever_married? #=> true
+  person = Person.new(relationship_status: RelationshipStatus::DIVORCED)
+  person.relationship_status_ever_married? #=> true
   ```
 
   Custom helper methods return `nil` when the attribute is `nil`. If a method
