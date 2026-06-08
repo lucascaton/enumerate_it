@@ -344,8 +344,10 @@ describe EnumerateIt do
 
         it 'method is prefixed with the attribute name' do
           target = test_class_with_prefixed_custom_helpers.new(TestEnumerationWithCustomHelpers::VALUE_ONE)
-          expect(target).to respond_to(:foobar_lookup)
+          expect(target.foobar_lookup).to eq(:one)
+          expect(target.foobar_boolean?).to be(true)
           expect(target).not_to respond_to(:lookup)
+          expect(target).not_to respond_to(:boolean?)
         end
       end
     end
