@@ -100,9 +100,11 @@ module EnumerateIt
 
         mod = Module.new(&block)
         methods = mod.instance_methods(false)
-
         collisions = methods & singleton_class.instance_methods
-        raise ArgumentError, "#{collisions.join(', ')} already defined." if collisions.any?
+
+        if collisions.any?
+          raise ArgumentError, "Custom helper(s) '#{collisions.join(', ')}' would override existing EnumerateIt::Base methods"
+        end
 
         @custom_helper_methods.concat(methods)
         extend mod

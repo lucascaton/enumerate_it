@@ -250,7 +250,7 @@ describe EnumerateIt::Base do
               end
             end
           end
-        end.to raise_error(ArgumentError, /list/)
+        end.to raise_error(ArgumentError, "Custom helper(s) 'list' would override existing EnumerateIt::Base methods")
       end
     end
   end
