@@ -22,6 +22,12 @@ At a glance:
 ```ruby
 class RelationshipStatus < EnumerateIt::Base
   associate_values :single, :married, :divorced
+
+  custom_helpers do
+    def ever_married?(value)
+      [MARRIED, DIVORCED].include?(value)
+    end
+  end
 end
 
 class Person < ApplicationRecord
@@ -31,6 +37,7 @@ end
 person = Person.new(relationship_status: RelationshipStatus::MARRIED)
 
 person.married? #=> true
+person.ever_married? #=> true
 person.relationship_status_humanize #=> 'Married'
 Person.married.to_sql #=> SELECT "people".* FROM "people" WHERE "people"."relationship_status" = "married"
 RelationshipStatus.to_a #=> [['Divorced', 'divorced'], ['Married', 'married'], ['Single', 'single']]
@@ -362,6 +369,57 @@ This will create:
   > On ActiveRecord objects, mutator methods like `married!` call `save!`
   > immediately, running callbacks and raising on validation failure. They are
   > not pure setters.
+
+  You can also define custom helper methods on the enumeration class using
+  a `custom_helpers` block. These become class methods on the enumeration, and when
+  `create_helpers: true` is used, instance methods on the model that delegate
+  the attribute's current value automatically:
+
+  ```ruby
+  class RelationshipStatus < EnumerateIt::Base
+    associate_values :single, :married, :divorced
+
+    custom_helpers do
+      def ever_married?(value)
+        [MARRIED, DIVORCED].include?(value)
+      end
+    end
+  end
+  ```
+
+  Available as a class method on the enumeration:
+
+  ```ruby
+  RelationshipStatus.ever_married?(RelationshipStatus::MARRIED)  #=> true
+  RelationshipStatus.ever_married?(RelationshipStatus::DIVORCED) #=> true
+  RelationshipStatus.ever_married?(RelationshipStatus::SINGLE)   #=> false
+  ```
+
+  Available as instance methods when `create_helpers: true`:
+
+  ```ruby
+  class Person < ApplicationRecord
+    has_enumeration_for :relationship_status, with: RelationshipStatus, create_helpers: true
+  end
+
+  p = Person.new(relationship_status: RelationshipStatus::DIVORCED)
+  p.ever_married? #=> true
+  ```
+
+  The `prefix` option works the same as for built-in helpers:
+
+  ```ruby
+  class Person < ApplicationRecord
+    has_enumeration_for :relationship_status,
+      with: RelationshipStatus, create_helpers: { prefix: true }
+  end
+
+  p.relationship_status_ever_married? #=> true
+  ```
+
+  Custom helper methods return `nil` when the attribute is `nil`. If a method
+  name collides with an already-defined class method on the enumeration, an
+  `ArgumentError` is raised at load time.
 
 - A scope method for each enumeration option if you pass the `create_scopes`
   option as `true`:
