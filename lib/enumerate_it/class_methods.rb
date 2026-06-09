@@ -1,5 +1,5 @@
 module EnumerateIt
-  module ClassMethods
+  module ClassMethods # rubocop:disable Metrics/ModuleLength
     def has_enumeration_for(attribute, options = {})
       self.enumerations = enumerations.dup
 
@@ -17,7 +17,8 @@ module EnumerateIt
       set_validations(attribute, options) unless options[:skip_validation]
 
       if options[:create_helpers]
-        %w[create_helper_methods create_mutator_methods create_polymorphic_methods create_custom_helper_methods].each do |method|
+        %w[create_helper_methods create_mutator_methods create_polymorphic_methods
+           create_custom_helper_methods].each do |method|
           send(method, options[:with], attribute, options[:create_helpers])
         end
       end

@@ -239,8 +239,8 @@ describe EnumerateIt::Base do
     end
 
     context 'when a custom helper name collides with a built-in method' do
-      it 'raises an ArgumentError' do
-        expect do
+      let(:build_colliding_enum) do
+        proc do
           Class.new(EnumerateIt::Base) do
             associate_values :collision
 
@@ -250,7 +250,14 @@ describe EnumerateIt::Base do
               end
             end
           end
-        end.to raise_error(ArgumentError, "Custom helper(s) 'list' would override existing EnumerateIt::Base methods")
+        end
+      end
+
+      it 'raises an ArgumentError' do
+        expect(&build_colliding_enum).to raise_error(
+          ArgumentError,
+          "Custom helper(s) 'list' would override existing EnumerateIt::Base methods"
+        )
       end
     end
   end

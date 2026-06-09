@@ -45,7 +45,7 @@ describe EnumerateIt do
     it 'defaults to not creating custom helper methods' do
       klass = Class.new do
         extend EnumerateIt
-        attr_accessor :foobar
+
         has_enumeration_for :foobar, with: TestEnumerationWithCustomHelpers
       end
       expect(klass.new).not_to respond_to(:lookup)
@@ -306,7 +306,8 @@ describe EnumerateIt do
 
             attr_accessor :foobar
 
-            has_enumeration_for :foobar, with: TestEnumerationWithCustomHelpers, create_helpers: true
+            has_enumeration_for :foobar, with: TestEnumerationWithCustomHelpers,
+              create_helpers: true
 
             def initialize(foobar)
               @foobar = foobar
@@ -334,7 +335,8 @@ describe EnumerateIt do
 
             attr_accessor :foobar
 
-            has_enumeration_for :foobar, with: TestEnumerationWithCustomHelpers, create_helpers: { prefix: true }
+            has_enumeration_for :foobar, with: TestEnumerationWithCustomHelpers,
+              create_helpers: { prefix: true }
 
             def initialize(foobar)
               @foobar = foobar
