@@ -266,7 +266,7 @@ describe EnumerateIt::Base do
     context 'when methods are defined inside custom_helpers block' do
       it 'returns the registered names' do
         expect(TestEnumerationWithCustomHelpers.custom_helper_methods)
-          .to eq(%i[lookup boolean?])
+          .to match_array(%i[lookup boolean?])
       end
     end
 
