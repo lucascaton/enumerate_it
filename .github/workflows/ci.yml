@@ -24,6 +24,9 @@ jobs:
           - gemfiles/rails_8.0.gemfile
           - gemfiles/rails_8.1.gemfile
         exclude:
+          # Rails 7.2+ requires Ruby 3.1 or newer
+          - ruby: 3.0
+            gemfile: gemfiles/rails_7.2.gemfile
           # Rails 8+ requires Ruby 3.2 or newer
           - ruby: 3.0
             gemfile: gemfiles/rails_8.0.gemfile
