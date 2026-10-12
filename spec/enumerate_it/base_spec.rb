@@ -135,6 +135,15 @@ describe EnumerateIt::Base do
     it 'returns a hash' do
       expect(TestEnumerationWithoutArray.to_h).to eq(value_one: '1', value_two: '2')
     end
+
+    context 'specifying a sort mode' do
+      subject(:enumeration) { create_enumeration_class_with_sort_mode(:name) }
+
+      it 'returns a hash sorted by the given mode' do
+        expect(enumeration.to_h).to eq(bar: '2', bra: '4', foo: '1', omg: '3', zomg: '0')
+        expect(enumeration.to_h.keys).to eq(%i[bar bra foo omg zomg])
+      end
+    end
   end
 
   describe '.to_json' do
