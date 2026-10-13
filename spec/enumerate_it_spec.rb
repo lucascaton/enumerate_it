@@ -133,13 +133,10 @@ describe EnumerateIt do
       context 'when using a nested class as the enumeration' do
         let :class_with_nested_enum do
           Class.new do
-            # rubocop:disable Lint/ConstantDefinitionInBlock
-            # rubocop:disable RSpec/LeakyConstantDeclaration
+            # rubocop:disable-next Lint/ConstantDefinitionInBlock, RSpec/LeakyConstantDeclaration
             class NestedEnum < EnumerateIt::Base
               associate_values foo: %w[1 Blerrgh], bar: [{ '2' => 'Blarghhh' }]
             end
-            # rubocop:enable RSpec/LeakyConstantDeclaration
-            # rubocop:enable Lint/ConstantDefinitionInBlock
 
             extend EnumerateIt
 
