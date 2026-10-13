@@ -28,7 +28,7 @@ module EnumerateIt
       end
 
       def to_h
-        sorted_map.to_h { |key, value| [key, value.first] }
+        sorted_map.to_h.transform_values(&:first)
       end
 
       def enumeration
