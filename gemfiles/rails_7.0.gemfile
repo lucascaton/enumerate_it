@@ -6,6 +6,7 @@ gem 'activerecord', '~> 7.0.10'
 gem 'activesupport', '~> 7.0.10'
 gem 'base64'
 gem 'bigdecimal'
+gem 'json', '< 3'
 gem 'mutex_m'
 gem 'sqlite3', '< 2'
 

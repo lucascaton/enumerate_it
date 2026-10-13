@@ -19,6 +19,9 @@ rails_versions = JSON.parse(Net::HTTP.get(URI('https://rubygems.org/api/v1/versi
       gem 'sqlite3', '< 2' # Rails 6.x and 7.0 require sqlite3 v1.x
     end
 
+    # Rails versions before 8.1 pass the removed quirks_mode option to JSON 3.
+    gem 'json', '< 3' if Gem::Version.new(rails_version) < Gem::Version.new('8.1')
+
     # The following is likely necessary due to this issue (or something related):
     # https://stackoverflow.com/a/79385484/1445184
     if Gem::Version.new(rails_version) < Gem::Version.new(7.1)
